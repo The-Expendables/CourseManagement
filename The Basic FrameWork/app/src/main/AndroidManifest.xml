@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.asus.coursemanagament" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name=".ActivityLogin.Login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActivityDment.CourseChooseList"
+            android:label="@string/title_activity_course_choose_list"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ActivityDepartment.CourseChooseList" >
+        </activity>
+        <activity android:name=".ActivityDepartment.CourseChooseLIst" >
+        </activity>
+        <activity android:name=".CourseDepartment" >
+        </activity>
+        <activity android:name=".ActivityDepartment.Export" >
+        </activity>
+        <activity android:name=".Export" >
+        </activity>
+        <activity android:name=".MajorLIst" >
+        </activity>
+        <activity android:name=".SumCourseList_XXX" >
+        </activity>
+        <activity android:name=".SummaryTable" >
+        </activity>
+        <activity android:name=".TaskList" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
+        </activity>
+        <activity android:name=".CourseDeclare" >
+        </activity>
+        <activity android:name=".CourseResultInfo" >
+        </activity>
+        <activity android:name=".CourseResultList_XXX" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseAdd" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseCheck" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseInfo" >
+        </activity>
+        <activity
+            android:name=".ActivityTeachingOffice.TaskManage.CourseRelease"
+            android:label="@string/title_activity_course_release"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.BatchImport" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentAdd" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentInfo" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentList" >
+        </activity>
+        <activity
+            android:name=".ActivityTeachingOffice.UserManage.SingleImport"
+            android:label="@string/title_activity_single_import"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.TeacherInfo" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Login">
+    <ImageView
+        android:id="@+id/imageview1"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/img_fzu_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户名:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvw_userName"
+        android:layout_alignTop="@+id/edtt_userName"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtt_userName"
+        android:maxLength="5"
+        android:numeric="integer"
+        android:layout_below="@+id/imageview1"
+        android:layout_toEndOf="@+id/tvw_userName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密    码:"
+        android:textSize="20dp"
+        android:id="@+id/tvw_passWord"
+        android:layout_marginTop="8dp"
+        android:layout_alignTop="@+id/edtt_passWord"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtt_passWord"
+        android:password="true"
+        android:maxLength="12"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/edtt_userName"
+        android:layout_toEndOf="@+id/tvw_userName" />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_y="40dp"
+        android:layout_x="50dp"
+        android:id="@+id/rdgp"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/edtt_passWord"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="教师"
+            android:checked="true"
+            android:textSize="20dp"
+            android:id="@+id/rdgp_teacher"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系负责人"
+            android:textSize="20dp"
+            android:id="@+id/rdgp_department"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="教学办"
+            android:textSize="20dp"
+            android:id="@+id/rdgp_office"
+            />
+    </RadioGroup>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:textSize="25dp"
+        android:background="#ffaf14"
+        android:id="@+id/btn_login"
+        android:layout_marginTop="37dp"
+        android:layout_gravity="bottom"
+        android:layout_below="@+id/rdgp"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="280dp"
+        android:layout_y="200dp"
+        android:text="忘记密码？"
+        android:textSize="18dp"
+        android:layout_marginRight="150dp"
+        android:id="@+id/tvw_forget"
+        android:layout_toEndOf="@+id/imageview1"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
