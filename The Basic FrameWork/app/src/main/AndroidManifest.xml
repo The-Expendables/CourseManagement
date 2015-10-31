@@ -15,36 +15,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ActivityDment.CourseChooseList"
-            android:label="@string/title_activity_course_choose_list"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity android:name=".ActivityDepartment.CourseChooseList" >
-        </activity>
-        <activity android:name=".ActivityDepartment.CourseChooseLIst" >
-        </activity>
-        <activity android:name=".CourseDepartment" >
+        <activity android:name=".ActivityDepartment.CourseDepartment">
         </activity>
         <activity android:name=".ActivityDepartment.Export" >
         </activity>
-        <activity android:name=".Export" >
+        <activity android:name=".ActivityDepartment.MajorList" >
         </activity>
-        <activity android:name=".MajorLIst" >
+        <activity android:name=".ActivityDepartment.SumCourseList_XXX" >
         </activity>
-        <activity android:name=".SumCourseList_XXX" >
+        <activity android:name=".ActivityDepartment.SummaryTable" >
         </activity>
-        <activity android:name=".SummaryTable" >
+        <activity android:name=".ActivityDepartment.TaskList" >
         </activity>
-        <activity android:name=".TaskList" >
+        <activity android:name=".ActivityDepartment.TeacherList" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
+        <activity android:name=".ActivityTeacher.CourseDeclare" >
         </activity>
-        <activity android:name=".CourseDeclare" >
+        <activity android:name=".ActivityTeacher.CourseResultInfo" >
         </activity>
-        <activity android:name=".CourseResultInfo" >
-        </activity>
-        <activity android:name=".CourseResultList_XXX" >
+        <activity android:name=".ActivityTeacher.CourseResultList_XXX" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseAdd" >
         </activity>
@@ -52,10 +41,7 @@
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseInfo" >
         </activity>
-        <activity
-            android:name=".ActivityTeachingOffice.TaskManage.CourseRelease"
-            android:label="@string/title_activity_course_release"
-            android:theme="@style/AppTheme.NoActionBar" >
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.BatchImport" >
         </activity>
@@ -63,14 +49,13 @@
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentInfo" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentList" >
+        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentList">
         </activity>
-        <activity
-            android:name=".ActivityTeachingOffice.UserManage.SingleImport"
-            android:label="@string/title_activity_single_import"
-            android:theme="@style/AppTheme.NoActionBar" >
+        <activity android:name=".ActivityTeachingOffice.UserManage.SingleImport" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.TeacherInfo" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
         </activity>
