@@ -5,17 +5,19 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label=""
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".ActivityLogin.Login" >
+        <activity android:name=".ActivityLogin.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityDepartment.CourseDepartment">
+
+
+        <activity android:name=".ActivityDepartment.CourseDepartment" >
         </activity>
         <activity android:name=".ActivityDepartment.Export" >
         </activity>
@@ -29,19 +31,27 @@
         </activity>
         <activity android:name=".ActivityDepartment.TeacherList" >
         </activity>
+
+
         <activity android:name=".ActivityTeacher.CourseDeclare" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseResultInfo" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseResultList_XXX" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseAdd" >
+
+
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="">
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseCheck" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseInfo" >
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseAdd" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseInfo" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.BatchImport" >
         </activity>
@@ -49,7 +59,7 @@
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentInfo" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentList">
+        <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentList" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.SingleImport" >
         </activity>
@@ -59,6 +69,7 @@
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
         </activity>
+
     </application>
 
 </manifest>
