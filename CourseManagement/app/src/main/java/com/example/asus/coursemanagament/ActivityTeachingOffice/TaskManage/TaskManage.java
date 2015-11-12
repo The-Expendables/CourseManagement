@@ -4,19 +4,30 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SlidingMenu;
 
 public class TaskManage extends TabActivity {
 
+    private SlidingMenu mLeftMenu_teachingoffice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_manage);
+        mLeftMenu_teachingoffice = (SlidingMenu) findViewById(R.id.teachingoffice_menu);
         tabCreate();
     }
+
+    //侧滑菜单===============================
+    public void toggleMenu(View view){
+        mLeftMenu_teachingoffice.toggle();
+    }
+    //=========================================
+
     //选项卡============================================
     private void tabCreate(){
         TabHost tabHost = getTabHost();

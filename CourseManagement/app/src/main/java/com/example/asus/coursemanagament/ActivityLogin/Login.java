@@ -19,7 +19,6 @@ import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.CourseRelease;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
 import com.example.asus.coursemanagament.R;
 
 public class Login extends Activity {
@@ -36,13 +35,8 @@ public class Login extends Activity {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-//        Intent intent=new Intent(Login.this, UserManage.class);
-//        startActivity(intent);
-
         setContentView(R.layout.activity_login);
         initView();
-
     }
     //====================================================================
     //忘记密码？ 事件监听============================================
