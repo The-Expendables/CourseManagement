@@ -19,7 +19,7 @@ public class UserManage extends Activity {
         final ListView listvw=(ListView)findViewById(R.id.listvw);
         String[] ctype=new String[]{"系负责人","教师"};
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_activated_1,ctype);
+        android.R.layout.simple_list_item_activated_1,ctype);
         listvw.setAdapter(adapter);//关联listView
         listvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
