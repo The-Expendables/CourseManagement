@@ -14,11 +14,11 @@ public class CourseManager {
 
     }
 
-    public static Tb_course find(String cname){
+    public static Tb_course find(float grade,String cname){
         return new Tb_course(); //临时
     }
 
-    public static void delete(String cname){
+    public static void delete(float grade,String cname){
 
     }
 }

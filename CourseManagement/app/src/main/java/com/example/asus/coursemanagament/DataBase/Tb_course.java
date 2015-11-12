@@ -4,10 +4,10 @@ package com.example.asus.coursemanagament.DataBase;
  * Created by ASUS on 2015/10/30.
  */
 public class Tb_course {
-    private float grade;        //年级
+    private float grade;        //年级，主键
     private String major;       //专业
     private float p_cnt;        //人数
-    private String c_name;      //课程名称
+    private String c_name;      //课程名称，主键
     private String type;        //选修类型
     private float credit;       //学分
     private float times;        //学时

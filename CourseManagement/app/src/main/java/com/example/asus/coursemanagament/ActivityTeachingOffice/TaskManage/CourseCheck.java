@@ -1,11 +1,12 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.asus.coursemanagament.R;
 
-public class CourseCheck extends AppCompatActivity {
+public class CourseCheck extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
