@@ -39,7 +39,6 @@
                 android:textSize="20sp"
                 android:text="任务管理"
                 android:id="@+id/btn_task"
-                android:onClick="toggleMenu"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
         <RelativeLayout
@@ -52,6 +51,7 @@
                 android:textSize="20sp"
                 android:text="用户管理"
                 android:id="@+id/btn_user"
+                android:onClick="toggleMenu"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
         <RelativeLayout

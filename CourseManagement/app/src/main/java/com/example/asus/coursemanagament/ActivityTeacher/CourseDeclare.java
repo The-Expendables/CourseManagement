@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SlidingMenu;
+import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
 
 public class CourseDeclare extends AppCompatActivity {
     private SlidingMenu mLeftMenu_teacher;
