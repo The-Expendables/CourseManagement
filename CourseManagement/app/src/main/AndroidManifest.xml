@@ -8,7 +8,8 @@
         android:label="报课系统"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
-        <activity android:name=".ActivityLogin.Login">
+        <activity android:name=".ActivityLogin.Login" >
+
 
         </activity>
         <activity android:name=".ActivityDepartment.CourseDepartment" >
@@ -26,13 +27,17 @@
         <activity android:name=".ActivityDepartment.TeacherList" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseDeclare" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ActivityTeacher.CourseResultInfo" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseResultList_XXX" >
         </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage" >
 
-        <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage">
 
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
@@ -58,13 +63,11 @@
         <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
+        <activity android:name=".ActivityTeachingOffice.PasswordChange" >
+        </activity>
+        <activity android:name=".ActivityTeacher.PasswordChange1" >
+        </activity>
     </application>
 
 </manifest>
