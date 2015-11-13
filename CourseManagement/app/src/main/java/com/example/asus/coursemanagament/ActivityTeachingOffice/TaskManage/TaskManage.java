@@ -4,6 +4,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -11,6 +12,8 @@ import android.widget.TabHost;
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
+import android.widget.TabHost;
+
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
 
