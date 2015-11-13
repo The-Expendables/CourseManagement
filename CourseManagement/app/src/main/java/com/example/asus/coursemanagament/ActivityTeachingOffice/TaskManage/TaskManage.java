@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SlidingMenu;
@@ -42,11 +43,24 @@ public class TaskManage extends TabActivity {
 
         intent = new Intent(this,CourseCheck.class);
         spec = tabHost.newTabSpec("tab2")
-                .setIndicator("查看报课")
+                .setIndicator("查看报课") //Indicator指示器
                 .setContent(intent);
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);//设置默认选项卡，为tab1
+
+        TabWidget tabWidget=tabHost.getTabWidget();//获取TabHost的头部
+
+        //getChildCount 返回选项卡数量
+        //getChildTabViewAt 返回位于指定索引位置的选项卡标识符
+        for(int i = 0;i < tabWidget.getChildCount();i++){
+            //循环每个tabView
+            View view = tabWidget.getChildTabViewAt(i);
+            //获取tabView项
+            TextView tv = (TextView)view.findViewById(android.R.id.title);
+            tv.setTextSize(18);//改变字体
+        }
     }
+
     //================================================================
 }
 
