@@ -23,6 +23,10 @@
         <activity android:name=".ActivityDepartment.SummaryTable" >
         </activity>
         <activity android:name=".ActivityDepartment.TaskList" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ActivityDepartment.TeacherList" >
         </activity>
@@ -34,10 +38,6 @@
         <activity android:name=".ActivityTeacher.CourseResultList_XXX" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
@@ -68,6 +68,8 @@
         <activity android:name=".ActivityTeachingOffice.PasswordChange" >
         </activity>
         <activity android:name=".ActivityTeacher.PasswordChange1" >
+        </activity>
+        <activity android:name=".ActivityDepartment.PasswordChange2" >
         </activity>
     </application>
 

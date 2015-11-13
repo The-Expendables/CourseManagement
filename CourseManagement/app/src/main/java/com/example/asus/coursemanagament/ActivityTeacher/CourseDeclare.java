@@ -13,6 +13,7 @@ import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
 
 public class CourseDeclare extends TabActivity {
+
     private SlidingMenu mLeftMenu_teacher;
     private Button btn_task1;
     private Button btn_password1;
@@ -23,7 +24,6 @@ public class CourseDeclare extends TabActivity {
         setContentView(R.layout.activity_course_declare);
         mLeftMenu_teacher = (SlidingMenu) findViewById(R.id.teacher_menu);
         tabCreate();
-
         //设置侧滑菜单任务管理跳转=========================
         btn_task1 = (Button) findViewById(R.id.btn_task1);
         btn_task1.setOnClickListener(new View.OnClickListener() {
