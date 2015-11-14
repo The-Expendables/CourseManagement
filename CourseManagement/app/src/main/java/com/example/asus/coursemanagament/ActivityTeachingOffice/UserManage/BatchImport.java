@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import cn.qqtheme.framework.helper.Common;
+import cn.qqtheme.framework.picker.FilePicker;
 
 import com.example.asus.coursemanagament.R;
 
@@ -24,4 +28,23 @@ public class BatchImport extends AppCompatActivity {
         });
         //============================================
     }
+    //选择文件监听事件====================================
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+    public void onBtn_select(View view){
+        FilePicker picker = new FilePicker(this);
+        picker.setShowHideDir(false);
+        picker.setInitPath(Common.getRootPath(this) + "Download/");
+        //picker.setAllowExtensions(new String[]{".apk"});
+        picker.setMode(FilePicker.Mode.File);
+        picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+            @Override
+            public void onFilePicked(String currentPath) {
+                showToast(currentPath);
+            }
+        });
+        picker.showAtBottom();
+    }
+    //=================================
 }
