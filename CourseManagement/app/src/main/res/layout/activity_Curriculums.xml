@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage">
+    tools:context="com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TotalCourseInfo">
     <EditText
         android:id="@+id/searchbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:drawableLeft="@android:drawable/ic_menu_search"
-        android:hint="Search"
+        android:hint="请输入关键字"
         android:drawablePadding="5dp"
         android:singleLine="true"
-        android:ems="10" >
+         >
         <requestFocus />
     </EditText>
 

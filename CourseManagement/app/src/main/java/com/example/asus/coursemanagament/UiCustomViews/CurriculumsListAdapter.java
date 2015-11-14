@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament;
+package com.example.asus.coursemanagament.UiCustomViews;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,39 +9,39 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListInfo;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
+import com.example.asus.coursemanagament.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by wwk on 2015/11/13.
  */
-public class ListAdapter extends BaseAdapter implements Filterable {
+public class CurriculumsListAdapter extends BaseAdapter implements Filterable {
 
     private MyFilter myFilter;
-    private List<ListInfo> listInfos;
+    private List<ListCurriculums> listCurriculumses;
     private Context context;
 
-    private ArrayList<ListInfo> mOriginalValues;
+    private ArrayList<ListCurriculums> mOriginalValues;
 
     private final Object mLock = new Object();
 
-    public ListAdapter(Context context,List<ListInfo> listInfos){
+    public CurriculumsListAdapter(Context context, List<ListCurriculums> listCurriculumses){
         this.context = context;
-        this.listInfos = listInfos;
+        this.listCurriculumses = listCurriculumses;
     }
 
 
     @Override
     public int getCount() {
-        return listInfos.size();
+        return listCurriculumses.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listInfos.get(position);
+        return listCurriculumses.get(position);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         View view = convertView;
         ViewHolder holder;
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.list_item,null);
+            view = LayoutInflater.from(context).inflate(R.layout.list_item_curriculums,null);
             holder = new ViewHolder();
 
             holder.tv_ItemName = (TextView)view.findViewById(R.id.ItemName);
@@ -66,10 +66,10 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             holder = (ViewHolder)view.getTag();
         }
 
-        holder.tv_ItemName.setText(listInfos.get(position).getItemName());
-        holder.tv_semester.setText(listInfos.get(position).getSemester());
-        holder.tv_deadlineview.setText(listInfos.get(position).getDeadlineview());
-        holder.tv_deadline.setText(listInfos.get(position).getDeadline());
+        holder.tv_ItemName.setText(listCurriculumses.get(position).getItemName());
+        holder.tv_semester.setText(listCurriculumses.get(position).getSemester());
+        holder.tv_deadlineview.setText(listCurriculumses.get(position).getDeadlineview());
+        holder.tv_deadline.setText(listCurriculumses.get(position).getDeadline());
 
         return view;
     }
@@ -99,13 +99,13 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             if (mOriginalValues == null) {
                 synchronized (mLock) {
                     // 将list的用户 集合转换给这个原始数据的ArrayList
-                    mOriginalValues = new ArrayList<ListInfo>(listInfos);
+                    mOriginalValues = new ArrayList<ListCurriculums>(listCurriculumses);
                 }
             }
 
             if (constraint == null || constraint.length() == 0) {
                 synchronized (mLock) {
-                    ArrayList<ListInfo> list = new ArrayList<ListInfo>(mOriginalValues);
+                    ArrayList<ListCurriculums> list = new ArrayList<ListCurriculums>(mOriginalValues);
                     results.values = list;
                     results.count = list.size();
                 }
@@ -115,16 +115,16 @@ public class ListAdapter extends BaseAdapter implements Filterable {
                     String prefixString = constraint.toString().toLowerCase();
 
                     // 声明一个临时的集合对象 将原始数据赋给这个临时变量
-                    final ArrayList<ListInfo> values = mOriginalValues;
+                    final ArrayList<ListCurriculums> values = mOriginalValues;
                     final int count = values.size();
 
                     //新的集合对象
-                    final ArrayList<ListInfo> newValues = new ArrayList<ListInfo>(count);
+                    final ArrayList<ListCurriculums> newValues = new ArrayList<ListCurriculums>(count);
 
                     // 如果姓item中tv的前缀相符就添加到新的集合
                     for (int i = 0; i < count; i++) {
 
-                        final ListInfo value = (ListInfo) values.get(i);
+                        final ListCurriculums value = (ListCurriculums) values.get(i);
                         //Android拼音帮助类PinyinUtils，getPingYin汉字转拼音
                         if (PinyinUtils.getPingYin(value.getItemName()).startsWith(prefixString)||
                                 value.getItemName().startsWith(prefixString) ||
@@ -143,7 +143,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //重新与适配器相关联的List重新赋值一下
-            listInfos = (List<ListInfo>)results.values;
+            listCurriculumses = (List<ListCurriculums>)results.values;
 
             if(results.count > 0){
                 notifyDataSetChanged();

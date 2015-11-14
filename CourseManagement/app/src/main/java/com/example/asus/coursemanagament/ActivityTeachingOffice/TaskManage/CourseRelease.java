@@ -1,13 +1,17 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.asus.coursemanagament.ListAdapter;
+import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
 import com.example.asus.coursemanagament.R;
 
 import java.util.ArrayList;
@@ -16,19 +20,32 @@ import java.util.List;
 public class CourseRelease extends Activity {
 
     private EditText search;
-    private List<ListInfo> listInfos= new ArrayList<ListInfo>(); //存放Item
+    private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
-    ListAdapter adapter ;
+    CurriculumsListAdapter adapter ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_release);
+        setContentView(R.layout.activity_curriculums);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         initList();
         initView();
 
     }
+    //listview 点击事件========================================
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(CourseRelease.this,CourseSet.class);
+            startActivity(intent);
+        }
+    }
+    //========================================================
 //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher{
 
@@ -53,22 +70,25 @@ public class CourseRelease extends Activity {
         search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
 
-        adapter = new ListAdapter(CourseRelease.this, listInfos);
+
+
+        adapter = new CurriculumsListAdapter(CourseRelease.this, listCurriculumses);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new MyOnItemClickListener());
     }
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
         String d = "截止日期:";
-        ListInfo cell;
+        ListCurriculums cell;
         for(int i = 0;i < 3; i++){
-            cell = new ListInfo("计算机","201502",d,"2015.03.01");
-            listInfos.add(cell);
+            cell = new ListCurriculums("计算机","201502",d,"2015.03.01");
+            listCurriculumses.add(cell);
         }
         for(int i = 0; i < 3; i++){
-            cell = new ListInfo("数学","201501",d,"2014.03.01");
-            listInfos.add(cell);
+            cell = new ListCurriculums("数学","201501",d,"2014.03.01");
+            listCurriculumses.add(cell);
         }
     }
     //=========================================================

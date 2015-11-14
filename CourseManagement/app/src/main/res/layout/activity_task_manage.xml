@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.example.asus.coursemanagament.SlidingMenu
+    <com.example.asus.coursemanagament.UiCustomViews.SlidingMenu
         android:layout_width="match_parent"
         android:id="@+id/teachingoffice_menu"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -19,12 +22,12 @@
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:background="#eeeeee">
+                    android:layout_height="50dp"
+                    android:background="#c0bfbf">
                     <ImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="13dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginLeft="5dp"
                         android:src="@android:drawable/ic_dialog_dialer"
                         android:onClick="toggleMenu"/>
@@ -32,13 +35,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="任务列表"
+                        android:textColor="#060606"
                         android:layout_centerInParent="true"
-                        android:textSize="30dp" />
+                        android:textSize="25sp" />
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="5dp"
+                        android:id="@+id/imgvw_add_task"
                         android:src="@android:drawable/ic_menu_add" />
                 </RelativeLayout>
                 <TabHost
@@ -61,8 +66,7 @@
                         </FrameLayout>
                     </LinearLayout>
                 </TabHost>
-                <!-- 在这里添加新的内容：如ListView-->
             </LinearLayout>
         </LinearLayout>
-    </com.example.asus.coursemanagament.SlidingMenu>
+    </com.example.asus.coursemanagament.UiCustomViews.SlidingMenu>
 </RelativeLayout>

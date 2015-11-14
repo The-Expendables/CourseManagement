@@ -4,23 +4,92 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.TabHost;
+
+import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
+import com.example.asus.coursemanagament.ActivityLogin.Login;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SlidingMenu;
+import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
 
 public class TaskManage extends TabActivity {
 
     private SlidingMenu mLeftMenu_teachingoffice;
+    private ImageView imgvw_add_task;
+    private Button btn_task;
+    private Button btn_user;
+    private Button btn_password;
+    private Button btn_exit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_manage);
         mLeftMenu_teachingoffice = (SlidingMenu) findViewById(R.id.teachingoffice_menu);
         tabCreate();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        //添加新的报课表======================================================
+        imgvw_add_task = (ImageView) findViewById(R.id.imgvw_add_task);
+        imgvw_add_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskManage.this, CourseAdd.class);
+                startActivity(intent);
+            }
+        });
+        //======================================================================
+
+        //设置侧滑菜单任务管理跳转=================================
+        btn_task = (Button) findViewById(R.id.btn_task);
+        btn_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLeftMenu_teachingoffice.toggle();
+            }
+        });
+        //==========================================================
+
+        //设置侧滑菜单用户管理跳转====================================
+        btn_user = (Button) findViewById(R.id.btn_user);
+        btn_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskManage.this, UserManage.class);
+                startActivity(intent);
+            }
+        });
+        //=============================================================
+
+        //设置侧滑菜单修改密码跳转======================================
+        btn_password = (Button) findViewById(R.id.btn_password);
+        btn_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskManage.this, PasswordChange.class);
+                startActivity(intent);
+            }
+        });
+        //============================================
+
+        //设置侧滑菜单退出跳转=======================================
+        btn_exit = (Button) findViewById(R.id.btn_exit);
+        btn_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskManage.this,Login.class);
+                startActivity(intent);
+            }
+        });
+        //===========================================================
     }
 
     //侧滑菜单===============================

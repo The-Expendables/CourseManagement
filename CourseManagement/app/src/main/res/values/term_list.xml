@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="term">
+        <item>201502</item>
+        <item>201501</item>
+        <item>201402</item>
+        <item>201401</item>
+        <item>201302</item>
+        <item>201301</item>
+    </string-array>
+</resources>

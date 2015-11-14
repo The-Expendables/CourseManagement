@@ -3,13 +3,13 @@ package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 /**
  * Created by wwk on 2015/11/13.
  */
-public class ListInfo {
+public class ListCurriculums {
     private String ItemName;
     private String semester;
     private String deadlineview;
     private String deadline;
 
-    public ListInfo(String ItemName, String semester, String deadlineview,String deadline) {
+    public ListCurriculums(String ItemName, String semester, String deadlineview, String deadline) {
         this.ItemName = ItemName;
         this.semester = semester;
         this.deadlineview = deadlineview;

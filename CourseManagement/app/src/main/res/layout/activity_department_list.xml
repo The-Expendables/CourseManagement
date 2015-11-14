@@ -7,31 +7,48 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="#c0bfbf"
         >
-        <TextView
-            android:id="@+id/tvw_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/ivw_1"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:text="返回"
-            android:textSize="24sp"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
             />
         <TextView
-            android:id="@+id/tvw_2"
+            android:id="@+id/tvw"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="系负责人列表"
-            android:textSize="24sp"/>
-        <TextView
-            android:id="@+id/tvw_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textSize="25sp"/>
+        <ImageView
+            android:id="@+id/ivw_2"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="添加"
-            android:textSize="24sp"/>
+            android:src="@android:drawable/ic_menu_add"
+            />
     </RelativeLayout>
+    <EditText
+        android:id="@+id/searchbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:hint="请输入关键字"
+        android:drawablePadding="5dp"
+        android:singleLine="true"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchbox">
+    </ListView>
 </LinearLayout>

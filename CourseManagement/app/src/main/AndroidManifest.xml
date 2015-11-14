@@ -8,8 +8,12 @@
         android:label="报课系统"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
-        <activity android:name=".ActivityLogin.Login">
+        <activity android:name=".ActivityLogin.Login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ActivityDepartment.CourseDepartment" >
         </activity>
@@ -17,27 +21,29 @@
         </activity>
         <activity android:name=".ActivityDepartment.MajorList" >
         </activity>
-        <activity android:name=".ActivityDepartment.SumCourseList_XXX" >
+        <activity android:name=".ActivityDepartment.SumCourseList" >
         </activity>
         <activity android:name=".ActivityDepartment.SummaryTable" >
         </activity>
         <activity android:name=".ActivityDepartment.TaskList" >
         </activity>
-        <activity android:name=".ActivityDepartment.TeacherList" >
+        <activity android:name=".ActivityDepartment.DepartTeacherList" >
         </activity>
+        <activity android:name=".ActivityDepartment.PasswordChange2" >
+        </activity>
+        <!--  -->
         <activity android:name=".ActivityTeacher.CourseDeclare" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseResultInfo" >
         </activity>
-        <activity android:name=".ActivityTeacher.CourseResultList_XXX" >
+        <activity android:name=".ActivityTeacher.CourseBegin" >
         </activity>
-
-        <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".ActivityTeacher.CourseChoose" >
+        </activity>
+        <activity android:name=".ActivityTeacher.PasswordChange1" >
+        </activity>
+        <!--  -->
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
         </activity>
@@ -45,7 +51,16 @@
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseAdd" >
         </activity>
-        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseInfo" >
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TotalCourseInfo" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TeachingOfficeSummaryTable" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.TeacherCourseInfo" >
+        </activity>
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseSet" >
+        </activity>
+        <!--  -->
+        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseSet" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.BatchImport" >
         </activity>
@@ -62,9 +77,11 @@
         <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
-
         </activity>
-
+        <activity android:name=".ActivityTeachingOffice.PasswordChange" >
+        </activity>
+        <activity android:name=".ActivityTeacher.CourseResult" >
+        </activity>
     </application>
 
 </manifest>

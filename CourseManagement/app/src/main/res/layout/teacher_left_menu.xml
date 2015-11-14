@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
+    android:background="#c0bfbf"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,83 +11,59 @@
         android:layout_centerInParent="true">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:src="@drawable/img_fzu_logo"
-                android:layout_centerVertical="true"
-                android:id="@+id/imgvw_1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="第一个item"
-                android:layout_marginLeft="20dp"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/imgvw_1"/>
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/img_fzu_logo"
-                android:layout_centerVertical="true"
-                android:id="@+id/imgvw_2"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="第二个item"
-                android:layout_marginLeft="20dp"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/imgvw_2"/>
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center">
+            <Button
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/img_fzu_logo"
-                android:layout_centerVertical="true"
-                android:id="@+id/imgvw_3"/>
-            <TextView
-                android:layout_width="wrap_content"
+                android:textSize="20sp"
+                android:text="任务管理"
+                android:id="@+id/btn_task1"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center">
+            <Button
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="第三个item"
-                android:layout_marginLeft="20dp"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/imgvw_3"/>
+                android:text="修改密码"
+                android:id="@+id/btn_password1"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/img_fzu_logo"
-                android:layout_centerVertical="true"
-                android:id="@+id/imgvw_4"/>
-            <TextView
-                android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center">
+            <Button
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="第四个item"
-                android:layout_marginLeft="20dp"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/imgvw_4"/>
+                android:text="退出"
+                android:id="@+id/btn_exit1"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
     </LinearLayout>
 

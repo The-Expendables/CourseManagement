@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament;
+package com.example.asus.coursemanagament.UiCustomViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
