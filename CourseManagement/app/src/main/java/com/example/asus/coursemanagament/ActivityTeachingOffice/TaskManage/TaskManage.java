@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
+import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
 import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
@@ -31,6 +35,7 @@ public class TaskManage extends TabActivity {
         setContentView(R.layout.activity_task_manage);
         mLeftMenu_teachingoffice = (SlidingMenu) findViewById(R.id.teachingoffice_menu);
         tabCreate();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         //添加新的报课表======================================================
         imgvw_add_task = (ImageView) findViewById(R.id.imgvw_add_task);
@@ -80,7 +85,7 @@ public class TaskManage extends TabActivity {
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TaskManage.this, Login.class);
+                Intent intent = new Intent(TaskManage.this,Login.class);
                 startActivity(intent);
             }
         });
@@ -107,11 +112,24 @@ public class TaskManage extends TabActivity {
 
         intent = new Intent(this,CourseCheck.class);
         spec = tabHost.newTabSpec("tab2")
-                .setIndicator("查看报课")
+                .setIndicator("查看报课") //Indicator指示器
                 .setContent(intent);
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);//设置默认选项卡，为tab1
+
+        TabWidget tabWidget=tabHost.getTabWidget();//获取TabHost的头部
+
+        //getChildCount 返回选项卡数量
+        //getChildTabViewAt 返回位于指定索引位置的选项卡标识符
+        for(int i = 0;i < tabWidget.getChildCount();i++){
+            //循环每个tabView
+            View view = tabWidget.getChildTabViewAt(i);
+            //获取tabView项
+            TextView tv = (TextView)view.findViewById(android.R.id.title);
+            tv.setTextSize(18);//改变字体
+        }
     }
+
     //================================================================
 }
 

@@ -32,4 +32,23 @@
             android:src="@android:drawable/ic_menu_add"
             />
     </RelativeLayout>
+    <EditText
+        android:id="@+id/searchbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:hint="请输入关键字"
+        android:drawablePadding="5dp"
+        android:singleLine="true"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchbox">
+    </ListView>
 </LinearLayout>

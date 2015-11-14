@@ -5,6 +5,7 @@ import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class UserManage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manage);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         //左侧按钮监听事件========================
         mLeftMenu_teachingoffice = (SlidingMenu) findViewById(R.id.teachingoffice_menu);
         //==========================

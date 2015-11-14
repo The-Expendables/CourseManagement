@@ -124,7 +124,7 @@ public class PasswordChange extends Activity {
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PasswordChange.this, Login.class);
+                Intent intent = new Intent(PasswordChange.this,Login.class);
                 startActivity(intent);
             }
         });
