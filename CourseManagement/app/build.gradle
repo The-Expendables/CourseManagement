@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile project(':framework-picker')
     compile files('src/main/libs/pinyin4j-2.5.0.jar')
+    compile files('src/main/libs/jxl.jar')
 }

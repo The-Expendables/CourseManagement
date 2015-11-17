@@ -4,12 +4,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.qqtheme.framework.helper.Common;
 import cn.qqtheme.framework.picker.FilePicker;
+import jxl.read.biff.BiffException;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 public class BatchImport extends AppCompatActivity {
 
@@ -38,7 +47,26 @@ public class BatchImport extends AppCompatActivity {
         picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
             @Override
             public void onFilePicked(String currentPath) {
-
+                List list = null;
+                try {
+                    list = ExcelUtil.readExcel(currentPath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }catch(BiffException e){
+                    e.printStackTrace();
+                }
+//                Toast.makeText(BatchImport.this,data.toString(),Toast.LENGTH_SHORT).show();
+                TextView tvw_show_excel = (TextView) findViewById(R.id.tvw_show_excel);
+                String result = "";
+                for (int i = 0; i < list.size(); i++) {
+                    String[] str = (String[]) list.get(i);
+                    for (int j = 0; j < str.length; j++) {
+                        result += str[j];
+                        result += ";";
+                    }
+                    result += "\n";
+                }
+                tvw_show_excel.setText(result);
             }
         });
         picker.showAtBottom();

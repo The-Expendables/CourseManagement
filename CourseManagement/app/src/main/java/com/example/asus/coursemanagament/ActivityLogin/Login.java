@@ -39,15 +39,15 @@ public class Login extends Activity {
     private TextView tvw_forget; //忘记密码？
 
     //服务器响应之后的ui操作============================================================
-//    private Handler handler=new Handler(){
-//        public void handleMessage(Message msg){
-//            switch(msg.what){
-//                case 1:
-//                    String response=(String)msg.obj;
-//                    Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    };
+    private Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            switch(msg.what){
+                case 1:
+                    String response=(String)msg.obj;
+                    Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     //============================================================
 
     @Override
@@ -116,6 +116,11 @@ public class Login extends Activity {
     class LoginClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+            //forTest=========================================================================
+//            Intent intent_to_teachingoffice = new Intent(Login.this, TaskManage.class);
+//            startActivity(intent_to_teachingoffice);
+            //===========================================
+//
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
             }
@@ -125,27 +130,6 @@ public class Login extends Activity {
             else if (edtt_password.length() < 6) {
                 Toast.makeText(Login.this, "密码格式有误，请重新输入", Toast.LENGTH_SHORT).show();
             }
-            /** get
-            *     String res = HttpUtil.get("http://www.google.com");
-            *
-            *     // post
-            *     String res = HttpUtil.post("http://sendmedata.com", "This is the data");
-            *
-            *     // post form
-            *     Map<String, String> params = new HashMap<String, String>();
-            *     params.put("firstname", "Joe");
-            *     params.put("lastname", "Smith");
-            *     params.put("age", "28");
-            *     String res = HttpUtil.postForm("http://site.com/newuser", params);
-            *
-            *     // append query parameters to url
-            *     String url = "http://mydatabase.com/users";
-            *     Map<String, String> params = new HashMap<String, String>();
-            *     params.put("orderby", "name");
-            *     params.put("limit", "10");
-            *     String fullUrl = HttpUtil.appendQueryParams(url, params);
-            *     // fullUrl = "http://mydatabase.com/user?orderby=name&limit=10"
-            */
             //将账号密码改成数据库数据
             else if (edtt_userName != null && edtt_password != null && number == 1) {
                 //跳转到教师界面
@@ -165,7 +149,7 @@ public class Login extends Activity {
                 startActivity(intent_to_teachingoffice);
             }
 //            else{
-//                //连接服务器==================================================================
+//                //连接服务器不能删==================================================================
 //                Map<String,String> params=new HashMap<String,String>();
 //                params.put("username",edtt_userName.getText().toString());
 //                params.put("password", edtt_password.getText().toString());
@@ -188,7 +172,7 @@ public class Login extends Activity {
 //                }catch(Exception e){
 //                    e.printStackTrace();
 //                }
-//                //=====================================
+                //=====================================
 //            }
         }
     }

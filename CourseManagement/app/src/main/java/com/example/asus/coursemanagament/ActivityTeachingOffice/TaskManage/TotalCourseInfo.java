@@ -14,10 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.helper.Common;
+import cn.qqtheme.framework.picker.FilePicker;
+import jxl.read.biff.BiffException;
 
 public class TotalCourseInfo extends Activity {
 
@@ -75,6 +81,23 @@ public class TotalCourseInfo extends Activity {
 
         btn_export = (Button)findViewById(R.id.btn_export);
         //导出事件
+        btn_export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilePicker picker = new FilePicker(TotalCourseInfo.this);
+                picker.setShowHideDir(false);
+                picker.setInitPath(Common.getRootPath(TotalCourseInfo.this) + "Download/");
+                //picker.setAllowExtensions(new String[]{".apk"});
+                picker.setMode(FilePicker.Mode.File);
+                picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+                    @Override
+                    public void onFilePicked(String currentPath) {
+                        ExcelUtil.writeExcel(currentPath);
+                    }
+                });
+                picker.showAtBottom();
+            }
+        });
 
 
         adapter = new TotalCoureseListAdapter(TotalCourseInfo.this, listInfos);
