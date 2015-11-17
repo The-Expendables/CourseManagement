@@ -29,9 +29,6 @@ public class BatchImport extends AppCompatActivity {
         //============================================
     }
     //选择文件监听事件====================================
-    private void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
     public void onBtn_select(View view){
         FilePicker picker = new FilePicker(this);
         picker.setShowHideDir(false);
@@ -41,7 +38,7 @@ public class BatchImport extends AppCompatActivity {
         picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
             @Override
             public void onFilePicked(String currentPath) {
-                showToast(currentPath);
+
             }
         });
         picker.showAtBottom();
