@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.DataBase;
+package com.example.asus.coursemanagament.SQLite_operation;
 
 /**
  * Created by Administrator on 2015/11/2.
@@ -8,6 +8,7 @@ public class Tb_teachingoffice {
     private String password;    //密码
     private String phone;       //手机号码
     private String name;        //姓名
+
 
     public String getId() {
         return id;
@@ -38,6 +39,17 @@ public class Tb_teachingoffice {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public Tb_teachingoffice() {
+        super();
+    }
+
+    public Tb_teachingoffice(String id,String password,String phone,String name){
+        this.id = id;
+        this.password = password;
+        this.phone = phone;
         this.name = name;
     }
 }

@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
-import com.example.asus.coursemanagament.DBManager.CourseManager;
+
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
 

@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.DataBase;
+package com.example.asus.coursemanagament.SQLite_operation;
 
 /**
  * Created by Administrator on 2015/11/2.
@@ -74,6 +74,21 @@ public class Tb_teacher {
     }
 
     public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Tb_teacher() {
+        super();
+    }
+
+    public Tb_teacher(String id,String password,String department,String name,String sex,String birth,String email,String phone){
+        this.id = id;
+        this.password = password;
+        this.department = department;
+        this.name = name;
+        this.sex = sex;
+        this.birth = birth;
+        this.email = email;
         this.phone = phone;
     }
 }

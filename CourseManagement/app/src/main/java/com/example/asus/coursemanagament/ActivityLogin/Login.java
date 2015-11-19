@@ -1,16 +1,16 @@
 package com.example.asus.coursemanagament.ActivityLogin;
 
 //import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.Window;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -19,15 +19,11 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.CourseRelease;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.LogRecord;
+import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
 
 public class Login extends Activity {
 
@@ -57,6 +53,28 @@ public class Login extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         initView();
+
+        //初始化表格数据==========================================================================
+        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
+        Tb_teacher th = new Tb_teacher("23456","23456","计算机系","李四","男","1970年12月","134892746@qq.com","15629124497");
+        test.add_teacher(th);
+        SQLOperateImpl test2 = new SQLOperateImpl(Login.this);    //增
+        Tb_teacher th2 = new Tb_teacher("23457","23457","计算机系","王五","男","1980年2月","348192746@qq.com","18547156624");
+        test2.add_teacher(th2);
+        SQLOperateImpl test3 = new SQLOperateImpl(Login.this);    //增
+        Tb_teacher th3 = new Tb_teacher("23458","23458","计算机系","赵七","男","1974年7月","489322746@qq.com","15624784416");
+        test3.add_teacher(th3);
+        SQLOperateImpl test4 = new SQLOperateImpl(Login.this);    //增
+        Tb_teacher th4 = new Tb_teacher("23459","23459","计算机系","钱八","男","1985年11月","925471746@qq.com","18865247894");
+        test4.add_teacher(th4);
+        SQLOperateImpl test5 = new SQLOperateImpl(Login.this);    //增
+        Tb_teacher th5 = new Tb_teacher("23455","23455","计算机系","陈九","女","1974年6月","845124780@qq.com","15024152632");
+        test5.add_teacher(th5);
+        SQLOperateImpl test1 = new SQLOperateImpl(Login.this);    //增
+        Tb_teachingoffice th1 = new Tb_teachingoffice("12345","12345","18659545514","张三");
+        test1.add_teachingoffice(th1);
+        //=================================================================================
+
     }
     //====================================================================
     //忘记密码？ 事件监听============================================
@@ -112,6 +130,8 @@ public class Login extends Activity {
         tvw_forget.setOnClickListener(new ForgetClickListener());    //为"忘记密码"绑定事件监听器
 
     }
+
+
     //登录按钮 事件监听=================================================
     class LoginClickListener implements View.OnClickListener{
         @Override
