@@ -55,6 +55,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE TeachingOffice (_id Integer PRIMARY KEY AUTOINCREMENT, password TEXT NOT NULL, phone TEXT NOT NULL, name text NOT NULL)");
         db.execSQL("CREATE TABLE Teacher (_id INTEGER PRIMARY KEY, password TEXT NOT NULL, department TEXT NOT NULL, name TEXT NOT NULL, sex TEXT, birth TEXT, email TEXT, phone TEXT)");
         db.execSQL("CREATE TABLE course (_id INTEGER PRIMARY KEY, grade TEXT NOT NULL, major TEXT NOT NULL, p_cnt TEXT NOT NULL, c_name TEXT NOT NULL, type TEXT NOT NULL, credit TEXT NOT NULL, times TEXT, exp_times TEXT, pra_times TEXT, be_weeks TEXT, t_name TEXT, remark TEXT)");
+        db.execSQL("CREATE TABLE course_mes (table_name INTEGER PRIMARY KEY, term TEXT NOT NULL, teacher_time TEXT NOT NULL, department_time TEXT NOT NULL)");
     }
 
     //版本升级时被调用
