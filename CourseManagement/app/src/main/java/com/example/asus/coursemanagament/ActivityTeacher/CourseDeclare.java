@@ -68,17 +68,22 @@ public class CourseDeclare extends TabActivity {
 
     //选项卡============================================
     private void tabCreate(){
+        Intent intent2 = getIntent();
+        //获取数据
+        String gonghao = intent2.getStringExtra("gonghao");
+
         TabHost tabHost = getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
-
         intent = new Intent(this,CourseBegin.class);
+        intent.putExtra("gonghao",gonghao);
         spec = tabHost.newTabSpec("tab1")//新建一个tab
                 .setIndicator("开始报课")//设置名称
                 .setContent(intent);//设置显示的intent，也可以为R.id.xx
         tabHost.addTab(spec);//添加到tabhost
 
         intent = new Intent(this,CourseResultInfo.class);
+        intent.putExtra("gonghao",gonghao);
         spec = tabHost.newTabSpec("tab2")
                 .setIndicator("查看报课结果")
                 .setContent(intent);

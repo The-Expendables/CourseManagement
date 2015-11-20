@@ -5,14 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
 
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ class MyOnItemClickListener implements AdapterView.OnItemClickListener{
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(CourseResultInfo.this,CourseResult.class);
+        TextView info = (TextView)view.findViewById(R.id.ItemName);
+        String infoo = info.getText().toString();
+        intent.putExtra("zhuanye",infoo);
         startActivity(intent);
     }
 }
@@ -74,16 +80,36 @@ class MyTextWatcher implements TextWatcher {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "截止日期:";
+        Intent intent = getIntent();
+        //获取数据
+        String gonghao = intent.getStringExtra("gonghao");
+        Log.i("info", "!!!!!!!!!!!" + gonghao);
+        Bundle bundle2 = new queryDB().queryDB(this, "教师信息表");
+        int rows2 = bundle2.getInt("rows");
+        int i;
+        String tmp;
+        String zhuanye = new String();
+        for (i = 0; i < rows2; i++) {
+            tmp = "cell" + i;
+            if(bundle2.getString(tmp + 2).equals(gonghao)){
+                zhuanye=bundle2.getString(tmp + 3);
+                break;
+            }
+        }
+
+        Log.i("info","!!!!!!!!!!!"+zhuanye);
+        Bundle bundle = new queryDB().queryDB(this, "发布表");
+        int rows = bundle.getInt("rows");
         ListCurriculums cell;
-        for(int i = 0;i < 3; i++){
-            cell = new ListCurriculums("计算机","201502",d,"2015.03.01");
-            listCurriculumses.add(cell);
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            if(bundle.getString(tmp + 1).equals(zhuanye)) {
+                cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
+                        "截止日期", bundle.getString(tmp + 3));
+                listCurriculumses.add(cell);
+            }
         }
-        for(int i = 0; i < 3; i++){
-            cell = new ListCurriculums("数学","201501",d,"2014.03.01");
-            listCurriculumses.add(cell);
-        }
+
     }
 //=========================================================
 }

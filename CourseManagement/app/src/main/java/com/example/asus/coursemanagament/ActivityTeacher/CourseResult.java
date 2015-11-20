@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TeachingOfficeSummaryTable;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 
 import java.util.ArrayList;
@@ -60,8 +61,7 @@ public class CourseResult extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(CourseResult.this,CourseDeclare.class);
-            startActivity(intent);
+            finish();
 
         }
     }
@@ -82,14 +82,18 @@ public class CourseResult extends AppCompatActivity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
+        Intent intent = getIntent();
+        //获取数据
+        String zhuanye = intent.getStringExtra("zhuanye");
+        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListTotalCourse cell;
-
-        for(int i = 0;i < 3; i++){
-            cell = new ListTotalCourse("图形设计");
-            listInfos.add(cell);
-        }
-        for(int i = 0; i < 3; i++){
-            cell = new ListTotalCourse("计算机导论");
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListTotalCourse(bundle.getString(tmp + 4));
             listInfos.add(cell);
         }
     }

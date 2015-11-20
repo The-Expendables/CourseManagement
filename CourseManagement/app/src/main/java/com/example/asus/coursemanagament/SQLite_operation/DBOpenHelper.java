@@ -60,6 +60,13 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         super(context, DB_NAME, null, VERSION);
     }
 
+    private Context mContext;
+    //第一个参数为该类本身；第二个参数为数据库的名字；第3个参数是用来设置游标对象的，这里一般设置为null；参数四是数据库的版本号。
+    public DBOpenHelper(Context context, String name,
+                        SQLiteDatabase.CursorFactory factory, int version) {
+        super(context,name,factory,version);
+        mContext = context;
+    }
     //数据库第一次被创建时调用
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -67,9 +74,9 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE " + TEACHINGOFFICE +" (序号 INTEGER PRIMARY KEY autoincrement, 工号 text NOT NULL, 密码 TEXT NOT NULL, 联系电话 TEXT NOT NULL, 姓名 text NOT NULL)");
         db.execSQL("CREATE TABLE 系负责人信息表 (序号 INTEGER PRIMARY KEY,工号 text NOT NULL, 密码 TEXT NOT NULL,所属系 TEXT NOT NULL, 联系电话 TEXT NOT NULL, 姓名 text NOT NULL)");
-        db.execSQL("CREATE TABLE 计算机课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
+        db.execSQL("CREATE TABLE 计算机专业课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
         db.execSQL("CREATE TABLE 发布表 (序号 integer PRIMARY KEY,表名 integer not null, 学期 TEXT NOT NULL, 教师报课截止时间 TEXT NOT NULL, 系负责人审核截止时间 TEXT NOT NULL)");
-        db.execSQL("CREATE TABLE 数学课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
+        db.execSQL("CREATE TABLE 数学专业课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
         db.execSQL("CREATE TABLE 教师报课信息表 (序号 integer PRIMARY KEY,工号 TEXT, 课程名 TEXT, 年级 TEXT, 起讫周序 TEXT, 任课教师 TEXT NOT NULL, 备注 TEXT)");
 
     }

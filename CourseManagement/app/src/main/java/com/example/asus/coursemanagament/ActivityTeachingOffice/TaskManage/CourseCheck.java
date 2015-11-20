@@ -10,7 +10,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
 import com.example.asus.coursemanagament.R;
 
@@ -22,6 +24,7 @@ public class CourseCheck extends Activity {
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class CourseCheck extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(CourseCheck.this,TeachingOfficeSummaryTable.class);
+            TextView info = (TextView)view.findViewById(R.id.ItemName);
+            String infoo = info.getText().toString();
+            intent.putExtra("zhuanye",infoo);
             startActivity(intent);
         }
     }
@@ -74,17 +80,20 @@ public class CourseCheck extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "截止日期:";
+        Bundle bundle = new queryDB().queryDB(this, "发布表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListCurriculums cell;
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
+                    "截止日期", bundle.getString(tmp + 3));
+            listCurriculumses.add(cell);
+        }
 
-        for(int i = 0; i < 3; i++){
-            cell = new ListCurriculums("数学","201501",d,"2014.03.01");
-            listCurriculumses.add(cell);
-        }
-        for(int i = 0;i < 3; i++){
-            cell = new ListCurriculums("计算机","201502",d,"2015.03.01");
-            listCurriculumses.add(cell);
-        }
+
     }
     //=========================================================
 }

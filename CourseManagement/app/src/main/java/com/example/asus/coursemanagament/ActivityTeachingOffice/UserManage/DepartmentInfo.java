@@ -26,8 +26,7 @@ public class DepartmentInfo extends AppCompatActivity {
         ivw_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DepartmentInfo.this,DepartmentList.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

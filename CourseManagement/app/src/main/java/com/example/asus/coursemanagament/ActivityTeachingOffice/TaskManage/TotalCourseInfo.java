@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 
@@ -66,8 +67,7 @@ public class TotalCourseInfo extends Activity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(TotalCourseInfo.this,TeachingOfficeSummaryTable.class);
-            startActivity(intent);
+          finish();
 
         }
     }
@@ -107,16 +107,21 @@ public class TotalCourseInfo extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
+        Intent intent = getIntent();
+        //获取数据
+        String zhuanye = intent.getStringExtra("zhuanye");
+        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListTotalCourse cell;
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListTotalCourse(bundle.getString(tmp + 4));
+            listInfos.add(cell);
+        }
 
-        for(int i = 0;i < 3; i++){
-            cell = new ListTotalCourse("图形设计");
-            listInfos.add(cell);
-        }
-        for(int i = 0; i < 3; i++){
-            cell = new ListTotalCourse("计算机导论");
-            listInfos.add(cell);
-        }
     }
     //=========================================================
 }

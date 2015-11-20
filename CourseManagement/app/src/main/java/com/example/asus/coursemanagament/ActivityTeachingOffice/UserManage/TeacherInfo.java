@@ -26,8 +26,7 @@ public class TeacherInfo extends AppCompatActivity {
         ivw_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TeacherInfo.this, TeacherList.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

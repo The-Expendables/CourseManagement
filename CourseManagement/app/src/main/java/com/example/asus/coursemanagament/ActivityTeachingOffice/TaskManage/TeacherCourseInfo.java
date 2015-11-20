@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.TeacherCourseListAdapter;
 
 import java.util.ArrayList;
@@ -57,8 +58,7 @@ public class TeacherCourseInfo extends Activity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(TeacherCourseInfo.this,TeachingOfficeSummaryTable.class);
-            startActivity(intent);
+            finish();
 
         }
     }
@@ -79,15 +79,23 @@ public class TeacherCourseInfo extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
+        Intent intent = getIntent();
+        //获取数据
+        String gonghao = intent.getStringExtra("gonghao");
+        //汇总表和教师信息
+        //教师的选课信息
+        Bundle bundle = new queryDB().queryDB(this, "教师报课信息表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListTeacherCourse cell;
-
-        for(int i = 0;i < 3; i++){
-            cell = new ListTeacherCourse("图形设计","未选");
-            listInfos.add(cell);
-        }
-        for(int i = 0; i < 3; i++){
-            cell = new ListTeacherCourse("计算机导论","已选");
-            listInfos.add(cell);
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            if(bundle.getString(tmp + 1).equals(gonghao)) {
+                cell = new ListTeacherCourse(bundle.getString(tmp + 2), bundle.getString(tmp + 5));
+                listInfos.add(cell);
+            }
         }
     }
     //=========================================================

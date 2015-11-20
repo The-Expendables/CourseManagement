@@ -167,6 +167,7 @@ public class Login extends Activity {
                 else if(password.equals(teacher.getPassword())){
                     //跳转到教师界面
                     Intent intent_to_teacher = new Intent(Login.this, CourseDeclare.class);
+                    intent_to_teacher.putExtra("gonghao",username);
                     startActivity(intent_to_teacher);
                 }
                 else{

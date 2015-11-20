@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
 
 import java.util.ArrayList;
@@ -38,8 +39,7 @@ public class TeacherList extends AppCompatActivity {
         ivw_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(TeacherList.this,UserManage.class);
-                    startActivity(intent);
+               finish();
             }
         });
         //============================================
@@ -90,13 +90,13 @@ public class TeacherList extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(TeacherList.this,TeacherInfo.class);
-                startActivity(intent);
+            Intent intent = new Intent(TeacherList.this,TeacherInfo.class);
+            startActivity(intent);
         }
     }
     //========================================================
 
-//控件绑定，事件监听===========================================
+    //控件绑定，事件监听===========================================
     private void initView(){
         search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
@@ -111,14 +111,17 @@ public class TeacherList extends AppCompatActivity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "工号:";
-       ListProfessionals cell;
-        for(int i = 0;i < 3; i++){
-            cell = new ListProfessionals("张三",d,"1234");
-            listInfos.add(cell);
-        }
-        for(int i = 0; i < 3; i++){
-            cell = new ListProfessionals("李四",d,"0987");
+
+        Bundle bundle = new queryDB().queryDB(this, "教师信息表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
+        ListProfessionals cell;
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListProfessionals(bundle.getString(tmp + 4),
+                    "工号", bundle.getString(tmp + 1));
             listInfos.add(cell);
         }
     }

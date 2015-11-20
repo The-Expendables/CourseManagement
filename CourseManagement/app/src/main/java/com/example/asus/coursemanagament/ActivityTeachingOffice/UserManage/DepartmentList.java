@@ -2,6 +2,7 @@ package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
 
 import java.util.ArrayList;
@@ -37,8 +39,7 @@ public class DepartmentList extends Activity {
         ivw_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DepartmentList.this,UserManage.class);
-                startActivity(intent);
+                finish();
             }
         });
         //============================================
@@ -83,8 +84,8 @@ public class DepartmentList extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DepartmentList.this,DepartmentInfo.class);
-                startActivity(intent);
+            Intent intent = new Intent(DepartmentList.this,DepartmentInfo.class);
+            startActivity(intent);
         }
     }
     //========================================================
@@ -94,8 +95,6 @@ public class DepartmentList extends Activity {
         search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
 
-
-
         adapter = new ProfessionalsListAdapter(DepartmentList.this, listInfos);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
@@ -104,16 +103,19 @@ public class DepartmentList extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "工号:";
+        Bundle bundle = new queryDB().queryDB(this, "系负责人信息表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListProfessionals cell;
-        for(int i = 0;i < 3; i++){
-            cell = new ListProfessionals("王八",d,"1234");
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListProfessionals(bundle.getString(tmp + 5),
+                    "工号", bundle.getString(tmp + 1));
             listInfos.add(cell);
         }
-        for(int i = 0; i < 3; i++){
-            cell = new ListProfessionals("林九",d,"0987");
-            listInfos.add(cell);
-        }
+
     }
     //=========================================================
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
 import com.example.asus.coursemanagament.R;
 
@@ -65,11 +67,18 @@ public class TeachingOfficeSummaryTable extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //总汇总表
             if(position == 0) {
+                Intent intent2 = getIntent();
+                //获取数据
+                String zhuanye = intent2.getStringExtra("zhuanye");
                 Intent intent = new Intent(TeachingOfficeSummaryTable.this, TotalCourseInfo.class);
+                intent.putExtra("zhuanye",zhuanye);
                 startActivity(intent);
             }
             else{
                 Intent intent = new Intent(TeachingOfficeSummaryTable.this,TeacherCourseInfo.class);
+                TextView info = (TextView)view.findViewById(R.id.jobNumber);
+                String infoo = info.getText().toString();
+                intent.putExtra("gonghao",infoo);
                 startActivity(intent);
             }
         }
@@ -80,8 +89,7 @@ public class TeachingOfficeSummaryTable extends Activity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(TeachingOfficeSummaryTable.this,TaskManage.class);
-            startActivity(intent);
+            finish();
 
         }
     }
@@ -105,18 +113,28 @@ public class TeachingOfficeSummaryTable extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "工号:";
+        Intent intent = getIntent();
+        //获取数据
+        String zhuanye = intent.getStringExtra("zhuanye");
+        //汇总表和教师信息
+        Bundle bundle = new queryDB().queryDB(this, "教师信息表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListProfessionals cell;
         cell = new ListProfessionals("汇","总","表");
         listInfos.add(cell);
-        for(int i = 0;i < 3; i++){
-            cell = new ListProfessionals("张三",d,"1234");
-            listInfos.add(cell);
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            if(bundle.getString(tmp + 3).equals(zhuanye) ) {
+                cell = new ListProfessionals(bundle.getString(tmp + 4),
+                        "工号", bundle.getString(tmp + 1));
+                listInfos.add(cell);
+            }
         }
-        for(int i = 0; i < 3; i++){
-            cell = new ListProfessionals("李四",d,"0987");
-            listInfos.add(cell);
-        }
+
+
     }
     //=========================================================
 }

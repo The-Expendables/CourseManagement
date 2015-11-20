@@ -13,8 +13,11 @@ import android.widget.ListView;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.CourseRelease;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTeacherCourse;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.TeacherCourseListAdapter;
+import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +28,10 @@ import java.util.List;
 public class CourseChoose  extends Activity {
 
     private EditText search;
-    private List<ListTeacherCourse> listInfos = new ArrayList<ListTeacherCourse>(); //存放Item
+    private List<ListTotalCourse> listInfos = new ArrayList<ListTotalCourse>(); //存放Item
     private ListView listView;
     private ImageView iv_left;
-    TeacherCourseListAdapter adapter;
+    TotalCoureseListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,7 @@ public class CourseChoose  extends Activity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(CourseChoose.this,CourseDeclare.class);
-            startActivity(intent);
-
+           finish();
         }
     }
     //============================================================
@@ -78,21 +79,25 @@ public class CourseChoose  extends Activity {
 
 
 
-        adapter = new TeacherCourseListAdapter(CourseChoose.this, listInfos);
+        adapter = new TotalCoureseListAdapter(CourseChoose.this, listInfos);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
     }
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        ListTeacherCourse cell;
-
-        for(int i = 0;i < 3; i++){
-            cell = new ListTeacherCourse("图形设计","未选");
-            listInfos.add(cell);
-        }
-        for(int i = 0; i < 3; i++){
-            cell = new ListTeacherCourse("计算机导论","已选");
+        Intent intent = getIntent();
+        //获取数据
+        String zhuanye = intent.getStringExtra("zhuanye");
+        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
+        ListTotalCourse cell;
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListTotalCourse(bundle.getString(tmp + 4));
             listInfos.add(cell);
         }
     }

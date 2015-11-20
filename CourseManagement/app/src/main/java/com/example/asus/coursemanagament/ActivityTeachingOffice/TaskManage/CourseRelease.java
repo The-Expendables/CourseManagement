@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
 import com.example.asus.coursemanagament.R;
 
@@ -49,21 +50,21 @@ public class CourseRelease extends Activity {
 //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher{
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            adapter.getFilter().filter(search.getText().toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        adapter.getFilter().filter(search.getText().toString());
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-}
     //===========================================================
 //控件绑定，事件监听===========================================
     private void initView(){
@@ -80,16 +81,19 @@ public class CourseRelease extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        String d = "截止日期:";
+        Bundle bundle = new queryDB().queryDB(this, "发布表");
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int i;
+        String tmp;
         ListCurriculums cell;
-        for(int i = 0;i < 3; i++){
-            cell = new ListCurriculums("计算机","201502",d,"2015.03.01");
+        for (i = 0; i < rows; i++) {
+            tmp = "cell" + i;
+            cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
+                    "截止日期", bundle.getString(tmp + 3));
             listCurriculumses.add(cell);
         }
-        for(int i = 0; i < 3; i++){
-            cell = new ListCurriculums("数学","201501",d,"2014.03.01");
-            listCurriculumses.add(cell);
-        }
+
     }
     //=========================================================
 }
