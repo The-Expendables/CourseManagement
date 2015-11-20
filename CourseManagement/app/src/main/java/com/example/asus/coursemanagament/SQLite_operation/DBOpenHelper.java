@@ -11,38 +11,49 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     private static final int VERSION = 1;//版本
     private static final String DB_NAME = "CourseManagement.db";//数据库名
     //创建教学办数据库表
-    public static final String TEACHINGOFFICE = "TeachingOffice";//表名
-    public static final String ID = "_id";//表中的列名
-    public static final String PASSWORD = "password";//表中的列名
-    public static final String PHONE = "phone";//表中的列名
-    public static final String NAME = "name";//表中的列名
+    public static final String TEACHINGOFFICE = "教学办信息表";//表名
+    public static final String ID = "工号";//表中的列名
+    public static final String PASSWORD = "密码";//表中的列名
+    public static final String PHONE = "联系电话";//表中的列名
+    public static final String NAME = "姓名";//表中的列名
+
 
     //创建教师数据库表
-    public static final String TEACHER = "Teacher";//表名
-    public static final String ID1 = "_id";//表中的列名
-    public static final String PASSWORD1 = "password";//表中的列名
-    public static final String DEPARTMENT = "department";//表中的列名
-    public static final String NAME1 = "name";//表中的列名
-    public static final String SEX = "sex";//表中的列名
-    public static final String BIRTH = "birth";//表中的列名
-    public static final String EMAIL = "email";//表中的列名
-    public static final String PHONE1 = "phone";//表中的列名
+    public static final String TEACHER = "教师信息表";//表名
+    public static final String ID1 = "工号";//表中的列名
+    public static final String PASSWORD1 = "密码";//表中的列名
+    public static final String DEPARTMENT = "所属系";//表中的列名
+    public static final String NAME1 = "姓名";//表中的列名
+    public static final String SEX = "性别";//表中的列名
+    public static final String BIRTH = "出生日期";//表中的列名
+    public static final String EMAIL = "电子邮件";//表中的列名
+    public static final String PHONE1 = "联系电话";//表中的列名
+
+    //创建系负责人数据库表
+    public static final String DEPARTMENTER = "系负责人信息表";//表名
+    public static final String ID3 = "工号";//表中的列名
+    public static final String PASSWORD2 = "密码";//表中的列名
+    public static final String DEPARTMENT2 = "所属系";//表中的列名
+    public static final String PHON2E = "联系电话";//表中的列名
+    public static final String NAME2 = "姓名";//表中的列名
+
+
 
     //创建课表的数据库表
-    public static final String COURSE = "Course";//表名
-    public static final String ID2 = "_id";//表中的列名
-    public static final String GRADE = "grade";//表中的列名
-    public static final String MAJOR = "major";//表中的列名
-    public static final String P_CNT = "p_cnt";//表中的列名
-    public static final String C_NAME = "c_name";//表中的列名
-    public static final String TYPE = "type";//表中的列名
-    public static final String CREDIT = "credit";//表中的列名
-    public static final String TIMES = "times";//表中的列名
-    public static final String EXP_TIMES = "exp_times";//表中的列名
-    public static final String PRA_TIMES = "pra_times";//表中的列名
-    public static final String BE_WEEKS = "be_weeks";//表中的列名
-    public static final String T_NAME = "t_name";//表中的列名
-    public static final String REMARK = "remark";//表中的列名
+    public static final String COURSE = "计算机课程表";//表名
+    public static final String ID2 = "序号";//表中的列名
+    public static final String GRADE = "年级";//表中的列名
+    public static final String MAJOR = "专业";//表中的列名
+    public static final String P_CNT = "专业人数";//表中的列名
+    public static final String C_NAME = "课程名称";//表中的列名
+    public static final String TYPE = "选修类型";//表中的列名
+    public static final String CREDIT = "学分";//表中的列名
+    public static final String TIMES = "学时";//表中的列名
+    public static final String EXP_TIMES = "实验学时";//表中的列名
+    public static final String PRA_TIMES = "上机学时";//表中的列名
+    public static final String BE_WEEKS = "起讫周序";//表中的列名
+    public static final String T_NAME = "任课教师";//表中的列名
+    public static final String REMARK = "备注";//表中的列名
 
     //创建数据库语句，STUDENT_TABLE，_ID ，NAME的前后都要加空格
     public DBOpenHelper(Context context) {
@@ -52,10 +63,15 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     //数据库第一次被创建时调用
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE TeachingOffice (_id Integer PRIMARY KEY AUTOINCREMENT, password TEXT NOT NULL, phone TEXT NOT NULL, name text NOT NULL)");
-        db.execSQL("CREATE TABLE Teacher (_id INTEGER PRIMARY KEY, password TEXT NOT NULL, department TEXT NOT NULL, name TEXT NOT NULL, sex TEXT, birth TEXT, email TEXT, phone TEXT)");
-        db.execSQL("CREATE TABLE course (_id INTEGER PRIMARY KEY, grade TEXT NOT NULL, major TEXT NOT NULL, p_cnt TEXT NOT NULL, c_name TEXT NOT NULL, type TEXT NOT NULL, credit TEXT NOT NULL, times TEXT, exp_times TEXT, pra_times TEXT, be_weeks TEXT, t_name TEXT, remark TEXT)");
-        db.execSQL("CREATE TABLE course_mes (table_name INTEGER PRIMARY KEY, term TEXT NOT NULL, teacher_time TEXT NOT NULL, department_time TEXT NOT NULL)");
+        db.execSQL("CREATE TABLE " + TEACHER +" (序号 INTEGER PRIMARY KEY autoincrement ,工号 text NOT NULL, 密码 TEXT NOT NULL, 所属系 TEXT NOT NULL, 姓名 TEXT NOT NULL, 性别 TEXT, 出生日期 TEXT, 电子邮件 TEXT, 联系电话 TEXT)");
+
+        db.execSQL("CREATE TABLE " + TEACHINGOFFICE +" (序号 INTEGER PRIMARY KEY autoincrement, 工号 text NOT NULL, 密码 TEXT NOT NULL, 联系电话 TEXT NOT NULL, 姓名 text NOT NULL)");
+        db.execSQL("CREATE TABLE 系负责人信息表 (序号 INTEGER PRIMARY KEY,工号 text NOT NULL, 密码 TEXT NOT NULL,所属系 TEXT NOT NULL, 联系电话 TEXT NOT NULL, 姓名 text NOT NULL)");
+        db.execSQL("CREATE TABLE 计算机课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
+        db.execSQL("CREATE TABLE 发布表 (序号 integer PRIMARY KEY,表名 integer not null, 学期 TEXT NOT NULL, 教师报课截止时间 TEXT NOT NULL, 系负责人审核截止时间 TEXT NOT NULL)");
+        db.execSQL("CREATE TABLE 数学课程表 (序号 integer PRIMARY KEY, 年级 TEXT NOT NULL, 专业 TEXT NOT NULL, 专业人数 TEXT NOT NULL, 课程名称 TEXT NOT NULL, 选修类型 TEXT NOT NULL, 学分 TEXT NOT NULL, 学时 TEXT, 实验学时 TEXT, 上机学时 TEXT, 起讫周序 TEXT, 任课教师 TEXT, 备注 TEXT)");
+        db.execSQL("CREATE TABLE 教师报课信息表 (序号 integer PRIMARY KEY,工号 TEXT, 课程名 TEXT, 年级 TEXT, 起讫周序 TEXT, 任课教师 TEXT NOT NULL, 备注 TEXT)");
+
     }
 
     //版本升级时被调用

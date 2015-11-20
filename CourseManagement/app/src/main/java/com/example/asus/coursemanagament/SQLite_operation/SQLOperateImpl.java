@@ -47,6 +47,20 @@ public class SQLOperateImpl implements SQLOperate{
     }
 
     /**
+     * 增，用insert向数据库  系负责人   表中插入数据
+     */
+    public void add_department(Tb_department dp) {
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.ID3, dp.getId());
+        values.put(DBOpenHelper.PASSWORD2, dp.getPassword());
+        values.put(DBOpenHelper.DEPARTMENT2,dp.getDepartment());
+        values.put(DBOpenHelper.PHON2E,dp.getPhone());
+        values.put(DBOpenHelper.NAME2, dp.getName());
+        db.insert(DBOpenHelper.DEPARTMENTER, null, values);
+    }
+
+    /**
      * 增，用insert向数据库  课程   表中插入数据
      */
     public void add_course(Tb_course cs) {
@@ -82,6 +96,14 @@ public class SQLOperateImpl implements SQLOperate{
     public void delete_teacher(int id) {
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         db.delete(DBOpenHelper.TEACHER, DBOpenHelper.ID1 + "=?", new String[]{String.valueOf(id)});
+    }
+
+    /**
+     * 删，通过id删除 系负责人  表数据
+     */
+    public void delete_department(int id) {
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        db.delete(DBOpenHelper.DEPARTMENTER, DBOpenHelper.ID3 + "=?", new String[]{String.valueOf(id)});
     }
 
     /**
@@ -122,6 +144,22 @@ public class SQLOperateImpl implements SQLOperate{
         db.update(DBOpenHelper.TEACHER, values, DBOpenHelper.ID1 + "=?", new String[]{String.valueOf(th.getId())});
     }
 
+
+    /**
+     * 改，修改 系负责人  表中指定id的数据
+     */
+    public void updata_department(Tb_department th) {
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.ID3, th.getId());
+        values.put(DBOpenHelper.PASSWORD2, th.getPassword());
+        values.put(DBOpenHelper.DEPARTMENT2,th.getDepartment());
+        values.put(DBOpenHelper.PHON2E,th.getPhone());
+        values.put(DBOpenHelper.NAME2, th.getName());
+        db.update(DBOpenHelper.DEPARTMENTER, values, DBOpenHelper.ID3 + "=?", new String[]{String.valueOf(th.getId())});
+    }
+
+
     /**
      * 改，修改 课程  表中指定id的数据
      */
@@ -147,7 +185,7 @@ public class SQLOperateImpl implements SQLOperate{
     /**
      * 查询   教学办  表中指定id的数据
      */
-    public Tb_teachingoffice findById_teachingoffice(int id) {
+    public Tb_teachingoffice findById_teachingoffice(String id) {
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         Cursor cursor = db.query(DBOpenHelper.TEACHINGOFFICE, null, DBOpenHelper.ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
         Tb_teachingoffice person = null;
@@ -168,7 +206,7 @@ public class SQLOperateImpl implements SQLOperate{
     /**
      * 查询   教师  表中指定id的数据
      */
-    public Tb_teacher findById_teacher(int id) {
+    public Tb_teacher findById_teacher(String id) {
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         Cursor cursor = db.query(DBOpenHelper.TEACHER, null, DBOpenHelper.ID1 + "=?", new String[]{String.valueOf(id)}, null, null, null);
         Tb_teacher person = null;
@@ -196,9 +234,32 @@ public class SQLOperateImpl implements SQLOperate{
     }
 
     /**
+     * 查询   教师  表中指定id的数据
+     */
+    public Tb_department findById_department(String id) {
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = db.query(DBOpenHelper.DEPARTMENTER, null, DBOpenHelper.ID3 + "=?", new String[]{String.valueOf(id)}, null, null, null);
+        Tb_department person = null;
+        if(cursor != null && cursor.moveToFirst()){
+            person = new Tb_department();
+            String id1 = cursor.getString(cursor.getColumnIndex(DBOpenHelper.ID3));
+            String password = cursor.getString(cursor.getColumnIndex(DBOpenHelper.PASSWORD2));
+            String department = cursor.getString(cursor.getColumnIndex(DBOpenHelper.DEPARTMENT2));
+            String phone = cursor.getString(cursor.getColumnIndex(DBOpenHelper.PHON2E));
+            String name = cursor.getString(cursor.getColumnIndex(DBOpenHelper.NAME2));
+            person.setId(id1);
+            person.setPassword(password);
+            person.setDepartment(department);
+            person.setName(name);
+            person.setPhone(phone);
+        }
+        return person;
+    }
+
+    /**
      * 查询   课表  表中指定id的数据
      */
-    public Tb_course findById_course(int id) {
+    public Tb_course findById_course(String id) {
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         Cursor cursor = db.query(DBOpenHelper.COURSE, null, DBOpenHelper.ID2 + "=?", new String[]{String.valueOf(id)}, null, null, null);
         Tb_course person = null;

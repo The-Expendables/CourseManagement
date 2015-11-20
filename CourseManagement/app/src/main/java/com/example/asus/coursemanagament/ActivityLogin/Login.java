@@ -22,6 +22,7 @@ import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_department;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
 
@@ -55,24 +56,27 @@ public class Login extends Activity {
         initView();
 
         //初始化表格数据==========================================================================
-        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
-        Tb_teacher th = new Tb_teacher("23456","23456","计算机系","李四","男","1970年12月","134892746@qq.com","15629124497");
-        test.add_teacher(th);
-        SQLOperateImpl test2 = new SQLOperateImpl(Login.this);    //增
-        Tb_teacher th2 = new Tb_teacher("23457","23457","计算机系","王五","男","1980年2月","348192746@qq.com","18547156624");
-        test2.add_teacher(th2);
-        SQLOperateImpl test3 = new SQLOperateImpl(Login.this);    //增
-        Tb_teacher th3 = new Tb_teacher("23458","23458","计算机系","赵七","男","1974年7月","489322746@qq.com","15624784416");
-        test3.add_teacher(th3);
-        SQLOperateImpl test4 = new SQLOperateImpl(Login.this);    //增
-        Tb_teacher th4 = new Tb_teacher("23459","23459","计算机系","钱八","男","1985年11月","925471746@qq.com","18865247894");
-        test4.add_teacher(th4);
-        SQLOperateImpl test5 = new SQLOperateImpl(Login.this);    //增
-        Tb_teacher th5 = new Tb_teacher("23455","23455","计算机系","陈九","女","1974年6月","845124780@qq.com","15024152632");
-        test5.add_teacher(th5);
-        SQLOperateImpl test1 = new SQLOperateImpl(Login.this);    //增
-        Tb_teachingoffice th1 = new Tb_teachingoffice("12345","12345","18659545514","张三");
-        test1.add_teachingoffice(th1);
+//        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
+//        Tb_teacher th = new Tb_teacher("23456","23456","计算机系","李四","男","1970年12月","134892746@qq.com","15629124497");
+//        test.add_teacher(th);
+//        SQLOperateImpl test2 = new SQLOperateImpl(Login.this);    //增
+//        Tb_teacher th2 = new Tb_teacher("23457","23457","计算机系","王五","男","1980年2月","348192746@qq.com","18547156624");
+//        test2.add_teacher(th2);
+//        SQLOperateImpl test3 = new SQLOperateImpl(Login.this);    //增
+//        Tb_teacher th3 = new Tb_teacher("23458","23458","计算机系","赵七","男","1974年7月","489322746@qq.com","15624784416");
+//        test3.add_teacher(th3);
+//        SQLOperateImpl test4 = new SQLOperateImpl(Login.this);    //增
+//        Tb_teacher th4 = new Tb_teacher("23459","23459","计算机系","钱八","男","1985年11月","925471746@qq.com","18865247894");
+//        test4.add_teacher(th4);
+//        SQLOperateImpl test5 = new SQLOperateImpl(Login.this);    //增
+//        Tb_teacher th5 = new Tb_teacher("23455","23455","计算机系","陈九","女","1974年6月","845124780@qq.com","15024152632");
+//        test5.add_teacher(th5);
+//        SQLOperateImpl test0 = new SQLOperateImpl(Login.this);    //增
+//        Tb_department th0 = new Tb_department("34567","34567","计算机系","18659545514","陈楠楠");
+//        test0.add_department(th0);
+//        SQLOperateImpl test1 = new SQLOperateImpl(Login.this);    //增
+//        Tb_teachingoffice th1 = new Tb_teachingoffice("12345","12345","18659545514","张三");
+//        test1.add_teachingoffice(th1);
         //=================================================================================
 
     }
@@ -82,8 +86,10 @@ public class Login extends Activity {
         @Override
         public void onClick(View source) {
             final AlertDialog.Builder Dia=new AlertDialog.Builder(Login.this);
+            SQLOperateImpl tel = new SQLOperateImpl(Login.this);
+            Tb_teachingoffice tele = tel.findById_teachingoffice("12345");
             Dia.setTitle("忘记密码？");
-            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:");
+            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:" + tele.getPhone());
             Dia.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -140,34 +146,63 @@ public class Login extends Activity {
 //            Intent intent_to_teachingoffice = new Intent(Login.this, TaskManage.class);
 //            startActivity(intent_to_teachingoffice);
             //===========================================
-//
+
+            String username = edtt_userName .getText().toString();   //获取账号
+            String password = edtt_password.getText().toString();  //获取密码
+            SQLOperateImpl person = new SQLOperateImpl(Login.this);
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
             }
             else if (edtt_userName.length() < 5) {
                 Toast.makeText(Login.this, "账号格式有误，请重新输入", Toast.LENGTH_SHORT).show();
             }
-            else if (edtt_password.length() < 6) {
-                Toast.makeText(Login.this, "密码格式有误，请重新输入", Toast.LENGTH_SHORT).show();
+            else if (edtt_password.length() < 5) {
+                Toast.makeText(Login.this,"密码格式有误，请重新输入", Toast.LENGTH_SHORT).show();
             }
-            //将账号密码改成数据库数据
-            else if (edtt_userName != null && edtt_password != null && number == 1) {
-                //跳转到教师界面
-                Intent intent_to_teacher = new Intent(Login.this, CourseDeclare.class);
-                startActivity(intent_to_teacher);
+            else if(number == 1){
+                Tb_teacher teacher = person.findById_teacher(username);
+                if(teacher==null){
+                    Toast.makeText(Login.this,"该账号不存在，请重新输入", Toast.LENGTH_SHORT).show();
+                }
+                else if(password.equals(teacher.getPassword())){
+                    //跳转到教师界面
+                    Intent intent_to_teacher = new Intent(Login.this, CourseDeclare.class);
+                    startActivity(intent_to_teacher);
+                }
+                else{
+                    Toast.makeText(Login.this,"密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+                }
             }
-            //将账号密码改成数据库数据
-            else if (edtt_userName != null && edtt_password != null && number == 2) {
-                //跳转到系负责人界面
-                Intent intent_to_department = new Intent(Login.this, TaskList.class);
-                startActivity(intent_to_department);
+            else if(number == 2){
+                Tb_department department = person.findById_department(username);
+                if(department==null){
+                    Toast.makeText(Login.this,"该账号不存在，请重新输入", Toast.LENGTH_SHORT).show();
+                }
+                else if(password.equals(department.getPassword())) {
+                    //跳转到系负责人界面
+                    Intent intent_to_department = new Intent(Login.this, TaskList.class);
+                    startActivity(intent_to_department);
+                }
+                else{
+                    Toast.makeText(Login.this,"密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+                }
             }
-            //将账号密码改成数据库数据
-            else if (edtt_userName != null && edtt_password != null && number == 3) {
-                //跳转到教学办界面
-                Intent intent_to_teachingoffice = new Intent(Login.this, TaskManage.class);
-                startActivity(intent_to_teachingoffice);
+            else if(number == 3){
+                Tb_teachingoffice teachingoffice = person.findById_teachingoffice(username);
+                if(teachingoffice==null){
+                    Toast.makeText(Login.this,"该账号不存在，请重新输入", Toast.LENGTH_SHORT).show();
+                }
+                else if(password.equals(teachingoffice.getPassword())) {
+                    //跳转到教学办界面
+                    Intent intent_to_teachingoffice = new Intent(Login.this, TaskManage.class);
+                    startActivity(intent_to_teachingoffice);
+                }
+                else{
+                    Toast.makeText(Login.this,"密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+                }
             }
+
+
 //            else{
 //                //连接服务器不能删==================================================================
 //                Map<String,String> params=new HashMap<String,String>();

@@ -24,9 +24,9 @@ public class SQlite_test extends AppCompatActivity {
 //        Tb_teachingoffice th2 = new Tb_teachingoffice("12345","12345","18659545514","李四");
 //        test.updata_teachingoffice(th2);
 //
-//        SQLOperateImpl test3 = new SQLOperateImpl(SQLite.this);     //查
-//        Tb_teachingoffice th3 = test3.findById_teachingoffice(12345);    //通过id（工号）找到整条记录
-//        Log.i("info",th3.getName());     //可以通过getName()方法获得查找到的记录的名字，并在日志上打印出来
+//        SQLOperateImpl test3 = new SQLOperateImpl(SQlite_test.this);     //查
+//        Tb_teachingoffice th3 = test3.findById_teachingoffice("12345");    //通过id（工号）找到整条记录
+//        Log.i("info", th3.getName());     //可以通过getName()方法获得查找到的记录的名字，并在日志上打印出来
 //                                           //要获取其他相应信息可以调用相应的方法
     }
 }

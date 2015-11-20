@@ -47,6 +47,7 @@
         </activity>
         <!--  -->
         <activity android:name=".ActivityTeachingOffice.TaskManage.TaskManage" >
+
         </activity>
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseRelease" >
         </activity>
@@ -80,12 +81,14 @@
         <activity android:name=".ActivityTeachingOffice.UserManage.TeacherList" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.UserManage" >
+
         </activity>
         <activity android:name=".ActivityTeachingOffice.PasswordChange" >
         </activity>
         <activity android:name=".ActivityTeacher.CourseResult" >
         </activity>
         <activity android:name=".SQLite_operation.SQlite_test" >
+
         </activity>
     </application>
 
