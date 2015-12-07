@@ -66,7 +66,7 @@ public class SQLOperateImpl implements SQLOperate{
     public void add_course(Tb_course cs) {
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBOpenHelper.ID2, cs.getId());
+//        values.put(DBOpenHelper.ID2, cs.getId());
         values.put(DBOpenHelper.GRADE, cs.getGrade());
         values.put(DBOpenHelper.MAJOR,cs.getMajor());
         values.put(DBOpenHelper.P_CNT,cs.getP_cnt());
@@ -261,7 +261,7 @@ public class SQLOperateImpl implements SQLOperate{
      */
     public Tb_course findById_course(String id) {
         SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = db.query(DBOpenHelper.COURSE, null, DBOpenHelper.ID2 + "=?", new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = db.query(DBOpenHelper.COURSE, null, DBOpenHelper.ID2 + "=?", new String[]{id}, null, null, null);
         Tb_course person = null;
         if(cursor != null && cursor.moveToFirst()){
             person = new Tb_course();

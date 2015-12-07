@@ -1,10 +1,14 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,8 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
+import com.example.asus.coursemanagament.SQLite_operation.SQLOperate;
+import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
@@ -33,6 +42,7 @@ public class TotalCourseInfo extends Activity {
     private ListView listView;
     private ImageView iv_left;
     private Button btn_export;
+//    private
     TotalCoureseListAdapter adapter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +102,115 @@ public class TotalCourseInfo extends Activity {
                 picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
                     @Override
                     public void onFilePicked(String currentPath) {
-                        ExcelUtil.writeExcel(currentPath);
+
+                        List list=new ArrayList();
+
+
+                        String tablename=new String();
+                        //这里需要intent传表名
+                        tablename="计算机专业课程表";
+                        //表名
+                        String[] str2=new String[12];
+                        for(int i=0;i<12;i++) str2[i]="";
+                        str2[0]=tablename;
+                        Log.i("info", "fuckyou!before");
+                        list.add(str2);
+
+                        //tset=====================================================
+//                        String result="";
+//                        for (int i = 0; i < list.size(); i++) {
+//                            str = (String[]) list.get(i);
+//                            for (int j = 0; j < str.length; j++) {
+//                                result += str[j];
+//                                result += ";";
+//                            }
+//                            result += "\n";
+//                        }
+//                        Toast.makeText(TotalCourseInfo.this, "fuckyou!"+result, Toast.LENGTH_SHORT);
+                        //==================================================
+                        //列名
+                        String str[]=new String[12];
+                        str[0]="年级";
+                        str[1]="专业";
+                        str[2]="专业人数";
+                        str[3]="课程名称";
+                        str[4]="选修类型";
+                        str[5]="学分";
+                        str[6]="学时";
+                        str[7]="实验";
+                        str[8]="上机";
+                        str[9]="起讫周序";
+                        str[10]="任课教师";
+                        str[11]="备注";
+                        list.add(str);
+                        //列名
+
+                        String[] str3=new String[12];
+                        for(int i=0;i<12;i++) str3[i]="";
+                        str3[7]=str3[8]="学时";
+                        list.add(str3);
+
+
+                        //每一行数据
+                        DBOpenHelper dbhelper=new DBOpenHelper(TotalCourseInfo.this);
+                        SQLiteDatabase db=dbhelper.getReadableDatabase();
+                        ContentValues values=new ContentValues();
+                        Cursor cursor=db.query(tablename,null,null,null,null,null,null);
+                        if(cursor.moveToFirst()){
+                            do{
+                                String[] str4=new String[12];
+                                str4[0]=cursor.getString(cursor.getColumnIndex("年级"));
+                                str4[1]=cursor.getString(cursor.getColumnIndex("专业"));
+                                str4[2]=cursor.getString(cursor.getColumnIndex("专业人数"));
+                                str4[3]=cursor.getString(cursor.getColumnIndex("课程名称"));
+                                str4[4]=cursor.getString(cursor.getColumnIndex("选修类型"));
+                                str4[5]=cursor.getString(cursor.getColumnIndex("学分"));
+                                str4[6]=cursor.getString(cursor.getColumnIndex("学时"));
+                                str4[7]=cursor.getString(cursor.getColumnIndex("实验学时"));
+                                str4[8]=cursor.getString(cursor.getColumnIndex("上机学时"));
+                                str4[9]=cursor.getString(cursor.getColumnIndex("起讫周序"));
+                                str4[10]=cursor.getString(cursor.getColumnIndex("任课教师"));
+                                str4[11]=cursor.getString(cursor.getColumnIndex("备注"));
+                                Log.i("info",str[0]);
+                                list.add(str4);
+                            }while(cursor.moveToNext());
+                        }
+//                        SQLOperateImpl test2 = new SQLOperateImpl(TotalCourseInfo.this);
+//                        Tb_course tb_course=new Tb_course();
+//                        String[] str4=new String[12];
+//                        for(int i=1;i<=64;i++){
+//                            tb_course=test2.findById_course(""+i);
+//                            if(tb_course==null) Log.i("info","fuckkkk!");
+//                            str4[0]=tb_course.getGrade();
+//                            str4[1]=tb_course.getMajor();
+//                            str4[2]=tb_course.getP_cnt();
+//                            str4[3]=tb_course.getC_name();
+//                            str4[4]=tb_course.getType();
+//                            str4[5]=tb_course.getCredit();
+//                            str4[6]=tb_course.getTimes();
+//                            str4[7]=tb_course.getExp_times();
+//                            str4[8]=tb_course.getPra_times();
+//                            str4[9]=tb_course.getBe_weeks();
+//                            str4[10]=tb_course.getT_name();
+//                            str4[11]=tb_course.getRemark();
+//                            list.add(str4);
+//                        }
+
+                        Log.i("info", "fuckyou!after");
+
+//                        String result="";
+//                        for (int i = 0; i < list.size(); i++) {
+//                            str = (String[]) list.get(i);
+//                            for (int j = 0; j < str.length; j++) {
+//                                result += str[j];
+//                                result += ";";
+//                            }
+//                            result += "\n";
+//                        }
+//                        Toast.makeText(TotalCourseInfo.this,"fuckyou!",Toast.LENGTH_SHORT);
+//                        List list=null;
+
+                        ExcelUtil.writeExcel(currentPath,list);
                     }
                 });
                 picker.showAtBottom();

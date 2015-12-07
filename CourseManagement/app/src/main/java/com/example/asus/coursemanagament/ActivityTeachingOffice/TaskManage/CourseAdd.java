@@ -1,21 +1,44 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
+import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
+import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
+
+import java.io.IOException;
+import java.util.List;
+
+import cn.qqtheme.framework.helper.Common;
+import cn.qqtheme.framework.picker.FilePicker;
+import jxl.read.biff.BiffException;
 
 public class CourseAdd extends AppCompatActivity {
     private ImageView imgvw_back1;
     private Button btn_release;
     private EditText time_teacher;
     private EditText time_department;
+    private String cardnumber;
+    private DBOpenHelper dbOpenHelper=new DBOpenHelper(CourseAdd.this);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,21 +61,133 @@ public class CourseAdd extends AppCompatActivity {
         btn_release.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(time_teacher.length()<10){
-                    Toast.makeText(CourseAdd.this,"教师报课截止时间输入格式有误",Toast.LENGTH_SHORT).show();
+                if (time_teacher.length() < 10) {
+                    Toast.makeText(CourseAdd.this, "教师报课截止时间输入格式有误", Toast.LENGTH_SHORT).show();
                 }
-                else if(time_department.length()<10){
-                    Toast.makeText(CourseAdd.this,"系负责人审核截止时间输入格式有误",Toast.LENGTH_SHORT).show();
+                else if (time_department.length() < 10) {
+                    Toast.makeText(CourseAdd.this, "系负责人审核截止时间输入格式有误", Toast.LENGTH_SHORT).show();
                 }
-                //最终需要数据库数据来判断
-                else{
+                else {
+                    Tb_course_mes tb_course_mes=new Tb_course_mes();
+
+                    TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
+                    tb_course_mes.setTable_name(edtt_tablename.getText().toString());
+
+                    Spinner sp_term = (Spinner) findViewById(R.id.sp_term);
+                    sp_term.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                            cardnumber = CourseAdd.this.getResources().getStringArray(R.array.term)[arg2];
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
+                    tb_course_mes.setTerm(cardnumber);
+
+                    TextView edtt_time_teacher = (EditText) findViewById(R.id.edtt_time_teacher);
+                    tb_course_mes.setTeacher_time(edtt_time_teacher.getText().toString());
+
+                    TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
+                    tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
+
+                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
+
+                    SQLiteDatabase db=dbOpenHelper.getReadableDatabase();
+                    ContentValues values=new ContentValues();
+                    values.put("表名",tb_course_mes.getTable_name());
+                    values.put("学期",tb_course_mes.getTerm());
+                    values.put("教师报课截止时间",tb_course_mes.getTeacher_time());
+                    values.put("系负责人审核截止日期",tb_course_mes.getDepartment_time());
+                    db.insert("发布表",null,values);
+
+                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CourseAdd.this, TaskManage.class);
                     startActivity(intent);
                 }
             }
         });
         //==========================================================
-
-        
     }
+
+    //添加按钮监听事件================================================
+    public void onBtn_filepicker(View view) {
+        FilePicker picker = new FilePicker(this);
+        picker.setShowHideDir(false);
+        picker.setInitPath(Common.getRootPath(this) + "Download/");
+        //picker.setAllowExtensions(new String[]{".apk"});
+        picker.setMode(FilePicker.Mode.File);
+        picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+            @Override
+            public void onFilePicked(String currentPath) {
+                //读取excel表格===========================================
+                List list = null;
+                try {
+                    list = ExcelUtil.readExcel(currentPath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (BiffException e) {
+                    e.printStackTrace();
+                }
+                //======================================
+
+                //绑定课程名称到界面========================================
+                TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
+                String[] tmp = (String[]) list.get(0);
+                edtt_tablename.setText(tmp[0]);
+
+                String tablename = new String();
+                switch (tmp[0]) {
+                    case "2015学年下学期计算机科学与技术专业 开课计划书":
+                        tablename = "计算机专业课程表";
+                        break;
+                    case "2015学年下学期 数学类（实验班）专业 开课计划书":
+                        tablename = "数学类（实验班）专业课程表";
+                        break;
+                    case "2015学年下学期数学类 开课计划书":
+                        tablename="数学专业课程表";
+                        break;
+                    default:Log.i("info","tablename not found");
+                        break;
+                }
+                //===========================================
+                Log.i("info","tablenme:"+tablename);
+                //数据导入数据库===========================================
+                // list.get(i);list.size(); String[] str=(String[])list.get(i);
+                int id = 0;
+                for (int i = 3; i < list.size(); i++) {
+                    String[] str = (String[]) list.get(i);
+                    SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+                    ContentValues values = new ContentValues();
+
+                    values.put("年级", str[0]);
+                    values.put("专业", str[1]);
+                    values.put("专业人数", str[2]);
+                    values.put("课程名称", str[3]);
+                    values.put("选修类型", str[4]);
+                    values.put("学分", str[5]);
+                    values.put("学时", str[6]);
+                    values.put("实验学时", str[7]);
+                    values.put("上机学时", str[8]);
+                    values.put("起讫周序", str[9]);
+                    values.put("任课教师", str[10]);
+                    values.put("备注", str[11]);
+                    db.insert(tablename, null, values);
+//                      Tb_course tb_course=new Tb_course("1",str[0],str[1],str[2],str[3],str[4],str[5],str[6],str[7],str[8],str[9],str[10],str[11]);
+//                        Log.i("info",str[0]);
+//                        SQLOperateImpl test = new SQLOperateImpl(CourseAdd.this);
+//                        test.add_course(tb_course);
+
+                }
+                Toast.makeText(CourseAdd.this, "导入成功！", Toast.LENGTH_SHORT).show();
+                //===========================================
+            }
+        });
+        picker.showAtBottom();
+    }
+
+    //下拉栏监听事件===========================================
+    //================================================
 }
