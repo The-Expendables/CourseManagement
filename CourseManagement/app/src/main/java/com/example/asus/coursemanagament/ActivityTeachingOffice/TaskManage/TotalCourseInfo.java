@@ -29,6 +29,8 @@ import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,7 +114,7 @@ public class TotalCourseInfo extends Activity {
                     @Override
                     public void onFilePicked(String currentPath) {
 
-                        List list = new ArrayList();
+                        final List list = new ArrayList();
 
                         String tablename = new String();
                         //这里需要intent传表名
@@ -154,13 +156,31 @@ public class TotalCourseInfo extends Activity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            List<Tb_course> courseList=parse
+                                            Gson gson=new Gson();
+                                            List<Tb_course> courseList=
+                                                    gson.fromJson(response,new TypeToken<List<Tb_course>>(){}.getType());
+                                            for(Tb_course tb_course:courseList){
+                                                String str4[]=new String[12];
+                                                str4[0] = tb_course.getGrade();
+                                                str4[1] = tb_course.getMajor();
+                                                str4[2] = tb_course.getP_cnt();
+                                                str4[3] = tb_course.getC_name();
+                                                str4[4] = tb_course.getType();
+                                                str4[5] = tb_course.getCredit();
+                                                str4[6] = tb_course.getTimes();
+                                                str4[7] = tb_course.getExp_times();
+                                                str4[8] = tb_course.getPra_times();
+                                                str4[9] = tb_course.getBe_weeks();
+                                                str4[10] = tb_course.getT_name();
+                                                str4[11] = tb_course.getRemark();
+                                                list.add(str4);
+                                            }
                                         }
                                     });
                                 }
                                 @Override
                                 public void onError(Exception e) {
-
+                                    Log.i("TotalCourseInfo",e.toString());
                                 }
                             });
                         } catch (Exception e) {

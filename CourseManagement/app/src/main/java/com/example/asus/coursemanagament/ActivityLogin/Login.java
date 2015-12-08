@@ -214,8 +214,9 @@ public class Login extends Activity {
 
                         @Override
                         public void onError(Exception e) {
-                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
+                            Log.i("Login","服务器访问失败");
                         }
                     });
                 } catch (Exception e) {
