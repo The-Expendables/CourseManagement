@@ -5,6 +5,7 @@ package com.example.asus.coursemanagament.ActivityLogin;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,13 +18,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
+import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -172,6 +178,7 @@ public class Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            goTo();
             String username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
             SQLOperateImpl person = new SQLOperateImpl(Login.this);
@@ -195,14 +202,19 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
+
+                                    if(response.equals("true")){
+                                        goTo();
+                                    }else{
+                                        Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                         }
 
                         @Override
                         public void onError(Exception e) {
-//                            Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     });
@@ -215,5 +227,21 @@ public class Login extends Activity {
         }
     }
 // =====================================================================
+
+    private void goTo(){
+        Intent intent=new Intent();
+        switch(number){
+            case 1:
+                intent.setClass(Login.this, CourseDeclare.class);
+                break;
+            case 2:
+                intent.setClass(Login.this,TaskList.class);
+                break;
+            case 3:
+                intent.setClass(Login.this, TaskManage.class);
+                break;
+        }
+        Login.this.startActivity(intent);
+    }
 
 }
