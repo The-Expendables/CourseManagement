@@ -114,9 +114,9 @@ public class TotalCourseInfo extends Activity {
                     @Override
                     public void onFilePicked(String currentPath) {
 
-                        final List list = new ArrayList();
+                        final List<String[]> list = new ArrayList<String[]>();
 
-                        String tablename = new String();
+                        String tablename = "";
                         //这里需要intent传表名
                         tablename = "计算机专业课程表";
                         //表名
@@ -140,17 +140,17 @@ public class TotalCourseInfo extends Activity {
                         str[10] = "任课教师";
                         str[11] = "备注";
                         list.add(str);
-                        //列名
 
+                        //列名
                         String[] str3 = new String[12];
                         for (int i = 0; i < 12; i++) str3[i] = "";
                         str3[7] = str3[8] = "学时";
                         list.add(str3);
 
-                        //从服务器拉取数据
+                        //从服务器拉取数据=====================================================================
                         Map<String, String> params = new HashMap<String, String>();
                         try {
-                            HttpUtil.doPost(GlobalVariables.URL + "/login", params, new HttpCallbackListener() {
+                            HttpUtil.doPost(GlobalVariables.URL + "/getCoursetable", params, new HttpCallbackListener() {
                                 @Override
                                 public void onFinish(final String response) {
                                     runOnUiThread(new Runnable() {
@@ -187,8 +187,9 @@ public class TotalCourseInfo extends Activity {
                             e.printStackTrace();
                             Log.i("info", e.toString());
                         }
+                        //=================================
 
-                        //每一行数据
+                        //访问本地数据库================================================================
                         /*
                         DBOpenHelper dbhelper = new DBOpenHelper(TotalCourseInfo.this);
                         SQLiteDatabase db = dbhelper.getReadableDatabase();
@@ -216,6 +217,7 @@ public class TotalCourseInfo extends Activity {
                             } while (cursor.moveToNext());
                         }
                         */
+                        //================================================
 
                         ExcelUtil.writeExcel(currentPath, list);
                     }

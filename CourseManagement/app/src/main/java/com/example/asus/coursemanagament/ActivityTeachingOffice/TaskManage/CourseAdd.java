@@ -22,9 +22,16 @@ import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
+import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
+import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
+import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.qqtheme.framework.helper.Common;
 import cn.qqtheme.framework.picker.FilePicker;
@@ -37,6 +44,9 @@ public class CourseAdd extends AppCompatActivity {
     private EditText time_department;
     private String cardnumber;
     private DBOpenHelper dbOpenHelper=new DBOpenHelper(CourseAdd.this);
+    private String table_json;
+    private String course_mes_json;
+    private Gson gson=new Gson();
 
 
     @Override
@@ -95,6 +105,45 @@ public class CourseAdd extends AppCompatActivity {
 
                     Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
 
+                    course_mes_json=gson.toJson(tb_course_mes);
+
+                    //数据上传到服务器===============================================================
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("table_json", table_json);
+                    params.put("course_mes_json",course_mes_json);
+                    try {
+                        HttpUtil.doPost(GlobalVariables.URL + "/sendCoursetable", params, new HttpCallbackListener() {
+                            @Override
+                            public void onFinish(final String response) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CourseAdd.this,"报课成功",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                                Log.i("CourseAdd", "服务器访问失败");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CourseAdd.this,"服务器访问失败，请稍后再试",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.i("info", e.toString());
+                    }
+                    //================================
+
+                    //把数据导入本地数据库============================================================
+                    /*
                     SQLiteDatabase db=dbOpenHelper.getReadableDatabase();
                     ContentValues values=new ContentValues();
                     values.put("表名",tb_course_mes.getTable_name());
@@ -102,6 +151,8 @@ public class CourseAdd extends AppCompatActivity {
                     values.put("教师报课截止时间",tb_course_mes.getTeacher_time());
                     values.put("系负责人审核截止日期",tb_course_mes.getDepartment_time());
                     db.insert("发布表",null,values);
+                    */
+                    //=================================
 
                     Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CourseAdd.this, TaskManage.class);
@@ -123,12 +174,10 @@ public class CourseAdd extends AppCompatActivity {
             @Override
             public void onFilePicked(String currentPath) {
                 //读取excel表格===========================================
-                List list = null;
+                List list = new ArrayList<String[]>();
                 try {
                     list = ExcelUtil.readExcel(currentPath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (BiffException e) {
+                } catch (IOException | BiffException e) {
                     e.printStackTrace();
                 }
                 //======================================
@@ -138,7 +187,7 @@ public class CourseAdd extends AppCompatActivity {
                 String[] tmp = (String[]) list.get(0);
                 edtt_tablename.setText(tmp[0]);
 
-                String tablename = new String();
+                String tablename = "";
                 switch (tmp[0]) {
                     case "2015学年下学期计算机科学与技术专业 开课计划书":
                         tablename = "计算机专业课程表";
@@ -147,15 +196,29 @@ public class CourseAdd extends AppCompatActivity {
                         tablename = "数学类（实验班）专业课程表";
                         break;
                     case "2015学年下学期数学类 开课计划书":
-                        tablename="数学专业课程表";
+                        tablename = "数学专业课程表";
                         break;
-                    default:Log.i("info","tablename not found");
+                    default:
+                        Log.i("info", "tablename not found");
                         break;
                 }
                 //===========================================
-                Log.i("info","tablenme:"+tablename);
+                Log.i("info", "tablenme:" + tablename);
+
+                //把报课表打包到table_json===========================================
+                List<Tb_course> list_tb_courses=new ArrayList<Tb_course>();
+                for (int i = 3; i < list.size(); i++) {
+                    String[] str = (String[]) list.get(i);
+                    Tb_course tb_course =
+                            new Tb_course("0",str[0],str[1],str[2],str[3],str[4],str[5],str[6],str[7],str[8],str[9],str[10],str[11]);
+                    list_tb_courses.add(tb_course);
+                }
+                table_json=gson.toJson(list_tb_courses);
+                //===========================================
+
                 //数据导入数据库===========================================
                 // list.get(i);list.size(); String[] str=(String[])list.get(i);
+                /*
                 int id = 0;
                 for (int i = 3; i < list.size(); i++) {
                     String[] str = (String[]) list.get(i);
@@ -182,6 +245,7 @@ public class CourseAdd extends AppCompatActivity {
 
                 }
                 Toast.makeText(CourseAdd.this, "导入成功！", Toast.LENGTH_SHORT).show();
+                */
                 //===========================================
             }
         });
