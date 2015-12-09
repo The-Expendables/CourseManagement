@@ -1,15 +1,14 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
-import android.app.Activity;
-import android.content.ContentValues;
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
-import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
@@ -29,6 +27,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,12 @@ public class CourseAdd extends AppCompatActivity {
     private String table_json;
     private String course_mes_json;
     private Gson gson=new Gson();
-
+    private Calendar cal;
+    private int year;
+    private int month;
+    private int day;
+    private Button btn_time_teacher;
+    private Button btn_time_department;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,39 @@ public class CourseAdd extends AppCompatActivity {
         });
         //===================================================
 
+        //时间选择器=================================================
+        cal = Calendar.getInstance();
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        btn_time_teacher = (Button)findViewById(R.id.btn_time_teacher);
+        final TextView edtt_time_teacher = (TextView) findViewById(R.id.edtt_time_teacher);
+        btn_time_teacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CourseAdd.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        edtt_time_teacher.setText(year + "." + (monthOfYear + 1) + "." + dayOfMonth);
+                    }
+                }, year, month, day).show();
+            }
+        });
+        btn_time_department = (Button) findViewById(R.id.btn_time_department);
+        final TextView edtt_time_department=(TextView) findViewById(R.id.edtt_time_department);
+        btn_time_department.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CourseAdd.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        edtt_time_department.setText(year + "." + (monthOfYear + 1) + "." + dayOfMonth);
+                    }
+                }, year, month, day).show();
+            }
+        });
+        //=======================================================
+
         //设置课表发布确认监听事件=============================
         time_teacher = (EditText) findViewById(R.id.time_teacher);
         time_department = (EditText) findViewById(R.id.time_department);
@@ -71,13 +108,6 @@ public class CourseAdd extends AppCompatActivity {
         btn_release.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (time_teacher.length() < 10) {
-                    Toast.makeText(CourseAdd.this, "教师报课截止时间输入格式有误", Toast.LENGTH_SHORT).show();
-                }
-                else if (time_department.length() < 10) {
-                    Toast.makeText(CourseAdd.this, "系负责人审核截止时间输入格式有误", Toast.LENGTH_SHORT).show();
-                }
-                else {
                     Tb_course_mes tb_course_mes=new Tb_course_mes();
 
                     TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
@@ -97,10 +127,10 @@ public class CourseAdd extends AppCompatActivity {
                     });
                     tb_course_mes.setTerm(cardnumber);
 
-                    TextView edtt_time_teacher = (EditText) findViewById(R.id.edtt_time_teacher);
+//                    TextView edtt_time_teacher = (EditText) findViewById(R.id.edtt_time_teacher);
                     tb_course_mes.setTeacher_time(edtt_time_teacher.getText().toString());
 
-                    TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
+//                    TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
                     tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
 
                     Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
@@ -138,7 +168,7 @@ public class CourseAdd extends AppCompatActivity {
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.i("info", e.toString());
+                        Log.i("info", e.toString()+"跑了吗跑了吗！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
                     }
                     //================================
 
@@ -154,10 +184,8 @@ public class CourseAdd extends AppCompatActivity {
                     */
                     //=================================
 
-                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CourseAdd.this, TaskManage.class);
                     startActivity(intent);
-                }
             }
         });
         //==========================================================

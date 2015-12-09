@@ -7,8 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -24,17 +22,15 @@ import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskM
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Login extends Activity {
+public class  Login extends Activity {
 
     private Button btn_login;   //登录按钮
     private EditText edtt_userName; //用户名输入框
@@ -202,7 +198,6 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     if(response.equals("true")){
                                         goTo();
                                     }else{
