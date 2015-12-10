@@ -112,7 +112,7 @@ public class TotalCourseInfo extends Activity {
                 picker.setMode(FilePicker.Mode.File);
                 picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
                     @Override
-                    public void onFilePicked(String currentPath) {
+                    public void onFilePicked(final String currentPath) {
 
                         final List<String[]> list = new ArrayList<String[]>();
 
@@ -175,12 +175,19 @@ public class TotalCourseInfo extends Activity {
                                                 str4[11] = tb_course.getRemark();
                                                 list.add(str4);
                                             }
+                                            ExcelUtil.writeExcel(currentPath, list);
                                         }
                                     });
                                 }
                                 @Override
                                 public void onError(Exception e) {
                                     Log.i("TotalCourseInfo",e.toString());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(TotalCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             });
                         } catch (Exception e) {
@@ -218,14 +225,11 @@ public class TotalCourseInfo extends Activity {
                         }
                         */
                         //================================================
-
-                        ExcelUtil.writeExcel(currentPath, list);
                     }
                 });
                 picker.showAtBottom();
             }
         });
-
 
         adapter = new TotalCoureseListAdapter(TotalCourseInfo.this, listInfos);
         listView = (ListView) findViewById(R.id.list);

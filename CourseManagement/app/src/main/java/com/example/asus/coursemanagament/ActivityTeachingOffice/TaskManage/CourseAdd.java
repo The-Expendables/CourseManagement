@@ -103,8 +103,6 @@ public class CourseAdd extends AppCompatActivity {
                     TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
                     tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
 
-                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
-
                     course_mes_json=gson.toJson(tb_course_mes);
 
                     //数据上传到服务器===============================================================
@@ -118,7 +116,9 @@ public class CourseAdd extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(CourseAdd.this,"报课成功",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(CourseAdd.this, TaskManage.class);
+//                                        startActivity(intent);
                                     }
                                 });
                             }
@@ -153,10 +153,6 @@ public class CourseAdd extends AppCompatActivity {
                     db.insert("发布表",null,values);
                     */
                     //=================================
-
-                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CourseAdd.this, TaskManage.class);
-                    startActivity(intent);
                 }
             }
         });
@@ -186,8 +182,9 @@ public class CourseAdd extends AppCompatActivity {
                 TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
                 String[] tmp = (String[]) list.get(0);
                 edtt_tablename.setText(tmp[0]);
+                //===========================================
 
-                String tablename = "";
+                /*String tablename = "";
                 switch (tmp[0]) {
                     case "2015学年下学期计算机科学与技术专业 开课计划书":
                         tablename = "计算机专业课程表";
@@ -202,8 +199,7 @@ public class CourseAdd extends AppCompatActivity {
                         Log.i("info", "tablename not found");
                         break;
                 }
-                //===========================================
-                Log.i("info", "tablenme:" + tablename);
+                Log.i("info", "tablenme:" + tablename);*/
 
                 //把报课表打包到table_json===========================================
                 List<Tb_course> list_tb_courses=new ArrayList<Tb_course>();
