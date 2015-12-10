@@ -150,7 +150,7 @@ public class TotalCourseInfo extends Activity {
                         //从服务器拉取数据=====================================================================
                         Map<String, String> params = new HashMap<String, String>();
                         try {
-                            HttpUtil.doPost(GlobalVariables.URL + "/getCoursetable", params, new HttpCallbackListener() {
+                            HttpUtil.doPost(GlobalVariables.URL + "/getCourseTable", params, new HttpCallbackListener() {
                                 @Override
                                 public void onFinish(final String response) {
                                     runOnUiThread(new Runnable() {
