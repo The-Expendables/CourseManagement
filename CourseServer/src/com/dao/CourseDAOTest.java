@@ -52,11 +52,14 @@ public class CourseDAOTest {
 //        if(tb_course==null) System.out.println("tb_course is null");
 //        else System.out.println("tb_course is not null");
         //与查询得到的数据进行合并
+        System.out.println(tb_course.getBe_weeks()+
+        		":"+tb_course.getT_name()+":"+tb_course.getRemark());
+        
         tb_course.setThree(tb_teacher_declare.getBe_weeks(),
         		tb_teacher_declare.getT_name(), tb_teacher_declare.getRemark());
         
-        System.out.println(tb_course.getBe_weeks()+
-        		":"+tb_course.getT_name()+":"+tb_course.getRemark());
+//        System.out.println(tb_course.getBe_weeks()+
+//        		":"+tb_course.getT_name()+":"+tb_course.getRemark());
         int su=CourseDAO.update(tb_course, table_name);
         if(su!=0) System.out.println("update success!");
         //====================
