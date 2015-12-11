@@ -39,8 +39,6 @@ import jxl.read.biff.BiffException;
 public class CourseAdd extends AppCompatActivity {
     private ImageView imgvw_back1;
     private Button btn_release;
-    private EditText time_teacher;
-    private EditText time_department;
     private String cardnumber;
     private DBOpenHelper dbOpenHelper=new DBOpenHelper(CourseAdd.this);
     private String table_json;
@@ -102,8 +100,6 @@ public class CourseAdd extends AppCompatActivity {
         //=======================================================
 
         //设置课表发布确认监听事件=============================
-        time_teacher = (EditText) findViewById(R.id.time_teacher);
-        time_department = (EditText) findViewById(R.id.time_department);
         btn_release = (Button) findViewById(R.id.btn_release);
         btn_release.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +144,7 @@ public class CourseAdd extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(CourseAdd.this,"报课成功",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CourseAdd.this,"发布成功",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }

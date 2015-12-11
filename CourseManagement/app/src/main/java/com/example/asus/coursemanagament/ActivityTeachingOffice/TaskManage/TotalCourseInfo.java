@@ -1,14 +1,14 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
-import android.content.ContentValues;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,12 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
-import com.example.asus.coursemanagament.SQLite_operation.SQLOperate;
-import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
@@ -32,7 +28,6 @@ import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +35,6 @@ import java.util.Map;
 
 import cn.qqtheme.framework.helper.Common;
 import cn.qqtheme.framework.picker.FilePicker;
-import jxl.read.biff.BiffException;
 
 public class TotalCourseInfo extends Activity {
 
@@ -48,6 +42,7 @@ public class TotalCourseInfo extends Activity {
     private List<ListTotalCourse> listInfos = new ArrayList<ListTotalCourse>(); //存放Item
     private ListView listView;
     private ImageView iv_left;
+    private Bundle bundle;
     private Button btn_export;
     //    private
     TotalCoureseListAdapter adapter;
@@ -252,4 +247,44 @@ public class TotalCourseInfo extends Activity {
 
     }
     //=========================================================
+
+    //================报课结果弹出框============================================
+    private void showDialog3(int i){   //显示课程信息对话框
+        LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
+        View view  = inflater.inflate(R.layout.activity_course_info, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int j=0;
+        TextView grade = (TextView) view.findViewById(R.id.grade);
+        grade.setText(bundle.getString("cell"+i+j)); j++;
+        TextView major = (TextView) view.findViewById(R.id.major);
+        major.setText(bundle.getString("cell"+i+j)); j++;
+        TextView number = (TextView) view.findViewById(R.id.number);
+        number.setText(bundle.getString("cell"+i+j)); j++;
+        TextView type = (TextView) view.findViewById(R.id.type);
+        type.setText(bundle.getString("cell" + i + j)); j++;
+        builder.setTitle(bundle.getString("cell" +i+j)); j++;//弹出框标题为课程名称
+        TextView credit = (TextView) view.findViewById(R.id.credit);
+        credit.setText(bundle.getString("cell" + i + j)); j++;
+        TextView time = (TextView) view.findViewById(R.id.time);
+        time.setText(bundle.getString("cell" + i + j)); j++;
+        TextView exp_time = (TextView) view.findViewById(R.id.exp_time);
+        exp_time.setText(bundle.getString("cell" + i + j)); j++;
+        TextView com_time = (TextView) view.findViewById(R.id.com_time);
+        com_time.setText(bundle.getString("cell" + i + j)); j++;
+        TextView be_weeks = (TextView) view.findViewById(R.id.be_weeks);
+        be_weeks.setText(bundle.getString("cell" + i + j)); j++;
+        TextView teachers = (TextView)view.findViewById(R.id.teachers);
+        teachers.setText(bundle.getString("cell" + i + j)); j++;
+        TextView note = (TextView)view.findViewById(R.id.note);
+        note.setText(bundle.getString("cell" +i+j));
+        builder.setView(view);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();  //创建一个dialog
+        dialog.show();          //显示对话框
+    }
 }

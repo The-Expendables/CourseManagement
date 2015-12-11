@@ -16,11 +16,11 @@
             android:text="年级:"
             android:textSize="20sp"/>
         <TextView
-        android:layout_weight="1"
-            android:id="@+id/grade1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+            android:layout_weight="1"
+            android:id="@+id/grade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_weight="1"
@@ -36,7 +36,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/major1"
+            android:id="@+id/major"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -55,7 +55,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/number1"
+            android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -74,7 +74,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/type1"
+            android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -93,7 +93,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/credit1"
+            android:id="@+id/credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -112,7 +112,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/time1"
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -131,7 +131,7 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/exp_time1"
+            android:id="@+id/exp_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
@@ -150,9 +150,67 @@
             android:textSize="20sp"/>
         <TextView
             android:layout_weight="1"
-            android:id="@+id/com_time1"
+            android:id="@+id/com_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="起讫周序:"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/be_weeks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="教师:"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/teachers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="备注:"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"/>
     </LinearLayout>
 </LinearLayout>
+
