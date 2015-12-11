@@ -54,7 +54,6 @@ public class TotalCourseInfo extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
         initView();
-
     }
 
     //search过滤搜索框事件============================================

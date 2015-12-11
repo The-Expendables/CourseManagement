@@ -56,6 +56,7 @@ public class CourseChoose  extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
         initView();
+
     }
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
@@ -116,6 +117,32 @@ public class CourseChoose  extends Activity {
     }
     //=========================================================
 
+
+
+    //选过一次就不能再选的逻辑判断，添加在listviewOnItemclick里面===============================
+//    if(listview.color = "black"){
+//        showDialog2(i);
+//    }
+//    else{
+//        showDialog_end();
+//    }
+    //报课成功一次后显示对话框======================================
+    private void showDialog_end(){   //显示确认对话框
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您已经报过该课程，若要修改，请联系教务办。");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();  //创建一个dialog
+        dialog.show();          //显示对话框
+    }
+
+
+
     //================选课弹出框============================================
     private void showDialog2(int i){   //显示课程信息对话框
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
@@ -170,11 +197,15 @@ public class CourseChoose  extends Activity {
                 String t_name = name_teacher.getText().toString();
                 EditText note1 = (EditText) view1.findViewById(R.id.remark);
                 String remark = note1.getText().toString();
+
                 Tb_teacher_declare tb_teacher_declare = new Tb_teacher_declare();
+                tb_teacher_declare.setTable_name("");    //要改！！！！！！！！！！！！！！！！！
+                tb_teacher_declare.setCourse_name(title);
+                tb_teacher_declare.setGrade("");        //要改
                 tb_teacher_declare.setBe_weeks(be_weeks);
+                tb_teacher_declare.setId("");         //要改
                 tb_teacher_declare.setT_name(t_name);
                 tb_teacher_declare.setRemark(remark);
-
                 tb_teacher_declare_json=gson.toJson(tb_teacher_declare);
 
                 //=======================================================
@@ -201,6 +232,7 @@ public class CourseChoose  extends Activity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(CourseChoose.this, "报课成功", Toast.LENGTH_SHORT).show();
+                                    //=========================把listview的字体颜色改成红色的
                                 }
                             });
                         }
