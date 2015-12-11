@@ -147,12 +147,13 @@ public class CourseAdd extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if(response.equals("true"))
-                                            Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
+                                        if(response.equals("true")) {
+                                            Toast.makeText(CourseAdd.this, "添加成功,请查看发布栏.", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(CourseAdd.this, TaskManage.class);
+                                            startActivity(intent);
+                                        }
                                         else if(response.equals("false"))
                                             Toast.makeText(CourseAdd.this,"服务器内部出错，请联系运维人员.",Toast.LENGTH_SHORT).show();
-//                                        Intent intent = new Intent(CourseAdd.this, TaskManage.class);
-//                                        startActivity(intent);
                                     }
                                 });
                             }

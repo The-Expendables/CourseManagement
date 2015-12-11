@@ -47,8 +47,9 @@ public class ExcelUtil {
         for(int i=0;i<rowcount;i++){
             String[] str = new String[colcount];
             for(int j=0;j<colcount;j++){
-                cell=sheet.getCell(j,i);
+                cell=sheet.getCell(j, i);
                 str[j]=cell.getContents();
+                str[j]=str[j].replaceAll("\\s","");
             }
             list.add(str);
         }
