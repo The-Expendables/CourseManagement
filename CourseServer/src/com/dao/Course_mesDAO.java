@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tb.Tb_course_mes;
+import com.util.GV;
 import com.util.JdbcUtil;
 
 public class Course_mesDAO extends MyDAO {
 	public static int insert(Tb_course_mes tb_course_mes){
 		init();
 		int ret=0;
+		GV gv=new GV();
+		tb_course_mes.setTable_name(gv.real_table_name.get(tb_course_mes.getTable_name()));
 		try{
 			sqlCommand="insert into 发布表"+
 					" values(?,?,?,?)";

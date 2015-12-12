@@ -34,29 +34,30 @@ public class GetMajority extends HttpServlet {
     	
     	String table_name = request.getParameter("table_name");
     	String type = request.getParameter("type");
-    	
+//    	String table_name = "系负责人信息表";
+//    	String type = "4";
     	String str = null;
-    	if(type == "1")
+    	if(type.equals("1"))
     	{
     		List<Tb_course> tb_course_list = GeneralDAO.queryCourse(table_name);
     		str = gson.toJson(tb_course_list);
     	}
-    	else if(type == "2")
+    	else if(type.equals("2"))
     	{
     		List<Tb_teacher_declare> tb_teacher_declare = GeneralDAO.queryTeacher_declare(table_name);
     		str = gson.toJson(tb_teacher_declare);
     	}
-    	else if(type == "3")
+    	else if(type.equals("3"))
     	{
     		List<Tb_teacher> tb_teacher = GeneralDAO.queryTeacher(table_name);
     		str = gson.toJson(tb_teacher);
     	}
-    	else if(type == "4")
+    	else if(type.equals("4"))
     	{
     		List<Tb_department> tb_department = GeneralDAO.queryDepartment(table_name);
     		str = gson.toJson(tb_department);
     	}
-    	else if(type == "5")
+    	else if(type.equals("5"))
     	{
     		List<Tb_course_mes> tb_course_mes = GeneralDAO.queryCourse_mes(table_name);
     		str = gson.toJson(tb_course_mes);
