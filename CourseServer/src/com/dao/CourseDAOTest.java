@@ -15,6 +15,7 @@ public class CourseDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 //	@Test

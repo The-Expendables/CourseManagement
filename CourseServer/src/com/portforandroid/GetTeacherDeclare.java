@@ -22,7 +22,7 @@ import com.tb.Tb_teacher_declare;
 
 
 @WebServlet("/Send_teacher_declare")
-public class Get_teacher_declare extends HttpServlet {
+public class GetTeacherDeclare extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
