@@ -12,16 +12,31 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
+import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
+import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
+import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CourseResultInfo extends AppCompatActivity {
+    private String tableName = new String("发布表");
+    private List<Tb_course_mes> l = new ArrayList<Tb_course_mes>();
+    private Gson gson = new Gson();
+    private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
+    private Bundle bundle;
 
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
@@ -42,8 +57,9 @@ class MyOnItemClickListener implements AdapterView.OnItemClickListener{
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(CourseResultInfo.this,CourseResult.class);
         TextView info = (TextView)view.findViewById(R.id.ItemName);
+        //传入专业开课表名称
         String infoo = info.getText().toString();
-        intent.putExtra("zhuanye",infoo);
+        intent.putExtra("courseTB",infoo);
         startActivity(intent);
     }
 }
@@ -79,36 +95,118 @@ class MyTextWatcher implements TextWatcher {
     }
     //======================================================
     // 初始化listView数据===========================================
+
     private void initList(){
-        Intent intent = getIntent();
-        //获取数据
-        String gonghao = intent.getStringExtra("gonghao");
-        Log.i("info", "!!!!!!!!!!!" + gonghao);
-        Bundle bundle2 = new queryDB().queryDB(this, "教师信息表");
-        int rows2 = bundle2.getInt("rows");
-        int i;
-        String tmp;
-        String zhuanye = new String();
-        for (i = 0; i < rows2; i++) {
-            tmp = "cell" + i;
-            if(bundle2.getString(tmp + 2).equals(gonghao)){
-                zhuanye=bundle2.getString(tmp + 3);
-                break;
-            }
+        //测试用例
+        final  List<Tb_course_mes> l2 = new ArrayList<Tb_course_mes>();
+        Tb_course_mes t1 = new Tb_course_mes("软件工程专业", "209902", "2100.01.20", "2100.01.21");
+        l2.add(t1);
+        Tb_course_mes t2 = new Tb_course_mes("数学类专业", "209902", "2100.01.20", "2100.01.21");
+        l2.add(t2);
+        Log.i(gson.toJson(l2),"!!!!!!!");
+
+        //连接服务器不能删==================================================================
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("table_name", tableName);
+        params.put("type",""+5);
+        try {
+            HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+                            l = gson.fromJson(response, type);
+                            Intent intent = getIntent();
+                            //获取工号，判定教师 所属系即专业
+                            String courseTB = intent.getStringExtra("courseTB");
+                            bundle = new queryDB().queryDB(CourseResultInfo.this, tableName, l);
+                            int i;
+                            String tmp;
+                            int rows = bundle.getInt("rows");
+                            ListCurriculums cell;
+                            for (i = 0; i < rows; i++) {
+                                tmp = "cell" + i;
+                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
+                                    cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
+                                            "截止日期:", bundle.getString(tmp + 2));
+                                    listCurriculumses.add(cell);
+                                }
+                            }
+                            initView();
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.i("in onError", "!!!!!!");
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(CourseResultInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+//                            Intent intent = getIntent();
+//                            //获取工号，判定教师 所属系即专业
+//                            String courseTB = intent.getStringExtra("courseTB");
+//                            bundle = new queryDB().queryDB(CourseResultInfo.this, tableName, l);
+//                            int i;
+//                            String tmp;
+//                            int rows = bundle.getInt("rows");
+//                            ListCurriculums cell;
+//                            for (i = 0; i < rows; i++) {
+//                                tmp = "cell" + i;
+//                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
+//                                    cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
+//                                            "截止日期:", bundle.getString(tmp + 2));
+//                                    listCurriculumses.add(cell);
+//                                }
+//                            }
+//                            initView();
+
+                        }
+                    });
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        Log.i("info","!!!!!!!!!!!"+zhuanye);
-        Bundle bundle = new queryDB().queryDB(this, "发布表");
-        int rows = bundle.getInt("rows");
-        ListCurriculums cell;
-        for (i = 0; i < rows; i++) {
-            tmp = "cell" + i;
-            if(bundle.getString(tmp + 1).equals(zhuanye)) {
-                cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
-                        "截止日期", bundle.getString(tmp + 3));
-                listCurriculumses.add(cell);
-            }
-        }
+//        Intent intent = getIntent();
+//        //获取数据
+//        String gonghao = intent.getStringExtra("gonghao");
+//        Log.i("info", "!!!!!!!!!!!" + gonghao);
+//        Bundle bundle2 = new queryDB().queryDB(this, "教师信息表");
+//        int rows2 = bundle2.getInt("rows");
+//        int i;
+//        String tmp;
+//        String zhuanye = new String();
+//        for (i = 0; i < rows2; i++) {
+//            tmp = "cell" + i;
+//            if(bundle2.getString(tmp + 2).equals(gonghao)){
+//                zhuanye=bundle2.getString(tmp + 3);
+//                break;
+//            }
+//        }
+//
+//        Log.i("info","!!!!!!!!!!!"+zhuanye);
+//        Bundle bundle = new queryDB().queryDB(this, "发布表");
+//        int rows = bundle.getInt("rows");
+//        ListCurriculums cell;
+//        for (i = 0; i < rows; i++) {
+//            tmp = "cell" + i;
+//            if(bundle.getString(tmp + 1).equals(zhuanye)) {
+//                cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
+//                        "截止日期", bundle.getString(tmp + 3));
+//                listCurriculumses.add(cell);
+//            }
+//        }
 
     }
 //=========================================================
