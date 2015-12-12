@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher_declare;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
@@ -27,7 +29,9 @@ import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +41,12 @@ import java.util.Map;
  * Created by wwk on 2015/11/14.
  */
 public class CourseChoose  extends Activity {
+    String tableName = new String ();
+    String courseTB =  new String();
+    String gonghao = new String();
+    private List<Tb_course> l = new ArrayList<Tb_course>();
 
+    private Type type = new TypeToken<List<Tb_course>>() {}.getType();
     private EditText search;
     private List<ListTotalCourse> listInfos = new ArrayList<ListTotalCourse>(); //存放Item
     private ListView listView;
@@ -45,41 +54,51 @@ public class CourseChoose  extends Activity {
     private Bundle bundle;
     TotalCoureseListAdapter adapter;
     private String title;
-
+    private String Grade;
+    private String be_weeks;
+    private String t_name;
+    private String remark;
     private Gson gson=new Gson();
     private String tb_teacher_declare_json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        //获取数据，eg：网络工程专业：。。。。
+         courseTB = intent.getStringExtra("courseTB");
+        gonghao = intent.getStringExtra("gonghao");
+         tableName = courseTB;//之后删除开课表三个字
+        Log.i(gonghao,"!!!!!!gonghao");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_choose);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-        initView();
-
+        TextView teacherCourse = (TextView)findViewById(R.id.teacherCourse);
+        teacherCourse.setText(tableName);
+    }
+    //listview 点击事件========================================
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener{
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            showDialog2(position);
+        }
     }
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
-
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             adapter.getFilter().filter(search.getText().toString());
         }
-
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     }
     //===========================================================
     //iv_left后退跳转==================================================
     class MyOnClickListner implements View.OnClickListener{
-
         @Override
         public void onClick(View v) {
            finish();
@@ -92,28 +111,104 @@ public class CourseChoose  extends Activity {
         search.addTextChangedListener(new MyTextWatcher());
         iv_left = (ImageView)findViewById(R.id.left);
         iv_left.setOnClickListener(new MyOnClickListner());
-
         adapter = new TotalCoureseListAdapter(CourseChoose.this, listInfos);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new MyOnItemClickListener());
     }
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        Intent intent = getIntent();
-        //获取数据
-        String zhuanye = intent.getStringExtra("zhuanye");
-        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
-        int rows = bundle.getInt("rows");
-        int cols = bundle.getInt("cols");
-        int i;
-        String tmp;
-        ListTotalCourse cell;
-        for (i = 0; i < rows; i++) {
-            tmp = "cell" + i;
-            cell = new ListTotalCourse(bundle.getString(tmp + 4));
-            listInfos.add(cell);
+        //测试用例
+        final  List<Tb_course> l2 = new ArrayList<Tb_course>();
+        Tb_course t1 = new Tb_course("2013级","软件工程专业","144","软工实践",
+                "实践选修", "2分","48h","24h","24h","1-8周","张东","");
+        l2.add(t1);
+        Tb_course t2 = new Tb_course("2013级","软件工程专业","144","UML建模",
+                "专业选修", "2分","48h","24h","24h","1-8周","郭洪","");
+        l2.add(t2);
+        Log.i(gson.toJson(l2), "!!!!!!!");
+
+        //连接服务器不能删==================================================================
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("table_name", tableName);
+        params.put("type",""+1);
+        try {
+            HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+                            l = gson.fromJson(response, type);
+
+                            bundle = new queryDB().queryDB(CourseChoose.this, tableName, l);
+                            int rows = bundle.getInt("rows");
+                            int cols = bundle.getInt("cols");
+                            int i;
+                            String tmp;
+                            ListTotalCourse cell;
+                            for (i = 0; i < rows; i++) {
+                                tmp = "cell" + i;
+                                    cell = new ListTotalCourse(bundle.getString(tmp + 3));
+                                    listInfos.add(cell);
+
+                            }
+                            initView();
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.i("in onError", "!!!!!!");
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(CourseChoose.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+//
+//                            bundle = new queryDB().queryDB(CourseChoose.this, tableName, l);
+//                            int rows = bundle.getInt("rows");
+//                            int cols = bundle.getInt("cols");
+//                            int i;
+//                            String tmp;
+//                            ListTotalCourse cell;
+//                            for (i = 0; i < rows; i++) {
+//                                tmp = "cell" + i;
+//                                    cell = new ListTotalCourse(bundle.getString(tmp + 3));
+//                                    listInfos.add(cell);
+//
+//                            }
+//                            initView();
+
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//        Intent intent = getIntent();
+//        //获取数据
+//        String zhuanye = intent.getStringExtra("zhuanye");
+//        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
+//        int rows = bundle.getInt("rows");
+//        int cols = bundle.getInt("cols");
+//        int i;
+//        String tmp;
+//        ListTotalCourse cell;
+//        for (i = 0; i < rows; i++) {
+//            tmp = "cell" + i;
+//            cell = new ListTotalCourse(bundle.getString(tmp + 4));
+//            listInfos.add(cell);
+//        }
     }
     //=========================================================
 
@@ -146,19 +241,20 @@ public class CourseChoose  extends Activity {
     //================选课弹出框============================================
     private void showDialog2(int i){   //显示课程信息对话框
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
-        View view  = inflater.inflate(R.layout.teacher_dialog, null);
+        View view = inflater.inflate(R.layout.teacher_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         int j=0;
         TextView grade = (TextView) view.findViewById(R.id.grade1);
-        grade.setText(bundle.getString("cell"+i+j)); j++;
+        grade.setText(bundle.getString("cell"+i+j));
+        Grade = bundle.getString("cell"+i+j); j++;
         TextView major = (TextView) view.findViewById(R.id.major1);
         major.setText(bundle.getString("cell" + i + j)); j++;
         TextView number = (TextView) view.findViewById(R.id.number1);
-        number.setText(bundle.getString("cell"+i+j)); j++;
-        TextView type = (TextView) view.findViewById(R.id.type1);
-        type.setText(bundle.getString("cell" + i + j)); j++;
+        number.setText(bundle.getString("cell" + i + j)); j++;
         builder.setTitle(bundle.getString("cell" + i + j));
         title = bundle.getString("cell" + i + j); j++;//弹出框标题为课程名称
+        TextView type = (TextView) view.findViewById(R.id.type1);
+        type.setText(bundle.getString("cell" + i + j)); j++;
         TextView credit = (TextView) view.findViewById(R.id.credit1);
         credit.setText(bundle.getString("cell" + i + j)); j++;
         TextView time = (TextView) view.findViewById(R.id.time1);
@@ -172,50 +268,49 @@ public class CourseChoose  extends Activity {
         builder.setPositiveButton("选择", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showDialog1();
+                showDialog11();
             }
         });
         AlertDialog dialog = builder.create();  //创建一个dialog
         dialog.show();          //显示对话框
     }
-    private void showDialog1(){   //显示课程信息填写对话框
-        LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
-        final View view1  = inflater.inflate(R.layout.teacher_dialog1,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
+    private void showDialog11(){   //显示课程信息填写对话框
+        LayoutInflater inflater = LayoutInflater.from(CourseChoose.this);    //引入自定义布局
+        final View view1 = inflater.inflate(R.layout.teacher_dialog3, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CourseChoose.this);
+        builder.setTitle("申报该课程，请填写：");
         builder.setView(view1);
         builder.setPositiveButton("提交", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //将填写的信息获取============================
-                Spinner spinner1 = (Spinner)view1.findViewById(R.id.spinner1);
+                Spinner spinner1 = (Spinner) view1.findViewById(R.id.spinner6);
                 String week_begin = spinner1.getSelectedItem().toString();
-                Spinner spinner2 = (Spinner)view1.findViewById(R.id.spinner2);
+                Spinner spinner2 = (Spinner) view1.findViewById(R.id.spinner7);
                 String week_end = spinner2.getSelectedItem().toString();
-                String be_weeks=week_begin+"-"+week_end;
+                be_weeks = week_begin + "-" + week_end;
                 EditText name_teacher = (EditText) view1.findViewById(R.id.name);
-                String t_name = name_teacher.getText().toString();
+                t_name = name_teacher.getText().toString();
                 EditText note1 = (EditText) view1.findViewById(R.id.remark);
-                String remark = note1.getText().toString();
-
+                remark = note1.getText().toString();
                 Tb_teacher_declare tb_teacher_declare = new Tb_teacher_declare();
-                tb_teacher_declare.setTable_name("");    //要改！！！！！！！！！！！！！！！！！
+                tb_teacher_declare.setTable_name(tableName);
                 tb_teacher_declare.setCourse_name(title);
-                tb_teacher_declare.setGrade("");        //要改
+                tb_teacher_declare.setGrade(Grade);
                 tb_teacher_declare.setBe_weeks(be_weeks);
-                tb_teacher_declare.setId("");         //要改
+                tb_teacher_declare.setId(GlobalVariables.userId);
                 tb_teacher_declare.setT_name(t_name);
                 tb_teacher_declare.setRemark(remark);
-                tb_teacher_declare_json=gson.toJson(tb_teacher_declare);
-
+                tb_teacher_declare_json = gson.toJson(tb_teacher_declare);
+                Log.i("info","!!!!!!!!!"+tb_teacher_declare_json);
                 //=======================================================
-                showDialog2();
+                showDialog22();
             }
         });
         AlertDialog dialog = builder.create();  //创建一个dialog
         dialog.show();          //显示对话框
     }
-    private void showDialog2(){      //显示是否确认选课提示
+    private void showDialog22(){      //显示是否确认选课提示
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("注意！！！！！");
         builder.setMessage("课程一旦选了就不能修改，您是否确认要选课？");
@@ -225,7 +320,7 @@ public class CourseChoose  extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("tb_teacher_declare_json",tb_teacher_declare_json);
                 try {
-                    HttpUtil.doPost(GlobalVariables.URL + "/sendCourseDeclare", params, new HttpCallbackListener() {
+                    HttpUtil.doPost(GlobalVariables.URL + "/Send_teacher_declare", params, new HttpCallbackListener() {
                         @Override
                         public void onFinish(final String response) {
                             runOnUiThread(new Runnable() {

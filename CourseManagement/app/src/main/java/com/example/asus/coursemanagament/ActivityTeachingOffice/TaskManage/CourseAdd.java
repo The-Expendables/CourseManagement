@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
@@ -40,7 +38,7 @@ public class CourseAdd extends AppCompatActivity {
     private ImageView imgvw_back1;
     private Button btn_release;
     private String cardnumber;
-    private DBOpenHelper dbOpenHelper=new DBOpenHelper(CourseAdd.this);
+//    private DBOpenHelper dbOpenHelper=new DBOpenHelper(CourseAdd.this);
     private String table_json;
     private String course_mes_json;
     private Gson gson=new Gson();
@@ -110,7 +108,9 @@ public class CourseAdd extends AppCompatActivity {
                     tb_course_mes.setTable_name(edtt_tablename.getText().toString());
 
                     Spinner sp_term = (Spinner) findViewById(R.id.sp_term);
-                    sp_term.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                cardnumber = sp_term.getSelectedItem().toString();
+//                Toast.makeText(CourseAdd.this,cardnumber,Toast.LENGTH_SHORT).show();
+                    /*sp_term.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                             cardnumber = CourseAdd.this.getResources().getStringArray(R.array.term)[arg2];
@@ -120,7 +120,7 @@ public class CourseAdd extends AppCompatActivity {
                         public void onNothingSelected(AdapterView<?> arg0) {
                             // TODO Auto-generated method stub
                         }
-                    });
+                    });*/
                     tb_course_mes.setTerm(cardnumber);
 
 //                    TextView edtt_time_teacher = (EditText) findViewById(R.id.edtt_time_teacher);
@@ -129,14 +129,13 @@ public class CourseAdd extends AppCompatActivity {
 //                    TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
                     tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
 
-                    Toast.makeText(CourseAdd.this,"添加成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
-
                     course_mes_json=gson.toJson(tb_course_mes);
-
+                Log.i("info",course_mes_json+"!!!!!!!!!!");
                     //数据上传到服务器===============================================================
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("table_json", table_json);
                     params.put("course_mes_json",course_mes_json);
+//                    Toast.makeText(CourseAdd.this,table_json+course_mes_json,Toast.LENGTH_SHORT).show();
                     try {
                         HttpUtil.doPost(GlobalVariables.URL + "/sendCoursetable", params, new HttpCallbackListener() {
                             @Override
@@ -144,7 +143,17 @@ public class CourseAdd extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+
                                         Toast.makeText(CourseAdd.this,"发布成功",Toast.LENGTH_SHORT).show();
+
+                                        if(response.equals("true")) {
+                                            Toast.makeText(CourseAdd.this, "添加成功,请查看发布栏.", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(CourseAdd.this, TaskManage.class);
+                                            startActivity(intent);
+                                        }
+                                        else if(response.equals("false"))
+                                            Toast.makeText(CourseAdd.this,"服务器内部出错，请联系运维人员.",Toast.LENGTH_SHORT).show();
+
                                     }
                                 });
                             }
@@ -164,7 +173,6 @@ public class CourseAdd extends AppCompatActivity {
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.i("info", e.toString()+"跑了吗跑了吗！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
                     }
                     //================================
 
@@ -179,10 +187,8 @@ public class CourseAdd extends AppCompatActivity {
                     db.insert("发布表",null,values);
                     */
                     //=================================
+                }
 
-                    Intent intent = new Intent(CourseAdd.this, TaskManage.class);
-                    startActivity(intent);
-            }
         });
         //==========================================================
     }
@@ -210,8 +216,9 @@ public class CourseAdd extends AppCompatActivity {
                 TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
                 String[] tmp = (String[]) list.get(0);
                 edtt_tablename.setText(tmp[0]);
+                //===========================================
 
-                String tablename = "";
+                /*String tablename = "";
                 switch (tmp[0]) {
                     case "2015学年下学期计算机科学与技术专业 开课计划书":
                         tablename = "计算机专业课程表";
@@ -226,8 +233,7 @@ public class CourseAdd extends AppCompatActivity {
                         Log.i("info", "tablename not found");
                         break;
                 }
-                //===========================================
-                Log.i("info", "tablenme:" + tablename);
+                Log.i("info", "tablenme:" + tablename);*/
 
                 //把报课表打包到table_json===========================================
                 List<Tb_course> list_tb_courses=new ArrayList<Tb_course>();

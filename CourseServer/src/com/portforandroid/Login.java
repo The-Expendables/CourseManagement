@@ -1,8 +1,10 @@
 package com.portforandroid;
 
-import java.io.DataOutputStream;
+/**
+ * 用户登录接口
+ */
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dao.UsersDAO;
-import com.google.gson.Gson;
-import com.tb.Tb_teacher;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
@@ -44,20 +44,13 @@ public class Login extends HttpServlet {
             if (flag) {
             	LOGIN_FLAG="success";
             	System.out.println(LOGIN_FLAG);
-//                output.writeUTF("true");
 //            	Tb_teacher th4 = new Tb_teacher("23459","23459","计算机专业","钱八","男","1985年11月","925471746@qq.com","18865247894");
-            	
-//            	Gson gson=new Gson();
-//            	String res=gson.toJson(th4);
-//            	System.out.println(res);
             	ret="true";
             }else{
                  //登录失败  
                 LOGIN_FLAG="failure";
                 ret="false";
                 System.out.println(LOGIN_FLAG);
-//                output.writeUTF("false");
-//                output.close(); 
             }
             response.getOutputStream().write(ret.getBytes("UTF-8"));
         	response.setContentType("text/json); charset=UTF-8");

@@ -32,6 +32,7 @@ import java.util.Map;
 
 public class  Login extends Activity {
 
+
     private Button btn_login;   //登录按钮
     private EditText edtt_userName; //用户名输入框
     private EditText edtt_password; //密码输入框
@@ -39,6 +40,8 @@ public class  Login extends Activity {
     private int number = 1; //判断角色身份
     private TextView tvw_forget; //忘记密码？
     private DBOpenHelper dbOpenHelper = new DBOpenHelper(Login.this);
+    String username = new String();
+    String zhuanye = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class  Login extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         initView();
+
 
         //初始化表格数据==========================================================================
 //        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
@@ -120,7 +124,7 @@ public class  Login extends Activity {
             SQLOperateImpl tel = new SQLOperateImpl(Login.this);
             Tb_teachingoffice tele = tel.findById_teachingoffice("12345");
             Dia.setTitle("忘记密码？");
-            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:" + tele.getPhone());
+            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:18753621145");
             Dia.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -174,9 +178,13 @@ public class  Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            goTo();
-            String username = edtt_userName.getText().toString();   //获取账号
+//            goTo();
+            username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
+
+            GlobalVariables.userId=username;
+            GlobalVariables.password=password;
+
             SQLOperateImpl person = new SQLOperateImpl(Login.this);
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
@@ -199,6 +207,7 @@ public class  Login extends Activity {
                                 @Override
                                 public void run() {
                                     if(response.equals("true")){
+
                                         goTo();
                                     }else{
                                         Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
@@ -211,7 +220,13 @@ public class  Login extends Activity {
                         public void onError(Exception e) {
 //                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
-                            Log.i("Login","服务器访问失败");
+                            Log.i("Login", "服务器访问失败");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                 } catch (Exception e) {
@@ -228,6 +243,7 @@ public class  Login extends Activity {
         Intent intent=new Intent();
         switch(number){
             case 1:
+                intent.putExtra("gonghao",username);
                 intent.setClass(Login.this, CourseDeclare.class);
                 break;
             case 2:

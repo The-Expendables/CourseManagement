@@ -5,4 +5,8 @@ package com.example.asus.coursemanagament.UiCustomViews;
  */
 public class GlobalVariables {
     public static String URL ="http://fenicnn.6655.la:17138/CourseServer";
+    //用户信息==================================================================
+    public  static  String userId;
+    public static String password;
+    //=========
 }

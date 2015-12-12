@@ -122,10 +122,57 @@ public class Tb_course {
         this.remark = remark;
     }
 
+    public String getX(int i) {
+        String s = new String();
+        switch (i) {
+            case 0:
+                s = getGrade();break;
+            case 1:
+                s = getMajor();break;
+            case 2:
+                s = getP_cnt();break;
+            case 3:
+                s = getC_name();break;
+            case 4:
+                s = getType();break;
+            case 5:
+                s = getCredit();break;
+            case 6:
+                s = getTimes();break;
+            case 7:
+                s = getExp_times();break;
+            case 8:
+                s = getPra_times();break;
+            case 9:
+                s = getBe_weeks();break;
+            case 10:
+                s = getT_name();break;
+            case 11:
+                s = getRemark();break;
+        }
+        return s;
+    }
     public Tb_course() {
         super();
     }
 
+    public Tb_course(String grade,String major,String p_cnt,String c_name,String type,
+                     String credit,String times,String exp_times,String pra_times,String be_weeks,
+                     String t_name,String remark){
+
+        this.grade = grade;
+        this.major = major;
+        this.p_cnt = p_cnt;
+        this.c_name = c_name;
+        this.type = type;
+        this.credit = credit;
+        this.times = times;
+        this.exp_times = exp_times;
+        this.pra_times = pra_times;
+        this.be_weeks = be_weeks;
+        this.t_name = t_name;
+        this.remark = remark;
+    }
     public Tb_course(String id,String grade,String major,String p_cnt,String c_name,String type,
                      String credit,String times,String exp_times,String pra_times,String be_weeks,
                      String t_name,String remark){
