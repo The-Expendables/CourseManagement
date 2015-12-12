@@ -29,13 +29,13 @@ public class Login extends HttpServlet {
     	 //登陆成功标志
         String LOGIN_FLAG="";
         //获得客户端提交用户名密码
-//        int type=Integer.parseInt(request.getParameter("type"));
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
+        int type=Integer.parseInt(request.getParameter("type"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         //调用UserDAO中isLogin方法判断数据中用户名密码是否正确
-        int type=1;
-        String username="21001";
-        String password="21001";
+//        int type=1;
+//        String username="21001";
+//        String password="21001";
         boolean flag=UsersDAO.login(type,username,password);
 //        if(!flag) System.out.println("---------flag null----------");
 //        boolean flag=true;

@@ -6,21 +6,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_department;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
+import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
+import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
+import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DepartmentList extends Activity {
+    String tableName = new String ("系负责人信息表");
+    private List<Tb_department> l = new ArrayList<Tb_department>();
+    private Gson gson = new Gson();
+    private Type type = new TypeToken<List<Tb_department>>() {}.getType();
+    private Bundle bundle;
 
     private EditText search;
     private List<ListProfessionals> listInfos= new ArrayList<ListProfessionals>(); //存放Item
@@ -29,11 +47,10 @@ public class DepartmentList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window_FEATURE_NO_TITLE);
         setContentView(R.layout.activity_department_list);
 
         initList();
-        initView();
+
         //返回监听事件============================================
         ImageView ivw_1=(ImageView)findViewById(R.id.ivw_1);
         ivw_1.setOnClickListener(new View.OnClickListener() {
@@ -54,10 +71,6 @@ public class DepartmentList extends Activity {
             }
         });
         //=================================
-
-        //listview====================================
-
-        //================================
 
     }
 
@@ -103,17 +116,75 @@ public class DepartmentList extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        Bundle bundle = new queryDB().queryDB(this, "系负责人信息表");
-        int rows = bundle.getInt("rows");
-        int cols = bundle.getInt("cols");
-        int i;
-        String tmp;
-        ListProfessionals cell;
-        for (i = 0; i < rows; i++) {
-            tmp = "cell" + i;
-            cell = new ListProfessionals(bundle.getString(tmp + 5),
-                    "工号", bundle.getString(tmp + 1));
-            listInfos.add(cell);
+        //测试用例
+//        final  List<Tb_department> l2 = new ArrayList<Tb_department>();
+//        Tb_department t1 = new Tb_department("11300", "123456", "谢墨", "18923234444","网络工程专业");
+//        l2.add(t1);
+//        Tb_department t2 = new Tb_department("11301", "123456", "冬熠", "18923231111","软件工程专业");
+//        l2.add(t2);
+//        Log.i(gson.toJson(l2), "!!!!!!!");
+
+        //连接服务器不能删==================================================================
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("table_name", tableName);
+        params.put("type",""+4);
+        try {
+            HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+                            l = gson.fromJson(response, type);
+                            bundle = new queryDB().queryDB(DepartmentList.this, tableName, l);
+                            int rows = bundle.getInt("rows");
+                            int cols = bundle.getInt("cols");
+                            int i;
+                            String tmp;
+                            ListProfessionals cell;
+                            for (i = 0; i < rows; i++) {
+                                tmp = "cell" + i;
+                                cell = new ListProfessionals(bundle.getString(tmp + 2),
+                                        "工号:", bundle.getString(tmp + 0));
+                                listInfos.add(cell);
+                            }
+                            initView();
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.i("in onError", "!!!!!!");
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(DepartmentList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
+////                            l = gson.fromJson(gson.toJson(l2), type);
+//                            bundle = new queryDB().queryDB(DepartmentList.this, tableName, l);
+//                            int rows = bundle.getInt("rows");
+//                            int cols = bundle.getInt("cols");
+//                            int i;
+//                            String tmp;
+//                            ListProfessionals cell;
+//                            for (i = 0; i < rows; i++) {
+//                                tmp = "cell" + i;
+//                                cell = new ListProfessionals(bundle.getString(tmp + 2),
+//                                        "工号:", bundle.getString(tmp + 0));
+//                                listInfos.add(cell);
+//                            }
+//                            initView();
+                        }
+                    });
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
