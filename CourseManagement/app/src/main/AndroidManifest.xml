@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
         <activity android:name=".ActivityLogin.Login" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,8 +65,7 @@
         <activity android:name=".ActivityTeachingOffice.TaskManage.CourseSet" >
         </activity>
         <!--  -->
-        <activity android:name=".ActivityTeachingOffice.TaskManage.CourseSet" >
-        </activity>
+
         <activity android:name=".ActivityTeachingOffice.UserManage.BatchImport" >
         </activity>
         <activity android:name=".ActivityTeachingOffice.UserManage.DepartmentAdd" >

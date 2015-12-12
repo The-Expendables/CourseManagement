@@ -55,6 +55,22 @@ public class Tb_department {
         super();
     }
 
+    public String getX(int i) {
+        String s = new String();
+        switch (i) {
+            case 0:
+                s =getId() ;break;
+            case 1:
+                s = getPassword();break;
+            case 2:
+                s = getName();break;
+            case 3:
+                s = getPhone();break;
+            case 4:
+                s = getDepartment();break;
+        }
+        return s;
+    }
     public Tb_department(String id,String password,String department,String phone,String name){
         this.id = id;
         this.password = password;

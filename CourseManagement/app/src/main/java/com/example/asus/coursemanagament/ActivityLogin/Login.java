@@ -20,21 +20,29 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Login extends Activity {
+
 
     private Button btn_login;   //登录按钮
     private EditText edtt_userName; //用户名输入框
@@ -43,6 +51,8 @@ public class Login extends Activity {
     private int number = 1; //判断角色身份
     private TextView tvw_forget; //忘记密码？
     private DBOpenHelper dbOpenHelper = new DBOpenHelper(Login.this);
+    String username = new String();
+    String zhuanye = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,7 @@ public class Login extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         initView();
+
 
         //初始化表格数据==========================================================================
 //        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
@@ -179,7 +190,7 @@ public class Login extends Activity {
         @Override
         public void onClick(View v) {
             goTo();
-            String username = edtt_userName.getText().toString();   //获取账号
+            username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
             SQLOperateImpl person = new SQLOperateImpl(Login.this);
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
@@ -204,6 +215,7 @@ public class Login extends Activity {
                                 public void run() {
 
                                     if(response.equals("true")){
+
                                         goTo();
                                     }else{
                                         Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
@@ -214,7 +226,7 @@ public class Login extends Activity {
 
                         @Override
                         public void onError(Exception e) {
-                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     });
@@ -232,6 +244,7 @@ public class Login extends Activity {
         Intent intent=new Intent();
         switch(number){
             case 1:
+                intent.putExtra("gonghao",username);
                 intent.setClass(Login.this, CourseDeclare.class);
                 break;
             case 2:

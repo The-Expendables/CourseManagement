@@ -81,6 +81,29 @@ public class Tb_teacher {
         super();
     }
 
+    public String getX(int i) {
+        String s = new String();
+        switch (i) {
+            case 0:
+                s = getId();break;
+            case 1:
+                s = getPassword();break;
+            case 2:
+                s = getName();break;
+            case 3:
+                s = getDepartment();break;
+            case 4:
+                s = getSex();break;
+            case 5:
+                s = getBirth();break;
+            case 6:
+                s = getEmail();break;
+            case 7:
+                s = getPhone();break;
+        }
+        return s;
+    }
+
     public Tb_teacher(String id,String password,String department,String name,String sex,String birth,String email,String phone){
         this.id = id;
         this.password = password;
