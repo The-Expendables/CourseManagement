@@ -1,8 +1,8 @@
 package com.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.tb.Tb_course;
 import com.tb.Tb_course_mes;
 import com.util.JdbcUtil;
 
