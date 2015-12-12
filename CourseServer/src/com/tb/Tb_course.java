@@ -143,4 +143,16 @@ public class Tb_course {
         this.t_name = t_name;
         this.remark = remark;
     }
+    
+    //用于合并开课表里教师填报的信息
+    public void setThree(String be_weeks,String t_name,String remark){
+    	if(this.be_weeks.length()>0) this.be_weeks+=";";
+    	this.be_weeks+=be_weeks;
+    	
+    	if(this.t_name.length()>0) this.t_name+=";";
+    	this.t_name+=t_name;
+    	
+    	if(this.remark.length()>0) this.remark+=";";
+    	this.remark+=remark;
+    }
 }

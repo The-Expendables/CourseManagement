@@ -1,8 +1,10 @@
 package com.portforandroid;
 
-import java.io.DataOutputStream;
+/**
+ * 教学办开课接口
+ */
+
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,12 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.dao.CourseDAO;
 import com.dao.Course_mesDAO;
-import com.dao.UsersDAO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tb.Tb_course;
 import com.tb.Tb_course_mes;
-import com.tb.Tb_teacher;
 import com.util.GV;
 
 @WebServlet("/sendCoursetable")
