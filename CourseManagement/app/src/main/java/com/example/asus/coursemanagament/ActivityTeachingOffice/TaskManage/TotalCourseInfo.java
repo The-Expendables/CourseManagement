@@ -54,12 +54,13 @@ public class TotalCourseInfo extends Activity {
     private Bundle bundle;
 
     private EditText search;
-    private List<ListTotalCourse> listInfos= new ArrayList<ListTotalCourse>(); //存放Item
+    private List<ListTotalCourse> listInfos = new ArrayList<ListTotalCourse>(); //存放Item
     private ListView listView;
     private ImageView iv_left;
     private Button btn_export;
-//    private
-    TotalCoureseListAdapter adapter ;
+    //    private
+    TotalCoureseListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,6 +74,7 @@ public class TotalCourseInfo extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
     }
+
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
 
@@ -92,25 +94,27 @@ public class TotalCourseInfo extends Activity {
 
         }
     }
+
     //===========================================================
     //iv_left后退跳转==================================================
-    class MyOnClickListner implements View.OnClickListener{
+    class MyOnClickListner implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-          finish();
+            finish();
 
         }
     }
+
     //============================================================
 //控件绑定，事件监听===========================================
-    private void initView(){
-        search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
+    private void initView() {
+        search = (EditText) findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
-        iv_left = (ImageView)findViewById(R.id.left);
+        iv_left = (ImageView) findViewById(R.id.left);
         iv_left.setOnClickListener(new MyOnClickListner());
 
-        btn_export = (Button)findViewById(R.id.btn_export);
+        btn_export = (Button) findViewById(R.id.btn_export);
         //导出事件
         btn_export.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,80 +126,118 @@ public class TotalCourseInfo extends Activity {
                 picker.setMode(FilePicker.Mode.File);
                 picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
                     @Override
-                    public void onFilePicked(String currentPath) {
+                    public void onFilePicked(final String currentPath) {
 
-                        List list=new ArrayList();
+                        final List<String[]> list = new ArrayList<String[]>();
 
-
-                        String tablename=new String();
+                        String tablename = "";
                         //这里需要intent传表名
-                        tablename="计算机专业课程表";
+                        tablename = "计算机专业课程表";
                         //表名
-                        String[] str2=new String[12];
-                        for(int i=0;i<12;i++) str2[i]="";
-                        str2[0]=tablename;
-                        Log.i("info", "fuckyou!before");
+                        String[] str2 = new String[12];
+                        for (int i = 0; i < 12; i++) str2[i] = "";
+                        str2[0] = tablename;
                         list.add(str2);
 
-                        //tset=====================================================
-//                        String result="";
-//                        for (int i = 0; i < list.size(); i++) {
-//                            str = (String[]) list.get(i);
-//                            for (int j = 0; j < str.length; j++) {
-//                                result += str[j];
-//                                result += ";";
-//                            }
-//                            result += "\n";
-//                        }
-//                        Toast.makeText(TotalCourseInfo.this, "fuckyou!"+result, Toast.LENGTH_SHORT);
-                        //==================================================
                         //列名
-                        String str[]=new String[12];
-                        str[0]="年级";
-                        str[1]="专业";
-                        str[2]="专业人数";
-                        str[3]="课程名称";
-                        str[4]="选修类型";
-                        str[5]="学分";
-                        str[6]="学时";
-                        str[7]="实验";
-                        str[8]="上机";
-                        str[9]="起讫周序";
-                        str[10]="任课教师";
-                        str[11]="备注";
+                        String str[] = new String[12];
+                        str[0] = "年级";
+                        str[1] = "专业";
+                        str[2] = "专业人数";
+                        str[3] = "课程名称";
+                        str[4] = "选修类型";
+                        str[5] = "学分";
+                        str[6] = "学时";
+                        str[7] = "实验";
+                        str[8] = "上机";
+                        str[9] = "起讫周序";
+                        str[10] = "任课教师";
+                        str[11] = "备注";
                         list.add(str);
-                        //列名
 
-                        String[] str3=new String[12];
-                        for(int i=0;i<12;i++) str3[i]="";
-                        str3[7]=str3[8]="学时";
+                        //列名
+                        String[] str3 = new String[12];
+                        for (int i = 0; i < 12; i++) str3[i] = "";
+                        str3[7] = str3[8] = "学时";
                         list.add(str3);
 
-
-                        //每一行数据
-                        DBOpenHelper dbhelper=new DBOpenHelper(TotalCourseInfo.this);
-                        SQLiteDatabase db=dbhelper.getReadableDatabase();
-                        ContentValues values=new ContentValues();
-                        Cursor cursor=db.query(tablename,null,null,null,null,null,null);
-                        if(cursor.moveToFirst()){
-                            do{
-                                String[] str4=new String[12];
-                                str4[0]=cursor.getString(cursor.getColumnIndex("年级"));
-                                str4[1]=cursor.getString(cursor.getColumnIndex("专业"));
-                                str4[2]=cursor.getString(cursor.getColumnIndex("专业人数"));
-                                str4[3]=cursor.getString(cursor.getColumnIndex("课程名称"));
-                                str4[4]=cursor.getString(cursor.getColumnIndex("选修类型"));
-                                str4[5]=cursor.getString(cursor.getColumnIndex("学分"));
-                                str4[6]=cursor.getString(cursor.getColumnIndex("学时"));
-                                str4[7]=cursor.getString(cursor.getColumnIndex("实验学时"));
-                                str4[8]=cursor.getString(cursor.getColumnIndex("上机学时"));
-                                str4[9]=cursor.getString(cursor.getColumnIndex("起讫周序"));
-                                str4[10]=cursor.getString(cursor.getColumnIndex("任课教师"));
-                                str4[11]=cursor.getString(cursor.getColumnIndex("备注"));
-                                Log.i("info",str[0]);
-                                list.add(str4);
-                            }while(cursor.moveToNext());
+                        //从服务器拉取数据=====================================================================
+                        Map<String, String> params = new HashMap<String, String>();
+                        try {
+                            HttpUtil.doPost(GlobalVariables.URL + "/getCourseTable", params, new HttpCallbackListener() {
+                                @Override
+                                public void onFinish(final String response) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Gson gson=new Gson();
+                                            List<Tb_course> courseList=
+                                                    gson.fromJson(response,new TypeToken<List<Tb_course>>(){}.getType());
+                                            for(Tb_course tb_course:courseList){
+                                                String str4[]=new String[12];
+                                                str4[0] = tb_course.getGrade();
+                                                str4[1] = tb_course.getMajor();
+                                                str4[2] = tb_course.getP_cnt();
+                                                str4[3] = tb_course.getC_name();
+                                                str4[4] = tb_course.getType();
+                                                str4[5] = tb_course.getCredit();
+                                                str4[6] = tb_course.getTimes();
+                                                str4[7] = tb_course.getExp_times();
+                                                str4[8] = tb_course.getPra_times();
+                                                str4[9] = tb_course.getBe_weeks();
+                                                str4[10] = tb_course.getT_name();
+                                                str4[11] = tb_course.getRemark();
+                                                list.add(str4);
+                                            }
+                                            ExcelUtil.writeExcel(currentPath, list);
+                                        }
+                                    });
+                                }
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.i("TotalCourseInfo",e.toString());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(TotalCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.i("info", e.toString());
                         }
+                        //=================================
+
+                        //访问本地数据库================================================================
+                        /*
+                        DBOpenHelper dbhelper = new DBOpenHelper(TotalCourseInfo.this);
+                        SQLiteDatabase db = dbhelper.getReadableDatabase();
+                        ContentValues values = new ContentValues();
+                        Cursor cursor = db.query(tablename, null, null, null, null, null, null);
+                        if (cursor.moveToFirst())
+
+                        {
+                            do {
+                                String[] str4 = new String[12];
+                                str4[0] = cursor.getString(cursor.getColumnIndex("年级"));
+                                str4[1] = cursor.getString(cursor.getColumnIndex("专业"));
+                                str4[2] = cursor.getString(cursor.getColumnIndex("专业人数"));
+                                str4[3] = cursor.getString(cursor.getColumnIndex("课程名称"));
+                                str4[4] = cursor.getString(cursor.getColumnIndex("选修类型"));
+                                str4[5] = cursor.getString(cursor.getColumnIndex("学分"));
+                                str4[6] = cursor.getString(cursor.getColumnIndex("学时"));
+                                str4[7] = cursor.getString(cursor.getColumnIndex("实验学时"));
+                                str4[8] = cursor.getString(cursor.getColumnIndex("上机学时"));
+                                str4[9] = cursor.getString(cursor.getColumnIndex("起讫周序"));
+                                str4[10] = cursor.getString(cursor.getColumnIndex("任课教师"));
+                                str4[11] = cursor.getString(cursor.getColumnIndex("备注"));
+                                Log.i("info", str[0]);
+                                list.add(str4);
+                            } while (cursor.moveToNext());
+                        }
+<<<<<<< HEAD
 //                        SQLOperateImpl test2 = new SQLOperateImpl(TotalCourseInfo.this);
 //                        Tb_course tb_course=new Tb_course();
 //                        String[] str4=new String[12];
@@ -234,17 +276,20 @@ public class TotalCourseInfo extends Activity {
                         Log.i(bundle.getString("cell01"),"!!!!!!!!in ceshi");
 
                         ExcelUtil.writeExcel(currentPath,list);
+=======
+                        */
+                        //================================================
                     }
                 });
                 picker.showAtBottom();
             }
         });
 
-
         adapter = new TotalCoureseListAdapter(TotalCourseInfo.this, listInfos);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
     }
+
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
@@ -327,6 +372,7 @@ public class TotalCourseInfo extends Activity {
             e.printStackTrace();
         }
 
-    }
+
+        }
     //=========================================================
 }

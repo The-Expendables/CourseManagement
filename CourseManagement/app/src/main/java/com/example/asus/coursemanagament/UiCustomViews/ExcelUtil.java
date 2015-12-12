@@ -28,26 +28,28 @@ import jxl.write.WritableWorkbook;
  * Created by Administrator on 2015/11/17.
  */
 public class ExcelUtil {
-    public static List readExcel(String currentpath)throws BiffException,IOException{
+    public static List<String[]> readExcel(String currentpath)throws BiffException,IOException{
         Workbook workbook=null;
         try{
             workbook=Workbook.getWorkbook(new File(currentpath));
         }catch(Exception e){
             e.printStackTrace();
         }
+        if (workbook == null) throw new AssertionError();
         Sheet sheet = workbook.getSheet(0);
         //列数
         int colcount = sheet.getColumns();
         //行号
         int rowcount = sheet.getRows();
 
-        List list=new ArrayList();
+        List<String[]> list=new ArrayList<String[]>();
         Cell cell=null;
         for(int i=0;i<rowcount;i++){
             String[] str = new String[colcount];
             for(int j=0;j<colcount;j++){
-                cell=sheet.getCell(j,i);
+                cell=sheet.getCell(j, i);
                 str[j]=cell.getContents();
+                str[j]=str[j].replaceAll("\\s","");
             }
             list.add(str);
         }

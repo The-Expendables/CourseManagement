@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityLogin.Login;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
 
@@ -24,10 +21,11 @@ public class PasswordChange1 extends Activity {
     private EditText edtt_new_password3;
     private EditText edtt_new_password4;
     private Button btn_commit1;
-
     private Button btn_task1;
     private Button btn_password1;
     private Button btn_exit1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +84,7 @@ public class PasswordChange1 extends Activity {
         btn_commit1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //先假设初始密码为12345
-                if ((edtt_old_password1.length()<5) || !edtt_old_password1.getText().toString().equals("12345")) {
+                if ((edtt_old_password1.length()<5) ) {
                     Toast.makeText(PasswordChange1.this, "原密码输入有误，请重新输入原密码", Toast.LENGTH_SHORT)
                             .show();
                 }

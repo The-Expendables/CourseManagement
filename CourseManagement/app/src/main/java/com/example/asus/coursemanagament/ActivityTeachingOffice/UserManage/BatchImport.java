@@ -28,7 +28,7 @@ public class BatchImport extends AppCompatActivity {
         setContentView(R.layout.activity_batch_import);
 
         //返回监听事件============================================
-        ImageView ivw_back=(ImageView)findViewById(R.id.ivw_back);
+        ImageView ivw_back = (ImageView) findViewById(R.id.ivw_back);
         ivw_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,36 +37,37 @@ public class BatchImport extends AppCompatActivity {
         });
         //============================================
     }
+
     //选择文件监听事件====================================
-    public void onBtn_select(View view){
+    public void onBtn_select(View view) {
         FilePicker picker = new FilePicker(this);
         picker.setShowHideDir(false);
         picker.setInitPath(Common.getRootPath(this) + "Download/");
         //picker.setAllowExtensions(new String[]{".apk"});
         picker.setMode(FilePicker.Mode.File);
         picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
-                @Override
+            @Override
             public void onFilePicked(String currentPath) {
                 List list = null;
                 try {
                     list = ExcelUtil.readExcel(currentPath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }catch(BiffException e){
+                } catch (IOException | BiffException e) {
                     e.printStackTrace();
                 }
 //                Toast.makeText(BatchImport.this,data.toString(),Toast.LENGTH_SHORT).show();
                 TextView tvw_show_excel = (TextView) findViewById(R.id.tvw_show_excel);
                 String result = "";
+                assert list != null;
                 for (int i = 0; i < list.size(); i++) {
                     String[] str = (String[]) list.get(i);
-                    for (int j = 0; j < str.length; j++) {
-                        result += str[j];
+                    for (String aStr : str) {
+                        result += aStr;
                         result += ";";
                     }
                     result += "\n";
                 }
                 tvw_show_excel.setText(result);
+
             }
         });
         picker.showAtBottom();

@@ -7,8 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,8 +23,11 @@ import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskM
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
+
 import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
+
+
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
@@ -35,13 +36,15 @@ import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Login extends Activity {
+public class  Login extends Activity {
 
 
     private Button btn_login;   //登录按钮
@@ -213,7 +216,6 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     if(response.equals("true")){
 
                                         goTo();
@@ -228,6 +230,13 @@ public class Login extends Activity {
                         public void onError(Exception e) {
 //                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
+                            Log.i("Login", "服务器访问失败");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                 } catch (Exception e) {
