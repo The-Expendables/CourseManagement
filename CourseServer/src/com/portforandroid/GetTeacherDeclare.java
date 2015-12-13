@@ -46,7 +46,6 @@ public class GetTeacherDeclare extends HttpServlet {
 //        System.out.println(teacher_declare_json);
         //这里的表名根据实际情况看看是否进行软编码
         String table_name=tb_teacher_declare.getTable_name();
-        
         //插入教师报课信息表
         int su=Teacher_declareDAO.insert(tb_teacher_declare);//su为是否成功的意思
         
