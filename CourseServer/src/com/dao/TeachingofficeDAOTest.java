@@ -13,13 +13,22 @@ public class TeachingofficeDAOTest extends MyDAO {
 	public void setUp() throws Exception {
 	}
 
+//	@Test
+//	public void testInsert() {
+//		Tb_teachingoffice tb_teachingoffice=new Tb_teachingoffice();
+//		tb_teachingoffice.setId("10086");
+//		tb_teachingoffice.setPassword("10086");
+//		tb_teachingoffice.setPhone("10086");
+//		TeachingofficeDAO.insert(tb_teachingoffice);
+//	}
+	
 	@Test
-	public void testInsert() {
+	public void testUpdate() {
 		Tb_teachingoffice tb_teachingoffice=new Tb_teachingoffice();
 		tb_teachingoffice.setId("10086");
 		tb_teachingoffice.setPassword("10086");
-		tb_teachingoffice.setPhone("10086");
-		TeachingofficeDAO.insert(tb_teachingoffice);
+		tb_teachingoffice.setPhone("sqhsb!!!");
+		TeachingofficeDAO.update(tb_teachingoffice);
 	}
 
 }

@@ -14,14 +14,23 @@ public class DepartmentDAOTest extends MyDAO {
 	public void setUp() throws Exception {
 	}
 
+//	@Test
+//	public void testInsert() {
+//		Tb_department tb_department = new Tb_department();
+//		tb_department.setId("10086");
+//		tb_department.setPassword("10086");
+//		tb_department.setDepartment("10086");
+//		tb_department.setPhone("10086");
+//		DepartmentDAO.insert(tb_department);
+//	}
 	@Test
-	public void testInsert() {
+	public void testUpdate() {
 		Tb_department tb_department = new Tb_department();
 		tb_department.setId("10086");
 		tb_department.setPassword("10086");
 		tb_department.setDepartment("10086");
-		tb_department.setPhone("10086");
-		DepartmentDAO.insert(tb_department);
+		tb_department.setPhone("sqhsb");
+		DepartmentDAO.update(tb_department);
 	}
 
 }

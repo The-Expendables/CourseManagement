@@ -13,14 +13,25 @@ public class teacherDAOTest {
 	public void setUp() throws Exception {
 	}
 
+//	@Test
+//	public void testInsert() {
+//		Tb_teacher tb_teacher = new Tb_teacher();
+//		tb_teacher.setId("10086");
+//		tb_teacher.setPassword("10086");
+//		tb_teacher.setDepartment("10086");
+//		tb_teacher.setPhone("10086");
+//		TeacherDAO.insert(tb_teacher);
+//	}
 	@Test
-	public void testInsert() {
+	public void testUpdate(){
 		Tb_teacher tb_teacher = new Tb_teacher();
+		tb_teacher.setId("10086");
 		tb_teacher.setId("10086");
 		tb_teacher.setPassword("10086");
 		tb_teacher.setDepartment("10086");
 		tb_teacher.setPhone("10086");
-		TeacherDAO.insert(tb_teacher);
+		tb_teacher.setName("sqhsb!!!");
+		TeacherDAO.update(tb_teacher);
 	}
 
 }

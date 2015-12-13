@@ -1,7 +1,6 @@
 package com.portforandroid;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +16,12 @@ import com.tb.Tb_teacher;
 import com.tb.Tb_teachingoffice;
 
 /**
- * 可扩展！
+ * Servlet implementation class PortForUpdate
  */
-@WebServlet("/Insert_info")
-public class PortForInsert extends HttpServlet {
+@WebServlet("/PortForUpdate")
+public class PortForUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private Gson gson = new Gson();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,22 +43,16 @@ public class PortForInsert extends HttpServlet {
         	Tb_teacher tb_teacher=
         			gson.fromJson(info_json, Tb_teacher.class);
         	su_teacher=TeacherDAO.insert(tb_teacher);
-        	if(su_teacher==0) 
-        		su_teacher=TeacherDAO.update(tb_teacher);
         	break;
         case "系负责人信息表":
         	Tb_department tb_department=
         			gson.fromJson(info_json, Tb_department.class);
         	su_department=DepartmentDAO.insert(tb_department);
-        	if(su_department==0) 
-        		su_department=DepartmentDAO.update(tb_department);
         	break;
         case "教学办":
         	Tb_teachingoffice tb_teachingoffice=
         			gson.fromJson(info_json, Tb_teachingoffice.class);
         	su_teachingoffice=TeachingofficeDAO.insert(tb_teachingoffice);
-        	if(su_teachingoffice==0)
-        		su_teachingoffice=TeachingofficeDAO.update(tb_teachingoffice);
         	break;
         }
         
@@ -72,11 +65,10 @@ public class PortForInsert extends HttpServlet {
         	str="系负责人";
         }
         String ret="";
-        if(str.length()>0) ret=str+"信息更新成功";
-        else ret="信息更新失败";
+        if(str.length()>0) ret=str+"信息插入成功";
+        else ret="信息插入失败";
         
         response.getOutputStream().write(ret.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
     }
-
 }
