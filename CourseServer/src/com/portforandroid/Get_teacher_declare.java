@@ -38,14 +38,13 @@ public class Get_teacher_declare extends HttpServlet {
     	
     	request.setCharacterEncoding("UTF-8"); //避免中文乱码 POST方式提交  
     	
-        String teacher_declare_json = request.getParameter("teacher_declare_json");
+        String teacher_declare_json = request.getParameter("tb_teacher_declare_json");
 //        System.out.println(table_json);
         
         Tb_teacher_declare tb_teacher_declare=new Tb_teacher_declare();
         tb_teacher_declare=gson.fromJson(teacher_declare_json,Tb_teacher_declare.class);
         //这里的表名根据实际情况看看是否进行软编码
         String table_name=tb_teacher_declare.getTable_name();
-        
         //插入教师报课信息表
         int su=Teacher_declareDAO.insert(tb_teacher_declare);//su为是否成功的意思
         
