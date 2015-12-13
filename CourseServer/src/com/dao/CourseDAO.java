@@ -85,8 +85,6 @@ public class CourseDAO extends MyDAO {
 			conn = JdbcUtil.getConnection();
 			pst = conn.prepareStatement(sqlCommand);
 			
-			System.out.println(tb_course.getBe_weeks());
-			
 			pst.setString(1, tb_course.getBe_weeks());
 			pst.setString(2, tb_course.getT_name());
 			pst.setString(3, tb_course.getRemark());
