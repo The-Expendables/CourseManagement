@@ -15,15 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
+import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
-import com.example.asus.coursemanagament.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -52,10 +50,10 @@ public class TeachingOfficeSummaryTable extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary_table);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-
+        TextView isCourse = (TextView)findViewById(R.id.isCourse);
+        isCourse.setText(tableName);
     }
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
@@ -153,6 +151,8 @@ public class TeachingOfficeSummaryTable extends Activity {
                         public void run() {
 
 //                            l = gson.fromJson(gson.toJson(l2), type);
+                            Log.i("info",response.length()+"------------");
+                            Log.i("info","-------"+response);
                             l = gson.fromJson(response, type);
                             Intent intent = getIntent();
                             //获取数据,即专业名称，eg：软件工程专业
@@ -176,6 +176,7 @@ public class TeachingOfficeSummaryTable extends Activity {
                                 }
                             }
                             initView();
+
 
                         }
                     });

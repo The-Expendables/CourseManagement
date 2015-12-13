@@ -22,7 +22,7 @@ import com.tb.Tb_teacher_declare;
 
 
 @WebServlet("/Send_teacher_declare")
-public class Get_teacher_declare extends HttpServlet {
+public class GetTeacherDeclare extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
@@ -43,6 +43,7 @@ public class Get_teacher_declare extends HttpServlet {
         
         Tb_teacher_declare tb_teacher_declare=new Tb_teacher_declare();
         tb_teacher_declare=gson.fromJson(teacher_declare_json,Tb_teacher_declare.class);
+//        System.out.println(teacher_declare_json);
         //这里的表名根据实际情况看看是否进行软编码
         String table_name=tb_teacher_declare.getTable_name();
         //插入教师报课信息表

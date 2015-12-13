@@ -55,7 +55,7 @@ public class BatchImport extends AppCompatActivity {
                     e.printStackTrace();
                 }
 //                Toast.makeText(BatchImport.this,data.toString(),Toast.LENGTH_SHORT).show();
-                TextView tvw_show_excel = (TextView) findViewById(R.id.tvw_show_excel);
+                /*TextView tvw_show_excel = (TextView) findViewById(R.id.tvw_show_excel);
                 String result = "";
                 assert list != null;
                 for (int i = 0; i < list.size(); i++) {
@@ -66,7 +66,7 @@ public class BatchImport extends AppCompatActivity {
                     }
                     result += "\n";
                 }
-                tvw_show_excel.setText(result);
+                tvw_show_excel.setText(result);*/
 
             }
         });

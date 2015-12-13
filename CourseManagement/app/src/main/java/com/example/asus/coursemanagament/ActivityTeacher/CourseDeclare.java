@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityLogin.Login;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTeacherCourse;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
@@ -36,6 +35,7 @@ public class CourseDeclare extends TabActivity {
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_teacherBaoCourse>>() {}.getType();
     private String courseTB = new String();
+    private String gonghao = new String();
 
     private SlidingMenu mLeftMenu_teacher;
     private Button btn_task1;
@@ -47,8 +47,8 @@ public class CourseDeclare extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_declare);
         mLeftMenu_teacher = (SlidingMenu) findViewById(R.id.teacher_menu);
-//        tabCreate();
-        initHttp();
+        tabCreate();
+//        initHttp();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         //设置侧滑菜单任务管理跳转=========================
         btn_task1 = (Button) findViewById(R.id.btn_task1);
@@ -100,14 +100,15 @@ public class CourseDeclare extends TabActivity {
         TabHost.TabSpec spec;
         Intent intent;
         intent = new Intent(this, CourseBegin.class);
-        intent.putExtra("courseTB",courseTB );
+        intent.putExtra("gonghao",gonghao);
+//        intent.putExtra("courseTB",courseTB );
         spec = tabHost.newTabSpec("tab1")//新建一个tab
                 .setIndicator("开始报课")//设置名称
                 .setContent(intent);//设置显示的intent，也可以为R.id.xx
         tabHost.addTab(spec);//添加到tabhost
 
         intent = new Intent(this, CourseResultInfo.class);
-        intent.putExtra("courseTB", courseTB);
+//        intent.putExtra("courseTB", courseTB);
         spec = tabHost.newTabSpec("tab2")
                 .setIndicator("查看报课结果")
                 .setContent(intent);
@@ -154,21 +155,21 @@ public class CourseDeclare extends TabActivity {
                             l = gson.fromJson(response, type);
                             Intent intent = getIntent();
                             //获取工号，判定教师 所属系即专业
-                            String gonghao = intent.getStringExtra("gonghao");
+                             gonghao = intent.getStringExtra("gonghao");
                             Log.i("info", "!!!!!!!!!!!" + gonghao);
                             Bundle bundle2 = new queryDB().queryDB(CourseDeclare.this, tableName, l);
                             int rows2 = bundle2.getInt("rows");
                             int i;
                             String tmp;
                             courseTB = new String();
-//                            for (i = 0; i < rows2; i++) {
-//                                tmp = "cell" + i;
-//                                if (bundle2.getString(tmp + 3).equals(gonghao)) {
-//                                    courseTB = bundle2.getString(tmp + 0);
-//                                    break;
-//                                }
-//                            }
-                            courseTB = "软件工程专业";//测试使用，之后删除，将前面的代码解注释
+                            for (i = 0; i < rows2; i++) {
+                                tmp = "cell" + i;
+                                if (bundle2.getString(tmp + 3).equals(gonghao)) {
+                                    courseTB = bundle2.getString(tmp + 0);
+                                    break;
+                                }
+                            }
+
                             tabCreate();
                         }
                     });
