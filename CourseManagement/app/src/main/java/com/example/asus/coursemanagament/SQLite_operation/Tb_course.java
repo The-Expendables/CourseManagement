@@ -5,18 +5,18 @@ package com.example.asus.coursemanagament.SQLite_operation;
  */
 public class Tb_course {
     private String id;    //编号；主键
-    private String grade;        //年级
-    private String major;       //专业
-    private String p_cnt;        //人数
-    private String c_name;      //课程名称
-    private String type;        //选修类型
-    private String credit;       //学分
-    private String times;        //学时
-    private String exp_times;    //实验学时
-    private String pra_times;   //上机学时
-    private String be_weeks;    //起讫周序
-    private String t_name;      //任课教师
-    private String remark;      //备注
+    private String grade;        //年级j=0
+    private String major;       //专业1
+    private String p_cnt;        //人数2
+    private String c_name;      //课程名称3
+    private String type;        //选修类型4
+    private String credit;       //学分5
+    private String times;        //学时6
+    private String exp_times;    //实验学时7
+    private String pra_times;   //上机学时8
+    private String be_weeks;    //起讫周序9
+    private String t_name;      //任课教师10
+    private String remark;      //备注11
 
     public String getId() {
         return id;

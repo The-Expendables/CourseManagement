@@ -18,30 +18,16 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
 import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
-
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
-
-
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
 import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
 import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class  Login extends Activity {
@@ -138,7 +124,7 @@ public class  Login extends Activity {
             SQLOperateImpl tel = new SQLOperateImpl(Login.this);
             Tb_teachingoffice tele = tel.findById_teachingoffice("12345");
             Dia.setTitle("忘记密码？");
-            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:" + tele.getPhone());
+            Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:18753621145");
             Dia.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -192,9 +178,13 @@ public class  Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            goTo();
+//            goTo();
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
+
+            GlobalVariables.userId=username;
+            GlobalVariables.password=password;
+
             SQLOperateImpl person = new SQLOperateImpl(Login.this);
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();

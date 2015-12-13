@@ -38,11 +38,12 @@ public class GetTeacherDeclare extends HttpServlet {
     	
     	request.setCharacterEncoding("UTF-8"); //避免中文乱码 POST方式提交  
     	
-        String teacher_declare_json = request.getParameter("teacher_declare_json");
+        String teacher_declare_json = request.getParameter("tb_teacher_declare_json");
 //        System.out.println(table_json);
         
         Tb_teacher_declare tb_teacher_declare=new Tb_teacher_declare();
         tb_teacher_declare=gson.fromJson(teacher_declare_json,Tb_teacher_declare.class);
+//        System.out.println(teacher_declare_json);
         //这里的表名根据实际情况看看是否进行软编码
         String table_name=tb_teacher_declare.getTable_name();
         
