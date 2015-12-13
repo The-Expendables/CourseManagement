@@ -42,17 +42,17 @@ public class PortForUpdate extends HttpServlet {
         case "教师信息表":
         	Tb_teacher tb_teacher=
         			gson.fromJson(info_json, Tb_teacher.class);
-        	su_teacher=TeacherDAO.insert(tb_teacher);
+        	su_teacher=TeacherDAO.update(tb_teacher);
         	break;
         case "系负责人信息表":
         	Tb_department tb_department=
         			gson.fromJson(info_json, Tb_department.class);
-        	su_department=DepartmentDAO.insert(tb_department);
+        	su_department=DepartmentDAO.update(tb_department);
         	break;
         case "教学办":
         	Tb_teachingoffice tb_teachingoffice=
         			gson.fromJson(info_json, Tb_teachingoffice.class);
-        	su_teachingoffice=TeachingofficeDAO.insert(tb_teachingoffice);
+        	su_teachingoffice=TeachingofficeDAO.update(tb_teachingoffice);
         	break;
         }
         
@@ -65,8 +65,8 @@ public class PortForUpdate extends HttpServlet {
         	str="系负责人";
         }
         String ret="";
-        if(str.length()>0) ret=str+"信息插入成功";
-        else ret="信息插入失败";
+        if(str.length()>0) ret=str+"信息更新成功";
+        else ret="信息更新失败";
         
         response.getOutputStream().write(ret.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");

@@ -30,7 +30,7 @@ public class teacherDAOTest {
 		tb_teacher.setPassword("10086");
 		tb_teacher.setDepartment("10086");
 		tb_teacher.setPhone("10086");
-		tb_teacher.setName("sqhsb!!!");
+		tb_teacher.setName("sqb!!!");
 		TeacherDAO.update(tb_teacher);
 	}
 

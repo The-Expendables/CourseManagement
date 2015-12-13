@@ -72,8 +72,8 @@ public class PortForInsert extends HttpServlet {
         	str="系负责人";
         }
         String ret="";
-        if(str.length()>0) ret=str+"信息更新成功";
-        else ret="信息更新失败";
+        if(str.length()>0) ret=str+"信息插入成功";
+        else ret="信息插入失败";
         
         response.getOutputStream().write(ret.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
