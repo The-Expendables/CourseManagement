@@ -59,7 +59,7 @@ public class ExcelUtil {
 
     public static void writeExcel(String currentpath,List list){
         try{
-            Log.i("info","In Writ Excel");
+//            Log.i("info","In Writ Excel");
             WritableWorkbook wwb;
             OutputStream os=new FileOutputStream(currentpath);
             wwb=Workbook.createWorkbook(os);

@@ -37,6 +37,8 @@ public class PortForInsert extends HttpServlet {
         String table_name= request.getParameter("table_name");
         String info_json = request.getParameter("info_json");
         
+        System.out.println(info_json);
+        
         int su_teacher=0,su_teachingoffice=0,su_department=0;
         
         switch(table_name){
@@ -73,7 +75,7 @@ public class PortForInsert extends HttpServlet {
         }
         String ret="";
         if(str.length()>0) ret=str+"信息插入成功";
-        else ret="信息插入失败";
+        else ret=str+"信息插入失败";
         
         response.getOutputStream().write(ret.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
