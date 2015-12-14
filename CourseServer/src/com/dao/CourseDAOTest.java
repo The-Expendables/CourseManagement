@@ -42,7 +42,7 @@ public class CourseDAOTest {
 	public void testupdate(){
 		String table_name="计算机科学与技术专业开课表";
 		Tb_course tb_course=
-				new Tb_course("","2012","计算机科学与技术","88","毕业设计(论文)","毕业设计","15","","","","1","2","3");
+				new Tb_course("","2012","计算机科学与技术","88","毕业设计(论文)","毕业设计","15","","","","","","");
 		int ret=0;
 		ret=CourseDAO.update(tb_course, table_name);
 		System.out.print(ret);
