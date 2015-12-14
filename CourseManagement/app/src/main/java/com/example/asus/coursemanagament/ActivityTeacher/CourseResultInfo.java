@@ -48,7 +48,7 @@ public class CourseResultInfo extends AppCompatActivity {
         setContentView(R.layout.activity_course_result_info);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-        initView();
+
     }
 //listview 点击事件========================================
 class MyOnItemClickListener implements AdapterView.OnItemClickListener{
@@ -129,11 +129,11 @@ class MyTextWatcher implements TextWatcher {
                             ListCurriculums cell;
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
+//                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
                                     cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
                                             "截止日期:", bundle.getString(tmp + 2));
                                     listCurriculumses.add(cell);
-                                }
+//                                }
                             }
                             initView();
                         }

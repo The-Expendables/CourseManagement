@@ -1,25 +1,13 @@
 package com.example.asus.coursemanagament.SQLite_operation;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wwk on 2015/11/20.
@@ -85,6 +73,7 @@ public class queryDB {
 
 
         //将 l 中的数据放入bundle中，按照不同的表定义不同类型
+
         Iterator it = l.iterator();
         while (it.hasNext()) {
             switch (k) {

@@ -294,7 +294,6 @@ public class TotalCourseInfo extends Activity {
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
         View view  = inflater.inflate(R.layout.activity_course_info, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        int j=0;
         Tb_course tb_course=l.get(i);
         TextView grade = (TextView) view.findViewById(R.id.grade);
         grade.setText(tb_course.getGrade());

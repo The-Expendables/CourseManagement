@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dao.CourseDAO;
 import com.dao.DepartmentDAO;
 import com.dao.TeacherDAO;
 import com.dao.TeachingofficeDAO;
 import com.google.gson.Gson;
+import com.tb.Tb_course;
 import com.tb.Tb_department;
 import com.tb.Tb_teacher;
 import com.tb.Tb_teachingoffice;
@@ -36,7 +38,7 @@ public class PortForUpdate extends HttpServlet {
         String table_name= request.getParameter("table_name");
         String info_json = request.getParameter("info_json");
         
-        int su_teacher=0,su_teachingoffice=0,su_department=0;
+        int su_teacher=0,su_teachingoffice=0,su_department=0,su_course=0;
         
         switch(table_name){
         case "教师信息表":
@@ -54,6 +56,46 @@ public class PortForUpdate extends HttpServlet {
         			gson.fromJson(info_json, Tb_teachingoffice.class);
         	su_teachingoffice=TeachingofficeDAO.update(tb_teachingoffice);
         	break;
+        case "计算机科学与技术专业开课表":
+        	Tb_course tb_course1=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course1,"计算机科学与技术专业开课表");
+        	break;
+        case "计算机科学与技术（实验班）专业开课表":
+        	Tb_course tb_course2=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course2,"计算机科学与技术（实验班）专业开课表");
+        	break;
+        case "计算机科学与技术（卓越班）专业开课表":
+        	Tb_course tb_course3=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course3,"计算机科学与技术（卓越班）专业开课表");
+        	break;
+        case "软件工程专业开课表":
+        	Tb_course tb_course4=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course4,"软件工程专业开课表");
+        	break;
+        case "网络工程专业开课表":
+        	Tb_course tb_course5=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course5,"网络工程专业开课表");
+        	break;
+        case "信息安全专业开课表":
+        	Tb_course tb_course6=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course6,"信息安全专业开课表");
+        	break;
+        case "数学类专业开课表":
+        	Tb_course tb_course7=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course7,"数学类专业开课表");
+        	break;
+        case "数学类（实验班）专业开课表":
+        	Tb_course tb_course8=
+					gson.fromJson(info_json, Tb_course.class);
+        	su_course=CourseDAO.update(tb_course8,"数学类（实验班）专业开课表");
+        	break;
         }
         
         String str="";
@@ -63,6 +105,8 @@ public class PortForUpdate extends HttpServlet {
         	str="教学办";
         }else if(su_department!=0){
         	str="系负责人";
+        }else if(su_course!=0){
+        	str="课程";
         }
         String ret="";
         if(str.length()>0) ret=str+"信息更新成功";

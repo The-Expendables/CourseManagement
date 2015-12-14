@@ -57,6 +57,7 @@ public class CourseChoose  extends Activity {
     private String Grade;
     private String be_weeks;
     private String t_name;
+    private String data;
     private String remark;
     private Gson gson=new Gson();
     private String tb_teacher_declare_json;
@@ -67,6 +68,8 @@ public class CourseChoose  extends Activity {
         //获取数据，eg：网络工程专业：。。。。
          courseTB = intent.getStringExtra("courseTB");
         gonghao = intent.getStringExtra("gonghao");
+        data = intent.getStringExtra("data");
+        Toast.makeText(CourseChoose.this,data,Toast.LENGTH_SHORT).show();
          tableName = courseTB;//之后删除开课表三个字
         Log.i(gonghao,"!!!!!!gonghao");
         super.onCreate(savedInstanceState);
@@ -80,6 +83,7 @@ public class CourseChoose  extends Activity {
     class MyOnItemClickListener implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             showDialog2(position);
         }
     }
@@ -132,7 +136,7 @@ public class CourseChoose  extends Activity {
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
-        params.put("type",""+1);
+        params.put("type", "" + 1);
         try {
             HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
                 @Override
@@ -171,23 +175,6 @@ public class CourseChoose  extends Activity {
                         public void run() {
 
                             Toast.makeText(CourseChoose.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//
-//                            bundle = new queryDB().queryDB(CourseChoose.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListTotalCourse cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                    cell = new ListTotalCourse(bundle.getString(tmp + 3));
-//                                    listInfos.add(cell);
-//
-//                            }
-//                            initView();
-
                         }
                     });
                 }
@@ -195,20 +182,6 @@ public class CourseChoose  extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        Intent intent = getIntent();
-//        //获取数据
-//        String zhuanye = intent.getStringExtra("zhuanye");
-//        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
-//        int rows = bundle.getInt("rows");
-//        int cols = bundle.getInt("cols");
-//        int i;
-//        String tmp;
-//        ListTotalCourse cell;
-//        for (i = 0; i < rows; i++) {
-//            tmp = "cell" + i;
-//            cell = new ListTotalCourse(bundle.getString(tmp + 4));
-//            listInfos.add(cell);
-//        }
     }
     //=========================================================
 
@@ -269,6 +242,12 @@ public class CourseChoose  extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showDialog11();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
         AlertDialog dialog = builder.create();  //创建一个dialog

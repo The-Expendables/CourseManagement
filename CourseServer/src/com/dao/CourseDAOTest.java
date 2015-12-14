@@ -40,29 +40,11 @@ public class CourseDAOTest {
 	
 	@Test
 	public void testupdate(){
-		Tb_teacher_declare tb_teacher_declare=new Tb_teacher_declare
-				("计算机科学与技术专业开课表","毕业设计(论文)","2012","1-3","110","苏钦辉sp","我是傻逼");
-        String table_name=tb_teacher_declare.getTable_name();
-        
-        //插入教师报课信息表
-//        Teacher_declareDAO.insert(tb_teacher_declare);
-        
-        //插入开课表=================================================================
-        Tb_course tb_course=CourseDAO.query(tb_teacher_declare.getGrade(), 
-        		tb_teacher_declare.getCourse_name(), table_name);
-//        if(tb_course==null) System.out.println("tb_course is null");
-//        else System.out.println("tb_course is not null");
-        //与查询得到的数据进行合并
-        System.out.println(tb_course.getBe_weeks()+
-        		":"+tb_course.getT_name()+":"+tb_course.getRemark());
-        
-        tb_course.setThree(tb_teacher_declare.getBe_weeks(),
-        		tb_teacher_declare.getT_name(), tb_teacher_declare.getRemark());
-        
-//        System.out.println(tb_course.getBe_weeks()+
-//        		":"+tb_course.getT_name()+":"+tb_course.getRemark());
-        int su=CourseDAO.update(tb_course, table_name);
-        if(su!=0) System.out.println("update success!");
-        //====================
+		String table_name="计算机科学与技术专业开课表";
+		Tb_course tb_course=
+				new Tb_course("","2012","计算机科学与技术","88","毕业设计(论文)","毕业设计","15","","","","1","2","3");
+		int ret=0;
+		ret=CourseDAO.update(tb_course, table_name);
+		System.out.print(ret);
 	}
 }
