@@ -39,6 +39,7 @@ public class TeachingOfficeSummaryTable extends Activity {
     private List<Tb_teacherBaoCourse> l = new ArrayList<Tb_teacherBaoCourse>();
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_teacherBaoCourse>>() {}.getType();
+    private String courseTB = new String();
 
     private EditText search;
     private List<ListProfessionals> listInfos= new ArrayList<ListProfessionals>(); //存放Item
@@ -91,8 +92,11 @@ public class TeachingOfficeSummaryTable extends Activity {
                 //教师个人报课信息，传送教师的工号
                 Intent intent = new Intent(TeachingOfficeSummaryTable.this,TeacherCourseInfo.class);
                 TextView info = (TextView)view.findViewById(R.id.jobNumber);
+                TextView info2 = (TextView)view.findViewById(R.id.teacherName);
                 String infoo = info.getText().toString();
+                String infoo2 = info2.getText().toString() ;
                 intent.putExtra("gonghao",infoo);
+                intent.putExtra("t_name",infoo2);
                 startActivity(intent);
             }
         }
@@ -168,9 +172,9 @@ public class TeachingOfficeSummaryTable extends Activity {
                             listInfos.add(cell);
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                if(bundle.getString(tmp + 0).equals(zhuanye+"开课表") ) {
+                                if(bundle.getString(tmp + 0).equals(zhuanye) ) {
                                     cell = new ListProfessionals(bundle.getString(tmp + 4),
-                                            "工号:", bundle.getString(tmp + 3));
+                                            "工号:", bundle.getString(tmp + 5));
                                     listInfos.add(cell);
 
                                 }

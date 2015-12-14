@@ -11,10 +11,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
 import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
 import com.example.asus.coursemanagament.SQLite_operation.queryDB;
 import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
@@ -36,7 +36,9 @@ public class TeacherCourseInfo extends Activity {
     private List<Tb_teacherBaoCourse> l = new ArrayList<Tb_teacherBaoCourse>();
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_teacherBaoCourse>>() {}.getType();
-    private Bundle bundle;
+    String gonghao = new String();
+    Intent intent = new Intent();
+
 
     private EditText search;
     private List<ListTeacherCourse> listInfos= new ArrayList<ListTeacherCourse>(); //存放Item
@@ -48,8 +50,13 @@ public class TeacherCourseInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_course_info);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+         intent = getIntent();
+        String t_name = intent.getStringExtra("t_name");
+        TextView tc = (TextView)findViewById(R.id.teacherCourse);
+        tc.setText(t_name+"报课情况");//title设置名称
         initList();
-        initView();
+
 
     }
     //search过滤搜索框事件============================================
@@ -119,14 +126,15 @@ public class TeacherCourseInfo extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-//                            l = gson.fromJson(gson.toJson(l2), type);
+//                            Log.i(,"------response-----"+response);
                             l = gson.fromJson(response, type);
-                            Intent intent = getIntent();
                             //获取数据,获得教师的工号
-                            String gonghao = intent.getStringExtra("gonghao");
+                             gonghao = intent.getStringExtra("gonghao");
+                            //获取数据,获得教师姓名
+
                             //汇总表和教师信息
-                            bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
+                            Log.i(gonghao,"------gonghao-----");
+                            Bundle bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
                             int i;
@@ -134,11 +142,13 @@ public class TeacherCourseInfo extends Activity {
                             ListTeacherCourse cell;
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                if (bundle.getString(tmp + 3).equals(gonghao)) {
+                                if (bundle.getString(tmp + 5).equals(gonghao)) {
+                                    Log.i("info!!!!",bundle.getString(tmp + 5));
                                     cell = new ListTeacherCourse(bundle.getString(tmp + 1),"");
                                     listInfos.add(cell);
                                 }
                             }
+
                             initView();
                         }
                     });

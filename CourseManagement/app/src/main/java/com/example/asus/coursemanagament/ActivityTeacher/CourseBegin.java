@@ -38,6 +38,7 @@ public class CourseBegin extends AppCompatActivity {
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
     private Bundle bundle;
+    private String data;
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
@@ -50,9 +51,7 @@ public class CourseBegin extends AppCompatActivity {
         setContentView(R.layout.activity_course_begin);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-
         initView();
-
 
 
 
@@ -66,10 +65,8 @@ public class CourseBegin extends AppCompatActivity {
             TextView info = (TextView)view.findViewById(R.id.ItemName);
             //传送给下一个UI 专业名称（开课表表名）
             String infoo = info.getText().toString();
-            intent.putExtra("courseTB",infoo);
-
-
-
+            intent.putExtra("courseTB", infoo);
+            intent.putExtra("data",data);
             startActivity(intent);
 
         }
@@ -128,7 +125,6 @@ public class CourseBegin extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
 //                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
 //                            Intent intent = getIntent();
@@ -144,6 +140,7 @@ public class CourseBegin extends AppCompatActivity {
 //                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
                                     cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
                                             "截止日期:", bundle.getString(tmp + 2));
+                                data = bundle.getString(tmp + 2);
                                     listCurriculumses.add(cell);
 //                                }
                             }

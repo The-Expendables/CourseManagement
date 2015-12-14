@@ -151,6 +151,7 @@ public class CourseResult extends AppCompatActivity {
 
 //                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
+//                            Intent intent = getIntent();
                             bundle = new queryDB().queryDB(CourseResult.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
