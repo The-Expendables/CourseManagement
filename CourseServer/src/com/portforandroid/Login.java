@@ -36,21 +36,21 @@ public class Login extends HttpServlet {
 //        int type=1;
 //        String username="21001";
 //        String password="21001";
-        boolean flag=UsersDAO.login(type,username,password);
+        String flag=UsersDAO.login(type, username, password);
 //        if(!flag) System.out.println("---------flag null----------");
 //        boolean flag=true;
         try {
         	String ret;
-            if (flag) {
-            	LOGIN_FLAG="success";
-            	System.out.println(LOGIN_FLAG);
-//            	Tb_teacher th4 = new Tb_teacher("23459","23459","计算机专业","钱八","男","1985年11月","925471746@qq.com","18865247894");
-            	ret="true";
-            }else{
-                 //登录失败  
+            if (flag.equals("false")) {
+            	//登录失败  
                 LOGIN_FLAG="failure";
                 ret="false";
                 System.out.println(LOGIN_FLAG);
+            }else{
+            	LOGIN_FLAG="success";
+            	System.out.println(LOGIN_FLAG);
+//            	Tb_teacher th4 = new Tb_teacher("23459","23459","计算机专业","钱八","男","1985年11月","925471746@qq.com","18865247894");
+            	ret=flag;
             }
             response.getOutputStream().write(ret.getBytes("UTF-8"));
         	response.setContentType("text/json); charset=UTF-8");
