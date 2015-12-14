@@ -5,22 +5,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TeachingOfficeSummaryTable;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
+import com.example.asus.coursemanagament.SQLite_operation.queryDB;
+import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
+import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
+import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
 import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SumCourseList extends AppCompatActivity {
+    String tableName = new String ();
+    String zhuanye =new String();
+    private List<Tb_course> l = new ArrayList<Tb_course>();
+    private Gson gson = new Gson();
+    private Type type = new TypeToken<List<Tb_course>>() {}.getType();
+    private Bundle bundle;
 
     private EditText search;
     private List<ListTotalCourse> listInfos= new ArrayList<ListTotalCourse>(); //存放Item
@@ -30,11 +48,16 @@ public class SumCourseList extends AppCompatActivity {
     TotalCoureseListAdapter adapter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        //获取数据，eg：网络工程专业：局域网解析。。。。
+        zhuanye = intent.getStringExtra("zhuanye");
+        tableName = zhuanye;//之后删除开课表三个字
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sum_course_list__xxx);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-        initView();
+//        initView();
 
     }
     //search过滤搜索框事件============================================
@@ -61,8 +84,7 @@ public class SumCourseList extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(SumCourseList.this,SummaryTable.class);
-            startActivity(intent);
+            finish();
 
         }
     }
@@ -85,16 +107,61 @@ public class SumCourseList extends AppCompatActivity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        ListTotalCourse cell;
 
-        for(int i = 0;i < 3; i++){
-            cell = new ListTotalCourse("图形设计");
-            listInfos.add(cell);
+        //连接服务器不能删==================================================================
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("table_name", tableName);
+        params.put("type",""+1);
+        try {
+            HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+//                            l = gson.fromJson(gson.toJson(l2), type);
+                            l = gson.fromJson(response, type);
+                            Intent intent = getIntent();
+                            //获取数据，eg：网络工程专业：局域网解析。。。。
+                            String zhuanye = intent.getStringExtra("zhuanye");
+                            bundle = new queryDB().queryDB(SumCourseList.this, tableName, l);
+                            int rows = bundle.getInt("rows");
+                            int cols = bundle.getInt("cols");
+                            int i;
+                            String tmp;
+                            ListTotalCourse cell;
+                            for (i = 0; i < rows; i++) {
+                                tmp = "cell" + i;
+                                cell = new ListTotalCourse(bundle.getString(tmp + 3));
+                                listInfos.add(cell);
+                            }
+                            initView();
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.i("in onError", "!!!!!!");
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(SumCourseList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
+
+
+
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        for(int i = 0; i < 3; i++){
-            cell = new ListTotalCourse("计算机导论");
-            listInfos.add(cell);
-        }
+
     }
     //=========================================================
 }

@@ -198,7 +198,6 @@ public class  Login extends Activity {
                 params.put("type", "" + number);
                 params.put("username", edtt_userName.getText().toString());
                 params.put("password", edtt_password.getText().toString());
-//                Toast.makeText(Login.this,username+password,Toast.LENGTH_SHORT).show();
                 try {
                     HttpUtil.doPost(GlobalVariables.URL + "/login", params, new HttpCallbackListener() {
                         @Override
@@ -218,7 +217,7 @@ public class  Login extends Activity {
 
                         @Override
                         public void onError(Exception e) {
-//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
                             e.printStackTrace();
                             Log.i("Login", "服务器访问失败");
                             runOnUiThread(new Runnable() {
@@ -247,6 +246,7 @@ public class  Login extends Activity {
                 intent.setClass(Login.this, CourseDeclare.class);
                 break;
             case 2:
+                intent.putExtra("gonghao",username);
                 intent.setClass(Login.this,TaskList.class);
                 break;
             case 3:
