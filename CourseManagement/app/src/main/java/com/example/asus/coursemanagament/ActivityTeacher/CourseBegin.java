@@ -36,13 +36,15 @@ public class CourseBegin extends AppCompatActivity {
     private String tableName = new String("发布表");
     private List<Tb_course_mes> l = new ArrayList<Tb_course_mes>();
     private Gson gson = new Gson();
-    private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
+    private Type type = new TypeToken<List<Tb_course_mes>>() {
+    }.getType();
     private Bundle bundle;
-    private String data;
+    private String Data1;
+    private String[] data_set = new String[3];
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
-    CurriculumsListAdapter adapter ;
+    CurriculumsListAdapter adapter;
 
 
     @Override
@@ -54,23 +56,33 @@ public class CourseBegin extends AppCompatActivity {
         initView();
 
 
-
     }
+
     //listview 点击事件========================================
-    class MyOnItemClickListener implements AdapterView.OnItemClickListener{
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(CourseBegin.this,CourseChoose.class);
-            TextView info = (TextView)view.findViewById(R.id.ItemName);
+            Intent intent = new Intent(CourseBegin.this, CourseChoose.class);
+            TextView info = (TextView) view.findViewById(R.id.ItemName);
             //传送给下一个UI 专业名称（开课表表名）
             String infoo = info.getText().toString();
             intent.putExtra("courseTB", infoo);
-            intent.putExtra("data",data);
+
+            int p1, p2;
+            for (p1 = 0; p1 < Data1.length() && Data1.charAt(p1) != '.'; p1++) ;
+            for(p2=p1+1;p2<Data1.length()&&Data1.charAt(p2)!='.';p2++);
+            data_set[0]=Data1.substring(0,p1);
+            data_set[1]=Data1.substring(p1+1,p2);
+            data_set[2]=Data1.substring(p2+1);
+
+            Log.i("info","<<<<>>>>"+data_set[0]+"."+data_set[1]+"."+data_set[2]);
+
             startActivity(intent);
 
         }
     }
+
     //========================================================
 //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
@@ -90,20 +102,22 @@ public class CourseBegin extends AppCompatActivity {
 
         }
     }
+
     //===========================================================
 //控件绑定，事件监听===========================================
-    private void initView(){
-        search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
+    private void initView() {
+        search = (EditText) findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
 
         adapter = new CurriculumsListAdapter(CourseBegin.this, listCurriculumses);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
     }
+
     //======================================================
     // 初始化listView数据===========================================
-    private void initList(){
+    private void initList() {
 
 
         //测试用例
@@ -117,7 +131,7 @@ public class CourseBegin extends AppCompatActivity {
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
-        params.put("type",""+5);
+        params.put("type", "" + 5);
         try {
             HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
                 @Override
@@ -138,10 +152,10 @@ public class CourseBegin extends AppCompatActivity {
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
 //                                if ((bundle.getString(tmp + 0)).equals(courseTB)) {
-                                    cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
-                                            "截止日期:", bundle.getString(tmp + 2));
-                                data = bundle.getString(tmp + 2);
-                                    listCurriculumses.add(cell);
+                                cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
+                                        "截止日期:", bundle.getString(tmp + 2));
+                                Data1 = bundle.getString(tmp + 2);
+                                listCurriculumses.add(cell);
 //                                }
                             }
                             initView();

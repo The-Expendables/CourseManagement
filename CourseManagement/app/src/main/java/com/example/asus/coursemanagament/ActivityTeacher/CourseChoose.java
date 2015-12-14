@@ -57,7 +57,6 @@ public class CourseChoose  extends Activity {
     private String Grade;
     private String be_weeks;
     private String t_name;
-    private String data;
     private String remark;
     private Gson gson=new Gson();
     private String tb_teacher_declare_json;
@@ -68,8 +67,6 @@ public class CourseChoose  extends Activity {
         //获取数据，eg：网络工程专业：。。。。
          courseTB = intent.getStringExtra("courseTB");
         gonghao = intent.getStringExtra("gonghao");
-        data = intent.getStringExtra("data");
-        Toast.makeText(CourseChoose.this,data,Toast.LENGTH_SHORT).show();
          tableName = courseTB;//之后删除开课表三个字
         Log.i(gonghao,"!!!!!!gonghao");
         super.onCreate(savedInstanceState);
