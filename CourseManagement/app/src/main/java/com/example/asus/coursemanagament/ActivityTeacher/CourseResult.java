@@ -26,12 +26,12 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_course;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.TotalCoureseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,7 +60,7 @@ public class CourseResult extends AppCompatActivity {
         Intent intent = getIntent();
         //获取数据，eg：网络工程专业：。。。。
         courseTB = intent.getStringExtra("courseTB");
-        tableName = courseTB;//之后删除开课表三个字
+        tableName = courseTB;
         Log.i(tableName, "!!!!!!tablename");
 
         super.onCreate(savedInstanceState);
@@ -127,17 +127,7 @@ public class CourseResult extends AppCompatActivity {
     // 初始化listView数据===========================================
     private void initList(){
 
-        //测试用例
-        final  List<Tb_course> l2 = new ArrayList<Tb_course>();
-        Tb_course t1 = new Tb_course("2013级","软件工程专业","144","软工实践",
-                "实践选修", "2分","48h","24h","24h","1-8周","张东","");
-        l2.add(t1);
-        Tb_course t2 = new Tb_course("2013级","软件工程专业","144","UML建模",
-                "专业选修", "2分","48h","24h","24h","1-8周","郭洪","");
-        l2.add(t2);
-        Log.i(gson.toJson(l2), "!!!!!!!");
-
-        //连接服务器不能删==================================================================
+        //连接服务器==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
         params.put("type",""+1);
@@ -149,9 +139,7 @@ public class CourseResult extends AppCompatActivity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
-//                            Intent intent = getIntent();
                             bundle = new queryDB().queryDB(CourseResult.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
@@ -180,21 +168,6 @@ public class CourseResult extends AppCompatActivity {
 
                             Toast.makeText(CourseResult.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//
-//                            bundle = new queryDB().queryDB(CourseResult.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListTotalCourse cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                cell = new ListTotalCourse(bundle.getString(tmp + 3));
-//                                listInfos.add(cell);
-//
-//                            }
-//                            initView();
 
                         }
                     });
@@ -203,20 +176,6 @@ public class CourseResult extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        Intent intent = getIntent();
-//        //获取数据
-//        String zhuanye = intent.getStringExtra("zhuanye");
-//        Bundle bundle = new queryDB().queryDB(this, zhuanye+"课程表");
-//        int rows = bundle.getInt("rows");
-//        int cols = bundle.getInt("cols");
-//        int i;
-//        String tmp;
-//        ListTotalCourse cell;
-//        for (i = 0; i < rows; i++) {
-//            tmp = "cell" + i;
-//            cell = new ListTotalCourse(bundle.getString(tmp + 4));
-//            listInfos.add(cell);
-//        }
     }
     //=========================================================
 

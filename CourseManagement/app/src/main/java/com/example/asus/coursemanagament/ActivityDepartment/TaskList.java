@@ -20,14 +20,14 @@ import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListCurriculums;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_department;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Tb.Tb_course_mes;
+import com.example.asus.coursemanagament.Tb.Tb_department;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.CurriculumsListAdapter;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

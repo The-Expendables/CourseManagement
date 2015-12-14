@@ -16,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_teacherBaoCourse;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.ProfessionalsListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -132,15 +132,6 @@ public class TeachingOfficeSummaryTable extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
-        //测试用例
-        final  List<Tb_teacherBaoCourse> l2 = new ArrayList<Tb_teacherBaoCourse>();
-        Tb_teacherBaoCourse t1 = new Tb_teacherBaoCourse("软件工程专业开课表",
-                "软工实践", "2013级", "11322","张东","1-8周","");
-        l2.add(t1);
-        Tb_teacherBaoCourse t2 = new Tb_teacherBaoCourse("网络工程专业开课表",
-                "局域网解析", "2013级", "11333","科小","1-8周","");
-        l2.add(t2);
-        Log.i(gson.toJson(l2), "!!!!!!!");
 
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -154,7 +145,6 @@ public class TeachingOfficeSummaryTable extends Activity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             Log.i("info",response.length()+"------------");
                             Log.i("info","-------"+response);
                             l = gson.fromJson(response, type);
@@ -195,28 +185,6 @@ public class TeachingOfficeSummaryTable extends Activity {
                         public void run() {
 
                             Toast.makeText(TeachingOfficeSummaryTable.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//                            Intent intent = getIntent();
-//                            //获取数据,即专业名称，eg：软件工程专业
-//                            String zhuanye = intent.getStringExtra("zhuanye");
-//                            //汇总表和教师信息
-//                            Bundle bundle = new queryDB().queryDB(TeachingOfficeSummaryTable.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListProfessionals cell;
-//                            cell = new ListProfessionals("汇","总","表");
-//                            listInfos.add(cell);
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                if(bundle.getString(tmp + 0).equals(zhuanye+"开课表") ) {
-//                                    cell = new ListProfessionals(bundle.getString(tmp + 4),
-//                                            "工号:", bundle.getString(tmp + 3));
-//                                    listInfos.add(cell);
-//                                }
-//                            }
-//                            initView();
                         }
                     });
                 }

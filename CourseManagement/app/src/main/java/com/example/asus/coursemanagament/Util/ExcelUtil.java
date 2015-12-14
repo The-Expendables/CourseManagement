@@ -1,7 +1,5 @@
-package com.example.asus.coursemanagament.UiCustomViews;
+package com.example.asus.coursemanagament.Util;
 
-import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 
 import java.io.File;
@@ -17,7 +15,6 @@ import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
-import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
 import jxl.write.Label;
 import jxl.write.WritableCellFormat;

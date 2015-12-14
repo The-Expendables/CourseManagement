@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 
 public class PasswordChange1 extends Activity {
     private SlidingMenu mLeftMenu_teacher;

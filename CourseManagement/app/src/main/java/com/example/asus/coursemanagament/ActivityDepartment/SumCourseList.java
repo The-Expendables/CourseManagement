@@ -15,14 +15,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TeachingOfficeSummaryTable;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_course;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.TotalCoureseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -120,7 +119,6 @@ public class SumCourseList extends AppCompatActivity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
                             Intent intent = getIntent();
                             //获取数据，eg：网络工程专业：局域网解析。。。。

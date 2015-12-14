@@ -13,19 +13,16 @@ import cn.qqtheme.framework.picker.FilePicker;
 import jxl.read.biff.BiffException;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
-import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.example.asus.coursemanagament.Tb.Tb_teacher;
+import com.example.asus.coursemanagament.Util.ExcelUtil;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -130,17 +127,7 @@ public class BatchImport extends AppCompatActivity {
 
                 }
                 teachers_json=gson.toJson(teachers);
-//                String result = "";
-//                assert list != null;
-//                for (int i = 0; i < list.size(); i++) {
-//                    String[] str = (String[]) list.get(i);
-//                    for (String aStr : str) {
-//                        result += aStr;
-//                        result += ";";
-//                    }
-////                    result += "\n";
-//                }
-//                Log.i("info","<<>>"+result);
+
             }
         });
         picker.showAtBottom();

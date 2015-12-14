@@ -15,12 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.TeacherCourseListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_teacherBaoCourse;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.TeacherCourseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -105,17 +105,8 @@ public class TeacherCourseInfo extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
-        //测试用例
-        final  List<Tb_teacherBaoCourse> l2 = new ArrayList<Tb_teacherBaoCourse>();
-        Tb_teacherBaoCourse t1 = new Tb_teacherBaoCourse("软件工程专业",
-                "软工实践", "2013级", "11322","张东","1-8周","");
-        l2.add(t1);
-        Tb_teacherBaoCourse t2 = new Tb_teacherBaoCourse("软件工程专业",
-                "XML建模", "2013级", "11322","张东","1-8周","");
-        l2.add(t2);
-        Log.i(gson.toJson(l2), "!!!!!!!");
 
-        //连接服务器不能删==================================================================
+        //连接服务器================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
         params.put("type",""+2);
@@ -126,7 +117,7 @@ public class TeacherCourseInfo extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            Log.i(,"------response-----"+response);
+
                             l = gson.fromJson(response, type);
                             //获取数据,获得教师的工号
                              gonghao = intent.getStringExtra("gonghao");
@@ -164,25 +155,6 @@ public class TeacherCourseInfo extends Activity {
 
                             Toast.makeText(TeacherCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//                            Intent intent = getIntent();
-//                            //获取数据,获得教师的工号
-//                            String gonghao = intent.getStringExtra("gonghao");
-//                            //汇总表和教师信息
-//                            bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListTeacherCourse cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                if (bundle.getString(tmp + 3).equals(gonghao)) {
-//                                    cell = new ListTeacherCourse(bundle.getString(tmp + 1), "");
-//                                    listInfos.add(cell);
-//                                }
-//                            }
-//                            initView();
                         }
                     });
                 }

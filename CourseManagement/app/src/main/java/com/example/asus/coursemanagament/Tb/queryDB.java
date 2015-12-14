@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.SQLite_operation;
+package com.example.asus.coursemanagament.Tb;
 
 import android.content.Context;
 import android.os.Bundle;

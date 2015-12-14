@@ -9,14 +9,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 
 public class UserManage extends Activity {
 
