@@ -11,16 +11,16 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacherBaoCourse;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.TeacherCourseListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_teacherBaoCourse;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.TeacherCourseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,7 +36,9 @@ public class TeacherCourseInfo extends Activity {
     private List<Tb_teacherBaoCourse> l = new ArrayList<Tb_teacherBaoCourse>();
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_teacherBaoCourse>>() {}.getType();
-    private Bundle bundle;
+    String gonghao = new String();
+    Intent intent = new Intent();
+
 
     private EditText search;
     private List<ListTeacherCourse> listInfos= new ArrayList<ListTeacherCourse>(); //存放Item
@@ -48,8 +50,13 @@ public class TeacherCourseInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_course_info);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+         intent = getIntent();
+        String t_name = intent.getStringExtra("t_name");
+        TextView tc = (TextView)findViewById(R.id.teacherCourse);
+        tc.setText(t_name+"报课情况");//title设置名称
         initList();
-        initView();
+
 
     }
     //search过滤搜索框事件============================================
@@ -98,17 +105,8 @@ public class TeacherCourseInfo extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
-        //测试用例
-        final  List<Tb_teacherBaoCourse> l2 = new ArrayList<Tb_teacherBaoCourse>();
-        Tb_teacherBaoCourse t1 = new Tb_teacherBaoCourse("软件工程专业",
-                "软工实践", "2013级", "11322","张东","1-8周","");
-        l2.add(t1);
-        Tb_teacherBaoCourse t2 = new Tb_teacherBaoCourse("软件工程专业",
-                "XML建模", "2013级", "11322","张东","1-8周","");
-        l2.add(t2);
-        Log.i(gson.toJson(l2), "!!!!!!!");
 
-        //连接服务器不能删==================================================================
+        //连接服务器================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
         params.put("type",""+2);
@@ -120,13 +118,14 @@ public class TeacherCourseInfo extends Activity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
-                            Intent intent = getIntent();
                             //获取数据,获得教师的工号
-                            String gonghao = intent.getStringExtra("gonghao");
+                             gonghao = intent.getStringExtra("gonghao");
+                            //获取数据,获得教师姓名
+
                             //汇总表和教师信息
-                            bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
+                            Log.i(gonghao,"------gonghao-----");
+                            Bundle bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
                             int i;
@@ -134,11 +133,13 @@ public class TeacherCourseInfo extends Activity {
                             ListTeacherCourse cell;
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                if (bundle.getString(tmp + 3).equals(gonghao)) {
+                                if (bundle.getString(tmp + 5).equals(gonghao)) {
+                                    Log.i("info!!!!",bundle.getString(tmp + 5));
                                     cell = new ListTeacherCourse(bundle.getString(tmp + 1),"");
                                     listInfos.add(cell);
                                 }
                             }
+
                             initView();
                         }
                     });
@@ -154,25 +155,6 @@ public class TeacherCourseInfo extends Activity {
 
                             Toast.makeText(TeacherCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//                            Intent intent = getIntent();
-//                            //获取数据,获得教师的工号
-//                            String gonghao = intent.getStringExtra("gonghao");
-//                            //汇总表和教师信息
-//                            bundle = new queryDB().queryDB(TeacherCourseInfo.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListTeacherCourse cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                if (bundle.getString(tmp + 3).equals(gonghao)) {
-//                                    cell = new ListTeacherCourse(bundle.getString(tmp + 1), "");
-//                                    listInfos.add(cell);
-//                                }
-//                            }
-//                            initView();
                         }
                     });
                 }

@@ -20,13 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.ExcelUtil;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.TotalCoureseListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_course;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.ExcelUtil;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.TotalCoureseListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -128,7 +128,6 @@ public class TotalCourseInfo extends Activity {
                 FilePicker picker = new FilePicker(TotalCourseInfo.this);
                 picker.setShowHideDir(false);
                 picker.setInitPath(Common.getRootPath(TotalCourseInfo.this) + "Download/");
-                //picker.setAllowExtensions(new String[]{".apk"});
                 picker.setMode(FilePicker.Mode.File);
                 picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
                     @Override
@@ -201,15 +200,6 @@ public class TotalCourseInfo extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
-//        //测试用例
-//        final  List<Tb_course> l2 = new ArrayList<Tb_course>();
-//        Tb_course t1 = new Tb_course("2013级","软件工程专业","144","软工实践",
-//                "实践选修", "2分","48h","24h","24h","1-8周","张东","");
-//        l2.add(t1);
-//        Tb_course t2 = new Tb_course("2013级","软件工程专业","144","UML建模",
-//                "专业选修", "2分","48h","24h","24h","1-8周","郭洪","");
-//        l2.add(t2);
-//        Log.i(gson.toJson(l2), "!!!!!!!");
 
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -223,7 +213,6 @@ public class TotalCourseInfo extends Activity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
 
                             l = gson.fromJson(response, type);
                             Intent intent = getIntent();
@@ -260,22 +249,7 @@ public class TotalCourseInfo extends Activity {
                         public void run() {
                             Toast.makeText(TotalCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//                            Intent intent = getIntent();
-//                            //获取数据，eg：网络工程专业：局域网解析。。。。
-//                            String zhuanye = intent.getStringExtra("zhuanye");
-//                            Bundle bundle = new queryDB().queryDB(TotalCourseInfo.this, tableName, l);
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListTotalCourse cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                cell = new ListTotalCourse(bundle.getString(tmp + 3));
-//                                listInfos.add(cell);
-//                            }
-//                            initView();
+
 
                         }
                     });
@@ -294,7 +268,6 @@ public class TotalCourseInfo extends Activity {
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
         View view  = inflater.inflate(R.layout.activity_course_info, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        int j=0;
         Tb_course tb_course=l.get(i);
         TextView grade = (TextView) view.findViewById(R.id.grade);
         grade.setText(tb_course.getGrade());

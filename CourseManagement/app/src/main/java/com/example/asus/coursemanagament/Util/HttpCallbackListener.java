@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.UiCustomViews;
+package com.example.asus.coursemanagament.Util;
 
 /**
  * Created by Administrator on 2015/11/16.

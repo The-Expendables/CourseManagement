@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.UiCustomViews;
+package com.example.asus.coursemanagament.Util;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

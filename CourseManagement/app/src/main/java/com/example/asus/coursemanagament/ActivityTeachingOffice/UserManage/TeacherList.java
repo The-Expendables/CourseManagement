@@ -16,13 +16,12 @@ import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_department;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teacher;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
-import com.example.asus.coursemanagament.UiCustomViews.ProfessionalsListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_teacher;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.example.asus.coursemanagament.Util.ProfessionalsListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -128,17 +127,7 @@ public class TeacherList extends AppCompatActivity {
     // 初始化listView数据===========================================
     private void initList(){
 
-        //测试用例
-//        final  List<Tb_teacher> l2 = new ArrayList<Tb_teacher>();
-//        Tb_teacher t1 = new Tb_teacher("11344", "123456", "李华","网络工程专业","男","1990.01.11",
-//                "342342@qq.com", "18923234444");
-//        l2.add(t1);
-//        Tb_teacher t2 = new Tb_teacher("11355", "123456", "林航","软件工程专业","男","1991.02.22",
-//                "333342@qq.com", "18923232222");
-//        l2.add(t2);
-//        Log.i(gson.toJson(l2), "!!!!!!!");
-
-        //连接服务器不能删==================================================================
+        //连接服务器==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
         params.put("type",""+3);
@@ -150,7 +139,6 @@ public class TeacherList extends AppCompatActivity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
                             bundle = new queryDB().queryDB(TeacherList.this, tableName, l);
 
@@ -178,21 +166,7 @@ public class TeacherList extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(TeacherList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-//                            l = gson.fromJson(gson.toJson(l2), type);
-//                            bundle = new queryDB().queryDB(TeacherList.this, tableName, l);
-//
-//                            int rows = bundle.getInt("rows");
-//                            int cols = bundle.getInt("cols");
-//                            int i;
-//                            String tmp;
-//                            ListProfessionals cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                cell = new ListProfessionals(bundle.getString(tmp + 2),
-//                                        "工号:", bundle.getString(tmp + 0));
-//                                listInfos.add(cell);
-//                            }
-//                            initView();
+
                         }
                     });
 

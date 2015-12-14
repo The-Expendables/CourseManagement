@@ -1,11 +1,11 @@
-package com.example.asus.coursemanagament.SQLite_operation;
+package com.example.asus.coursemanagament.Tb;
 
 /**
  * Created by wwk on 2015/12/10.
  */
 public class Tb_teacherBaoCourse {
     private String table_name;  //课程表名
-    private String c_name;      //课程名称
+    private String course_name;      //课程名称
     private String grade;        //年级
     private String id;          //用户名,工号
     private String t_name;      //任课教师
@@ -17,7 +17,7 @@ public class Tb_teacherBaoCourse {
        return table_name;
    }
     public String getC_name() {
-        return c_name;
+        return course_name;
     }
     public String getGrade() {
         return grade;
@@ -47,22 +47,22 @@ public class Tb_teacherBaoCourse {
             case 2:
                 s = getGrade();break;
             case 3:
-                s = getId();break;
+                s = getBe_weeks();break;
             case 4:
                 s = getT_name();break;
             case 5:
-                s = getBe_weeks();break;
+                s = getId();break;
             case 6:
                 s = getRemark();break;
         }
         return s;
     }
-    public Tb_teacherBaoCourse(String table_name,String c_name,String grade,String id,
-                               String t_name, String be_weeks, String remark){
+    public Tb_teacherBaoCourse(String table_name,String c_name,String grade,String be_weeks,String id,
+                               String t_name , String remark){
         this.table_name = table_name;
         this.id = id;
         this.grade = grade;
-        this.c_name = c_name;
+        this.course_name = c_name;
         this.be_weeks = be_weeks;
         this.t_name = t_name;
         this.remark = remark;

@@ -16,10 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.example.asus.coursemanagament.Tb.Tb_course_mes;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
@@ -112,10 +112,8 @@ public class CourseSet extends AppCompatActivity {
                 });
                 tb_course_mes.setTerm(cardnumber);
 
-//                    TextView edtt_time_teacher = (EditText) findViewById(R.id.edtt_time_teacher);
                 tb_course_mes.setTeacher_time(edtt_time_teacher.getText().toString());
 
-//                    TextView edtt_time_department=(EditText) findViewById(R.id.edtt_time_department);
                 tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
 
                 Toast.makeText(CourseSet.this,"修改成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
@@ -140,7 +138,6 @@ public class CourseSet extends AppCompatActivity {
 
                         @Override
                         public void onError(Exception e) {
-//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                             Log.i("CourseAdd", "服务器访问失败");
                             runOnUiThread(new Runnable() {
@@ -157,17 +154,6 @@ public class CourseSet extends AppCompatActivity {
                 }
                 //================================
 
-                //把数据导入本地数据库============================================================
-                    /*
-                    SQLiteDatabase db=dbOpenHelper.getReadableDatabase();
-                    ContentValues values=new ContentValues();
-                    values.put("表名",tb_course_mes.getTable_name());
-                    values.put("学期",tb_course_mes.getTerm());
-                    values.put("教师报课截止时间",tb_course_mes.getTeacher_time());
-                    values.put("系负责人审核截止日期",tb_course_mes.getDepartment_time());
-                    db.insert("发布表",null,values);
-                    */
-                //=================================
 
                 Intent intent = new Intent(CourseSet.this, TaskManage.class);
                 startActivity(intent);

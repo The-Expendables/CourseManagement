@@ -13,13 +13,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.asus.coursemanagament.SQLite_operation.Tb_course_mes;
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_course_mes;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.CurriculumsListAdapter;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -99,15 +99,6 @@ public class CourseRelease extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
-
-//        测试用例
-       final  List<Tb_course_mes> l2 = new ArrayList<Tb_course_mes>();
-        Tb_course_mes t1 = new Tb_course_mes("计算机科学与技术专业", "209902", "2100.01.20", "2100.01.21");
-        l2.add(t1);
-        Tb_course_mes t2 = new Tb_course_mes("数学类专业", "209902", "2100.01.20", "2100.01.21");
-        l2.add(t2);
-        Log.i(gson.toJson(l2),"!!!!!!!");
-
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
@@ -149,23 +140,6 @@ public class CourseRelease extends Activity {
                         @Override
                         public void run() {
                             Toast.makeText(CourseRelease.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-
-//                            l=gson.fromJson(gson.toJson(l2),type);
-//                            bundle = new queryDB().queryDB(CourseRelease.this, tableName, l);
-//                            Log.i(bundle.getString("cell00"),"!!!!!bundle num");
-//                            int rows = bundle.getInt("rows");
-//                            int i;
-//                            String tmp;
-//                            ListCurriculums cell;
-//                            for (i = 0; i < rows; i++) {
-//                                tmp = "cell" + i;
-//                                cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
-//                                        "截止日期:", bundle.getString(tmp + 2));
-//                                Log.i(cell.getSemester(), "!!!!!!!cell");
-//                                listCurriculumses.add(cell);
-//                            }
-//                            initView();
-
                         }
                     });
 

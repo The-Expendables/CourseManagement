@@ -1,6 +1,5 @@
 package com.example.asus.coursemanagament.ActivityLogin;
 
-//import android.support.v7.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,17 +19,14 @@ import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityTeacher.CourseDeclare;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.SQLite_operation.DBOpenHelper;
-import com.example.asus.coursemanagament.SQLite_operation.SQLOperateImpl;
-import com.example.asus.coursemanagament.SQLite_operation.Tb_teachingoffice;
-import com.example.asus.coursemanagament.UiCustomViews.GlobalVariables;
-import com.example.asus.coursemanagament.UiCustomViews.HttpCallbackListener;
-import com.example.asus.coursemanagament.UiCustomViews.HttpUtil;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class  Login extends Activity {
+public class Login extends Activity {
 
 
     private Button btn_login;   //登录按钮
@@ -39,7 +35,6 @@ public class  Login extends Activity {
     private RadioGroup rdgp;    //单选按钮组
     private int number = 1; //判断角色身份
     private TextView tvw_forget; //忘记密码？
-    private DBOpenHelper dbOpenHelper = new DBOpenHelper(Login.this);
     String username = new String();
     String zhuanye = new String();
 
@@ -51,68 +46,6 @@ public class  Login extends Activity {
         setContentView(R.layout.activity_login);
         initView();
 
-
-        //初始化表格数据==========================================================================
-//        SQLOperateImpl test = new SQLOperateImpl(Login.this);    //增
-//        Tb_teacher th = new Tb_teacher("23456","23456","计算机专业","李四","男","1970年12月","134892746@qq.com","15629124497");
-//        test.add_teacher(th);
-//        SQLOperateImpl test2 = new SQLOperateImpl(Login.this);    //增
-//        Tb_teacher th2 = new Tb_teacher("23457","23457","计算机专业","王五","男","1980年2月","348192746@qq.com","18547156624");
-//        test2.add_teacher(th2);
-//        SQLOperateImpl test3 = new SQLOperateImpl(Login.this);    //增
-//        Tb_teacher th3 = new Tb_teacher("23458","23458","计算机专业","赵七","男","1974年7月","489322746@qq.com","15624784416");
-//        test3.add_teacher(th3);
-//        SQLOperateImpl test4 = new SQLOperateImpl(Login.this);    //增
-//        Tb_teacher th4 = new Tb_teacher("23459","23459","计算机专业","钱八","男","1985年11月","925471746@qq.com","18865247894");
-//        test4.add_teacher(th4);
-//        SQLOperateImpl test5 = new SQLOperateImpl(Login.this);    //增
-//        Tb_teacher th5 = new Tb_teacher("23455","23455","计算机专业","陈九","女","1974年6月","845124780@qq.com","15024152632");
-//        test5.add_teacher(th5);
-//        SQLOperateImpl test0 = new SQLOperateImpl(Login.this);    //增
-//        Tb_department th0 = new Tb_department("34567","34567","计算机专业","18659545514","陈楠楠");
-//        test0.add_department(th0);
-//        SQLOperateImpl test1 = new SQLOperateImpl(Login.this);    //增
-//        Tb_teachingoffice th1 = new Tb_teachingoffice("12345","12345","18659545514","张三");
-//        test1.add_teachingoffice(th1);
-//
-//        SQLiteDatabase db=dbOpenHelper.getReadableDatabase();
-//        ContentValues values=new ContentValues();
-//        values.put("工号","12345");
-//        values.put("课程名称","毕业实习");
-//        values.put("年级","2013");
-//        values.put("起讫周序", "1-15");
-//        values.put("任课教师", "王一");
-//        db.insert("教师报课信息表", null, values);
-//        values.clear();
-//        values.put("工号", "12346");
-//        values.put("课程名称","电子商务技术");
-//        values.put("年级","2013");
-//        values.put("起讫周序", "3-5");
-//        values.put("任课教师", "王二");
-//        db.insert("教师报课信息表", null, values);
-//        values.clear();
-//        values.put("工号", "12347");
-//        values.put("课程名称","高级人工智能");
-//        values.put("年级","2013");
-//        values.put("起讫周序", "6-18");
-//        values.put("任课教师", "王五");
-//        db.insert("教师报课信息表", null, values);
-//        values.clear();
-//
-//        values.put("表名", "计算机专业");
-//        values.put("学期","201302");
-//        values.put("教师报课截止时间","20130107");
-//        values.put("系负责人审核截止时间","20130125");
-//        db.insert("发布表", null, values);
-//        values.clear();
-//        values.put("表名", "数学专业");
-//        values.put("学期","201501");
-//        values.put("教师报课截止时间","20150107");
-//        values.put("系负责人审核截止时间","20150115");
-//        db.insert("发布表", null, values);
-//        values.clear();
-        //=================================================================================
-
     }
 
     //====================================================================
@@ -121,8 +54,7 @@ public class  Login extends Activity {
         @Override
         public void onClick(View source) {
             final AlertDialog.Builder Dia = new AlertDialog.Builder(Login.this);
-            SQLOperateImpl tel = new SQLOperateImpl(Login.this);
-            Tb_teachingoffice tele = tel.findById_teachingoffice("12345");
+
             Dia.setTitle("忘记密码？");
             Dia.setMessage("请联系教学办负责人!" + "\n" + "联系电话:18753621145");
             Dia.setPositiveButton("确认", new DialogInterface.OnClickListener() {
@@ -178,14 +110,12 @@ public class  Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-//            goTo();
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
 
-            GlobalVariables.userId=username;
-            GlobalVariables.password=password;
+            GlobalVariables.userId = username;
+            GlobalVariables.password = password;
 
-            SQLOperateImpl person = new SQLOperateImpl(Login.this);
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
             } else if (edtt_userName.length() < 5) {
@@ -198,7 +128,6 @@ public class  Login extends Activity {
                 params.put("type", "" + number);
                 params.put("username", edtt_userName.getText().toString());
                 params.put("password", edtt_password.getText().toString());
-//                Toast.makeText(Login.this,username+password,Toast.LENGTH_SHORT).show();
                 try {
                     HttpUtil.doPost(GlobalVariables.URL + "/login", params, new HttpCallbackListener() {
                         @Override
@@ -206,11 +135,11 @@ public class  Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(response.equals("true")){
+                                    if (response.equals("true")) {
 
                                         goTo();
-                                    }else{
-                                        Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Login.this, "密码错误", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -218,7 +147,7 @@ public class  Login extends Activity {
 
                         @Override
                         public void onError(Exception e) {
-//                            Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
                             e.printStackTrace();
                             Log.i("Login", "服务器访问失败");
                             runOnUiThread(new Runnable() {
@@ -239,15 +168,16 @@ public class  Login extends Activity {
     }
 // =====================================================================
 
-    private void goTo(){
-        Intent intent=new Intent();
-        switch(number){
+    private void goTo() {
+        Intent intent = new Intent();
+        switch (number) {
             case 1:
-                intent.putExtra("gonghao",username);
+                intent.putExtra("gonghao", username);
                 intent.setClass(Login.this, CourseDeclare.class);
                 break;
             case 2:
-                intent.setClass(Login.this,TaskList.class);
+                intent.putExtra("gonghao", username);
+                intent.setClass(Login.this, TaskList.class);
                 break;
             case 3:
                 intent.setClass(Login.this, TaskManage.class);

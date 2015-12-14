@@ -1,4 +1,6 @@
-package com.example.asus.coursemanagament.UiCustomViews;
+package com.example.asus.coursemanagament.Util;
+
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -53,6 +55,7 @@ public class HttpUtil{
                         response.append(line);
                     }
                     in.close();
+                    Log.i("info", "fuck!response---" + response.toString());
                     listener.onFinish(response.toString());
                 } catch (Exception e) {
                     if(listener!=null){

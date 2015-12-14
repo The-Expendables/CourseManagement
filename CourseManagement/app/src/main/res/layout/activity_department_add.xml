@@ -28,10 +28,14 @@
     </RelativeLayout>
     <ImageView
         android:id="@+id/ivw"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:src="@drawable/img_fzu_logo"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,138 +47,289 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
+
             <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="  用户名："/>
+                android:layout_weight="2.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="工        号："/>
             <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="用户名为5为数字"
+                android:maxLength="5"
+                android:numeric="integer"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    android:src="@drawable/start"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"></LinearLayout>
         <!--2-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
+
             <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="  密码："/>
+                android:layout_weight="2.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="密        码："/>
             <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:hint="初始密码为工号"
+                android:layout_height="wrap_content"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    android:src="@drawable/start"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"></LinearLayout>
         <!--3-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
+
             <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="姓名："/>
+                android:layout_weight="2.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="姓        名："/>
             <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    android:src="@drawable/start"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        <!--4-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="性别："/>
-            <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
+            android:layout_weight="3"></LinearLayout>
+        <!--4-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"></LinearLayout>
         <!--5-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
+
             <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="所属系："/>
+                android:layout_weight="2.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="所  属  系："/>
             <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    android:src="@drawable/start"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"></LinearLayout>
         <!--6-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="出生年月："/>
-            <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
+            android:layout_weight="3"></LinearLayout>
         <!--7-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
+
             <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:gravity="right|center"
+                android:layout_weight="2.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
                 android:text="手机号码："/>
             <EditText
-                android:layout_width="200sp"
-                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="10dp"
+                    android:src="@drawable/start"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"></LinearLayout>
         <!--8-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1">
-            <TextView
-                android:layout_width="90sp"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="right|center"
-                android:text="邮箱账号："/>
-            <EditText
-                android:layout_width="200sp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="添加"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                />
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="取消"/>
+            </LinearLayout>
+
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="1">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="确定添加"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"

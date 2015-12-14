@@ -1,4 +1,4 @@
-package com.example.asus.coursemanagament.UiCustomViews;
+package com.example.asus.coursemanagament.Util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,25 +9,26 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
+import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wwk on 2015/11/14.
+ * Created by wwk on 2015/11/13.
  */
-public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
+public class ProfessionalsListAdapter extends BaseAdapter implements Filterable {
+
     private MyFilter myFilter;
-    private List<ListTotalCourse> listInfos;
+    private List<ListProfessionals> listInfos;
     private Context context;
 
-    private ArrayList<ListTotalCourse> mOriginalValues;
+    private ArrayList<ListProfessionals> mOriginalValues;
 
     private final Object mLock = new Object();
 
-    public TotalCoureseListAdapter(Context context, List<ListTotalCourse> listInfos){
+    public ProfessionalsListAdapter(Context context, List<ListProfessionals> listInfos){
         this.context = context;
         this.listInfos = listInfos;
     }
@@ -53,24 +54,29 @@ public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
         View view = convertView;
         ViewHolder holder;
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.list_item_total,null);
+            view = LayoutInflater.from(context).inflate(R.layout.list_item_professionals,null);
             holder = new ViewHolder();
 
-            holder.tv_courseName = (TextView)view.findViewById(R.id.courseName);
+            holder.tv_teacherName = (TextView)view.findViewById(R.id.teacherName);
+            holder.tv_job = (TextView)view.findViewById(R.id.job);
+            holder.tv_jobNumber = (TextView)view.findViewById(R.id.jobNumber);
             view.setTag(holder);
         }else{
             holder = (ViewHolder)view.getTag();
         }
 
-        holder.tv_courseName.setText(listInfos.get(position).getCourseName());
-
+        holder.tv_teacherName.setText(listInfos.get(position).getTeacherName());
+        holder.tv_job.setText(listInfos.get(position).getJob());
+        holder.tv_jobNumber.setText(listInfos.get(position).getJobNumber());
 
 
         return view;
     }
 
     static class ViewHolder{
-        TextView tv_courseName;
+        TextView tv_teacherName;
+        TextView tv_job;
+        TextView tv_jobNumber;
     }
     @Override
     public Filter getFilter() {
@@ -91,13 +97,13 @@ public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
             if (mOriginalValues == null) {
                 synchronized (mLock) {
                     // 将list的用户 集合转换给这个原始数据的ArrayList
-                    mOriginalValues = new ArrayList<ListTotalCourse>(listInfos);
+                    mOriginalValues = new ArrayList<ListProfessionals>(listInfos);
                 }
             }
 
             if (constraint == null || constraint.length() == 0) {
                 synchronized (mLock) {
-                    ArrayList<ListTotalCourse> list = new ArrayList<ListTotalCourse>(mOriginalValues);
+                    ArrayList<ListProfessionals> list = new ArrayList<ListProfessionals>(mOriginalValues);
                     results.values = list;
                     results.count = list.size();
                 }
@@ -107,19 +113,20 @@ public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
                 String prefixString = constraint.toString().toLowerCase();
 
                 // 声明一个临时的集合对象 将原始数据赋给这个临时变量
-                final ArrayList<ListTotalCourse> values = mOriginalValues;
+                final ArrayList<ListProfessionals> values = mOriginalValues;
                 final int count = values.size();
 
                 //新的集合对象
-                final ArrayList<ListTotalCourse> newValues = new ArrayList<ListTotalCourse>(count);
+                final ArrayList<ListProfessionals> newValues = new ArrayList<ListProfessionals>(count);
 
                 // 如果姓item中tv的前缀相符就添加到新的集合
                 for (int i = 0; i < count; i++) {
 
-                    final ListTotalCourse value = (ListTotalCourse) values.get(i);
+                    final ListProfessionals value = (ListProfessionals) values.get(i);
                     //Android拼音帮助类PinyinUtils，getPingYin汉字转拼音
-                    if (PinyinUtils.getPingYin(value.getCourseName()).startsWith(prefixString)||
-                            value.getCourseName().startsWith(prefixString)
+                    if (PinyinUtils.getPingYin(value.getTeacherName()).startsWith(prefixString)||
+                            value.getJobNumber().startsWith(prefixString)||
+                            value.getTeacherName().startsWith(prefixString)
                             ) {
                         newValues.add(value);
                     }
@@ -134,7 +141,7 @@ public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //重新与适配器相关联的List重新赋值一下
-            listInfos = (List<ListTotalCourse>)results.values;
+            listInfos = (List<ListProfessionals>)results.values;
 
             if(results.count > 0){
                 notifyDataSetChanged();
@@ -146,4 +153,3 @@ public class TotalCoureseListAdapter extends BaseAdapter implements Filterable {
 
     }
 }
-

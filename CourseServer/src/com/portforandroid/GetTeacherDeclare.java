@@ -19,8 +19,6 @@ import com.tb.Tb_teacher_declare;
  * 这里特别注意表名的问题！！！
  */
 
-
-
 @WebServlet("/Send_teacher_declare")
 public class GetTeacherDeclare extends HttpServlet {
 	

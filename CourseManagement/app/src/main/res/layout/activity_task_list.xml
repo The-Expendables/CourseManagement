@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.example.asus.coursemanagament.UiCustomViews.SlidingMenu
+    <com.example.asus.coursemanagament.Util.SlidingMenu
         android:layout_width="match_parent"
         android:id="@+id/department_menu"
         android:layout_height="match_parent"
@@ -61,5 +61,5 @@
 
             </LinearLayout>
         </LinearLayout>
-    </com.example.asus.coursemanagament.UiCustomViews.SlidingMenu>
+    </com.example.asus.coursemanagament.Util.SlidingMenu>
 </RelativeLayout>
