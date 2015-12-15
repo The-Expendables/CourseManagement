@@ -66,40 +66,46 @@ public class SingleImport extends AppCompatActivity {
         EditText edtt_email=(EditText)findViewById(R.id.edtt_email);
         String email=edtt_email.getText().toString();
 
-        Tb_teacher teacher=new Tb_teacher(id,password,department,name,sex,birth,email,phone);
+        if(id.equals("")||password.equals("")||department.equals("")||name.equals("")||
+                sex.equals("")||birth.equals("")||phone.equals("")){
+            Toast.makeText(SingleImport.this,"信息不完整",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Tb_teacher teacher = new Tb_teacher(id, password, department, name, sex, birth, email, phone);
 
-        String teacher_json=gson.toJson(teacher);
-        Log.i("info","<<>>"+teacher_json);
+            String teacher_json = gson.toJson(teacher);
+            Log.i("info", "<<>>" + teacher_json);
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("table_name", "教师信息表");
-        params.put("info_json", teacher_json);
-        try {
-            HttpUtil.doPost(GlobalVariables.URL + "/Insert_info", params, new HttpCallbackListener() {
-                @Override
-                public void onFinish(final String response) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                           Toast.makeText(SingleImport.this,response,Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("table_name", "教师信息表");
+            params.put("info_json", teacher_json);
+            try {
+                HttpUtil.doPost(GlobalVariables.URL + "/Insert_info", params, new HttpCallbackListener() {
+                    @Override
+                    public void onFinish(final String response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SingleImport.this, response, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 
-                @Override
-                public void onError(Exception e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(SingleImport.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("info", e.toString());
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SingleImport.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("info", e.toString());
+            }
         }
     }
     //=========================

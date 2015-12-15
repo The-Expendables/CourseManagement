@@ -110,13 +110,13 @@ public class Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            goTo();
+//            goTo();
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
 
             GlobalVariables.userId = username;
             GlobalVariables.password = password;
-
+            btn_login.setText("登录中...");
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
             } else if (edtt_userName.length() < 5) {
@@ -136,11 +136,11 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (response.equals("true")) {
-
-                                        goTo();
-                                    } else {
+                                    if (response.equals("false")) {
                                         Toast.makeText(Login.this, "密码错误", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        GlobalVariables.name=response;
+                                        goTo();
                                     }
                                 }
                             });
@@ -155,6 +155,7 @@ public class Login extends Activity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                    btn_login.setText("登录");
                                 }
                             });
                         }

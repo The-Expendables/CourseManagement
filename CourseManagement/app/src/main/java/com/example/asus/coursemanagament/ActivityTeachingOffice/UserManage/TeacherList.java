@@ -109,10 +109,9 @@ public class TeacherList extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            TextView gh = (TextView) findViewById(R.id.jobNumber);
+            TextView gh = (TextView) view.findViewById(R.id.jobNumber);
             String gh2 = new String(gh.getText().toString());
             int rows = bundle.getInt("rows");
-            int cols = bundle.getInt("cols");
             int i;
             int j = 0;
             String tmp;
@@ -123,14 +122,10 @@ public class TeacherList extends AppCompatActivity {
                     break;
                 }
             }
-
-            t = new Tb_teacher(bundle.getString("cell" + i + 0), bundle.getString("cell" + i + 1),
-                    bundle.getString("cell" + i + 2), bundle.getString("cell" + i + 3),
-                    bundle.getString("cell" + i + 4), bundle.getString("cell" + i + 5),
-                    bundle.getString("cell" + i + 6), bundle.getString("cell" + i + 7));
+            Tb_teacher tb_teacher=l.get(i);
 
             Intent intent = new Intent(TeacherList.this, TeacherInfo.class);
-            String t_json = gson.toJson(t);
+            String t_json = gson.toJson(tb_teacher);
             intent.putExtra("teacherInfo", t_json);
             startActivity(intent);
         }

@@ -7,15 +7,18 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.Tb.Tb_department;
+import com.example.asus.coursemanagament.Tb.Tb_teacher;
 import com.example.asus.coursemanagament.Tb.queryDB;
 import com.example.asus.coursemanagament.Util.GlobalVariables;
 import com.example.asus.coursemanagament.Util.HttpCallbackListener;
@@ -47,6 +50,7 @@ public class DepartmentList extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_list);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         initList();
 
@@ -95,10 +99,29 @@ public class DepartmentList extends Activity {
     //listview 点击事件========================================
     class MyOnItemClickListener implements AdapterView.OnItemClickListener {
 
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            TextView gh = (TextView) view.findViewById(R.id.jobNumber);
+            String gh2 = new String(gh.getText().toString());
+            int rows = bundle.getInt("rows");
+            int i;
+            int j = 0;
+            String tmp;
+            for (i = 0; i < rows; i++) {
+                tmp = "cell" + i + j;
+                if (bundle.getString(tmp).equals(gh2)) {
+                    break;
+                }
+            }
+
+            Tb_department t = l.get(i);
+
             Intent intent = new Intent(DepartmentList.this, DepartmentInfo.class);
+            String t_json = gson.toJson(t);
+            intent.putExtra("department_info", t_json);
             startActivity(intent);
+
         }
     }
     //========================================================

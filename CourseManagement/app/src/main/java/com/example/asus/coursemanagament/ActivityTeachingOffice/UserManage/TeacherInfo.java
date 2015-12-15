@@ -27,13 +27,14 @@ public class TeacherInfo extends AppCompatActivity {
     private ImageView ivw_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+            super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_info);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        initView();
 
         Intent intent = getIntent();
         String t_json=intent.getStringExtra("teacherInfo");
+
+        Log.i("info","<<>>"+t_json);
 
         Tb_teacher tb_teacher=gson.fromJson(t_json,Tb_teacher.class);
 
@@ -44,7 +45,7 @@ public class TeacherInfo extends AppCompatActivity {
         EditText edtt_password=(EditText)findViewById(R.id.edtt_password);
         edtt_password.setText(tb_teacher.getPassword());
 
-        EditText edtt_name=(EditText)findViewById(R.id.edtt_name);
+        EditText edtt_name=(EditText)findViewById(R.id.edtt_name1);
         edtt_name.setText(tb_teacher.getName());
 
         EditText edtt_sex=(EditText)findViewById(R.id.edtt_sex);
@@ -83,7 +84,7 @@ public class TeacherInfo extends AppCompatActivity {
         EditText edtt_password=(EditText)findViewById(R.id.edtt_password);
         String password=edtt_password.getText().toString();
 
-        EditText edtt_name=(EditText)findViewById(R.id.edtt_name);
+        EditText edtt_name=(EditText)findViewById(R.id.edtt_name1);
         String name=edtt_name.getText().toString();
 
         EditText edtt_sex=(EditText)findViewById(R.id.edtt_sex);
@@ -101,52 +102,50 @@ public class TeacherInfo extends AppCompatActivity {
         EditText edtt_email=(EditText)findViewById(R.id.edtt_email);
         String email=edtt_email.getText().toString();
 
-        Tb_teacher teacher=new Tb_teacher(id,password,department,name,sex,birth,email,phone);
+        if(id.equals("")||password.equals("")||department.equals("")||name.equals("")||
+                sex.equals("")||birth.equals("")||phone.equals("")){
+            Toast.makeText(TeacherInfo.this,"信息不完整",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Tb_teacher teacher = new Tb_teacher(id, password, department, name, sex, birth, email, phone);
 
-        String teacher_json=gson.toJson(teacher);
+            String teacher_json = gson.toJson(teacher);
 //        Log.i("info", "<<>>" + teacher_json);
 
-        Map<String, String> params = new HashMap<String, String>();
-        Log.i("info","<<<>>>"+teacher_json);
-        params.put("table_name", "教师信息表");
-        params.put("info_json", teacher_json);
-        try {
-            HttpUtil.doPost(GlobalVariables.URL + "/PortForUpdate", params, new HttpCallbackListener() {
-                @Override
-                public void onFinish(final String response) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(TeacherInfo.this, response, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                @Override
-                public void onError(Exception e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(TeacherInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("info", e.toString());
+            Map<String, String> params = new HashMap<String, String>();
+            Log.i("info", "<<<>>>" + teacher_json);
+            params.put("table_name", "教师信息表");
+            params.put("info_json", teacher_json);
+            try {
+                HttpUtil.doPost(GlobalVariables.URL + "/PortForUpdate", params, new HttpCallbackListener() {
+                    @Override
+                    public void onFinish(final String response) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(TeacherInfo.this, response, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(TeacherInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("info", e.toString());
+            }
         }
     }
 
-    //控件绑定==============================
-    private void initView(){
-        ivw_back = (ImageView)findViewById(R.id.ivw_back);
-        ivw_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 
 }
