@@ -8,5 +8,6 @@ public class GlobalVariables {
     //用户信息==================================================================
     public  static  String userId;
     public static String password;
+    public static String name;
     //=========
 }

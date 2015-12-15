@@ -61,6 +61,9 @@ public class CourseChoose extends Activity {
     private String remark;
     private Gson gson = new Gson();
     private String tb_teacher_declare_json;
+    private int position_list;
+    private String user_id;
+    private String limit_json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +81,64 @@ public class CourseChoose extends Activity {
         teacherCourse.setText(tableName);
     }
 
-    //listview 点击事件========================================
+    //listview 点击事件,判断是否报过该课程再进行报课========================================
     class MyOnItemClickListener implements AdapterView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            showDialog2(position);
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+            position_list = position;
+            int i=position;
+            int j = 0;
+            Grade = bundle.getString("cell" + i + j);
+            j=j+3;
+            title = bundle.getString("cell" + i + j);
+            user_id = GlobalVariables.userId;
+            //连接服务器不能删==================================================================
+            Map<String, String> params = new HashMap<String, String>();
+            Tb_teacher_declare tb_teacher_declare = new Tb_teacher_declare();
+            tb_teacher_declare.setTable_name(tableName);
+            tb_teacher_declare.setCourse_name(title);
+            tb_teacher_declare.setGrade(Grade);
+            tb_teacher_declare.setBe_weeks("");
+            tb_teacher_declare.setId(user_id);
+            tb_teacher_declare.setT_name("");
+            tb_teacher_declare.setRemark("");
+            limit_json = gson.toJson(tb_teacher_declare);
+            Log.i("info","iiiiiii"+limit_json);
+            Log.i("info","hhhh"+tableName+" "+title+" "+Grade+" "+user_id);
+            try {
+                params.put("limit_json", limit_json);
+                HttpUtil.doPost(GlobalVariables.URL + "/Limit", params, new HttpCallbackListener() {
+                    @Override
+                    public void onFinish(final String response) {
+                        Log.i("info","hhhhh"+response);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (response.equals("false")) {
+                                    showDialog_end1();
+                                } else {
+                                    showDialog2(position_list);
+                                }
+                            }
+                        });
+                    }
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                        Log.i("Login", "服务器访问失败");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CourseChoose.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("info", e.toString());
+            }
+            //=====================================
         }
     }
 
@@ -140,7 +195,6 @@ public class CourseChoose extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
 //                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
 
@@ -181,16 +235,8 @@ public class CourseChoose extends Activity {
     }
     //=========================================================
 
-
-    //选过一次就不能再选的逻辑判断，添加在listviewOnItemclick里面===============================
-//    if(listview.color = "black"){
-//        showDialog2(i);
-//    }
-//    else{
-//        showDialog_end();
-//    }
     //报课成功一次后显示对话框======================================
-    private void showDialog_end() {   //显示确认对话框
+    private void showDialog_end1() {   //显示确认对话框
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示：");
         builder.setMessage("您已经报过该课程，若要修改，请联系教务办。");
@@ -263,6 +309,12 @@ public class CourseChoose extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(CourseChoose.this);
         builder.setTitle("申报该课程，请填写：");
         builder.setView(view1);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         builder.setPositiveButton("提交", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -272,8 +324,7 @@ public class CourseChoose extends Activity {
                 Spinner spinner2 = (Spinner) view1.findViewById(R.id.spinner7);
                 String week_end = spinner2.getSelectedItem().toString();
                 be_weeks = week_begin + "-" + week_end;
-                EditText name_teacher = (EditText) view1.findViewById(R.id.name);
-                t_name = name_teacher.getText().toString();
+                t_name = GlobalVariables.name;
                 EditText note1 = (EditText) view1.findViewById(R.id.remark);
                 remark = note1.getText().toString();
                 Tb_teacher_declare tb_teacher_declare = new Tb_teacher_declare();

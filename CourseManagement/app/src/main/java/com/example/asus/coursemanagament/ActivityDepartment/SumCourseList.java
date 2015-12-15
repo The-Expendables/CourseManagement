@@ -1,17 +1,22 @@
 package com.example.asus.coursemanagament.ActivityDepartment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
@@ -59,6 +64,14 @@ public class SumCourseList extends AppCompatActivity {
 //        initView();
 
     }
+    //listview 点击事件========================================
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            showDialog1(position);
+        }
+    }
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
 
@@ -102,6 +115,7 @@ public class SumCourseList extends AppCompatActivity {
         adapter = new TotalCoureseListAdapter(SumCourseList.this, listInfos);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new MyOnItemClickListener());
     }
     //======================================================
     // 初始化listView数据===========================================
@@ -148,10 +162,6 @@ public class SumCourseList extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(SumCourseList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
-
-
-
-
                         }
                     });
                 }
@@ -162,4 +172,49 @@ public class SumCourseList extends AppCompatActivity {
 
     }
     //=========================================================
+
+    //================报课结果弹出框============================================
+    private void showDialog1(int i){   //显示课程信息对话框
+        LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
+        View view  = inflater.inflate(R.layout.activity_course_info1, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int j=0;
+        final Tb_course tb_course=l.get(i);
+        TextView grade = (TextView) view.findViewById(R.id.grade2);
+        grade.setText(tb_course.getGrade());
+        TextView major = (TextView) view.findViewById(R.id.major2);
+        major.setText(tb_course.getMajor());
+        TextView number = (TextView) view.findViewById(R.id.number2);
+        number.setText(tb_course.getP_cnt());
+        builder.setTitle(tb_course.getC_name());
+        TextView type = (TextView) view.findViewById(R.id.type2);
+        type.setText(tb_course.getType());
+        TextView credit = (TextView) view.findViewById(R.id.credit2);
+        credit.setText(tb_course.getCredit());
+        TextView time = (TextView) view.findViewById(R.id.time2);
+        time.setText(tb_course.getTimes());
+        TextView exp_time = (TextView) view.findViewById(R.id.exp_time2);
+        exp_time.setText(tb_course.getExp_times());
+        TextView com_time = (TextView) view.findViewById(R.id.com_time2);
+        com_time.setText(tb_course.getPra_times());
+        TextView be_weeks = (TextView) view.findViewById(R.id.be_weeks2);
+        be_weeks.setText(tb_course.getBe_weeks());
+        TextView teachers = (TextView)view.findViewById(R.id.teachers2);
+        teachers.setText(tb_course.getT_name());
+        TextView note = (TextView)view.findViewById(R.id.note2);
+        note.setText(tb_course.getRemark());
+        builder.setView(view);
+        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //发送数据到服务器========
+
+
+
+
+            }
+        });
+        AlertDialog dialog = builder.create();  //创建一个dialog
+        dialog.show();          //显示对话框
+    }
 }
