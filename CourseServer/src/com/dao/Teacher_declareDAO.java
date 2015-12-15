@@ -53,4 +53,31 @@ public class Teacher_declareDAO extends MyDAO {
 		}
 		return ret;
 	}
+	
+	public static Boolean search(Tb_teacher_declare tb_teacher_declare) {
+		init();
+		String T_name=null;
+		try {
+			sqlCommand="select * from 教师报课信息表  where 课程表名=? and 课程名称=? and 年级=? and 工号=?;";
+			conn = JdbcUtil.getConnection();
+			pst = conn.prepareStatement(sqlCommand);
+			
+			pst.setString(1, tb_teacher_declare.getTable_name());
+			pst.setString(2, tb_teacher_declare.getCourse_name());
+			pst.setString(3, tb_teacher_declare.getGrade());
+			pst.setString(4, tb_teacher_declare.getId());
+			
+			rs=pst.executeQuery();
+			while(rs.next()){
+				T_name=rs.getString("任课教师");
+			}
+
+			pst.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		if(T_name==null) return false;
+		else return true;
+	}
 }
