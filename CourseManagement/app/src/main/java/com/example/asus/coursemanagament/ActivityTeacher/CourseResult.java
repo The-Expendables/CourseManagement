@@ -108,7 +108,9 @@ public class CourseResult extends AppCompatActivity {
     class MyOnItemClickListener implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            showDialog1(position);
+            TextView t = (TextView)findViewById(R.id.courseName);
+            String tt = t.getText().toString();
+            showDialog1(tt);
         }
     }
 
@@ -180,12 +182,26 @@ public class CourseResult extends AppCompatActivity {
     //=========================================================
 
     //================报课结果弹出框============================================
-    private void showDialog1(int i){   //显示课程信息对话框
+    private void showDialog1(String i){   //显示课程信息对话框
+
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
         View view  = inflater.inflate(R.layout.activity_course_info, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        int j=0;
-        Tb_course tb_course=l.get(i);
+
+        int rows = bundle.getInt("rows");
+        int cols = bundle.getInt("cols");
+        int j ;
+        int k = 3;
+        String tmp;
+        for (j = 0; j < rows; j++) {
+            Tb_course tb=l.get(j);
+//            tmp = "cell" + j + k;
+            if (tb.getC_name().equals(i)) {
+                Log.i("info","<<<>>>"+tb.getC_name());
+                break;
+            }
+        }
+        Tb_course tb_course=l.get(j);
         TextView grade = (TextView) view.findViewById(R.id.grade);
         grade.setText(tb_course.getGrade());
         TextView major = (TextView) view.findViewById(R.id.major);
