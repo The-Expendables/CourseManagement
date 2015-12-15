@@ -12,8 +12,12 @@ public class UsersDAOTest {
 
 	@Test
 	public void testLogin() {
-//		boolean result=UsersDAO.login(0, "21001", "21001");
-//		if(result) System.out.println("ok!");
-//		else System.out.println("not ok!!");
+
+		int type=1;
+		String username="21001";
+		String password="21000";
+		String result=UsersDAO.login(type, username, password);
+		if(result.equals("false")) System.out.println("not ok!");
+		else System.out.println("ok!!");
 	}
 }
