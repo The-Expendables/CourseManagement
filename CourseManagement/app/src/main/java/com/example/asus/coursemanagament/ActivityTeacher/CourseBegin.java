@@ -1,6 +1,8 @@
 package com.example.asus.coursemanagament.ActivityTeacher;
 
 import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,18 +40,21 @@ public class CourseBegin extends AppCompatActivity {
     private String tableName = new String("发布表");
     private List<Tb_course_mes> l = new ArrayList<Tb_course_mes>();
     private Gson gson = new Gson();
-    private Type type = new TypeToken<List<Tb_course_mes>>() {
-    }.getType();
+    private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
     private Bundle bundle;
 
     private String Data1;
-    private String[] data_set = new String[3];
+    private int[] data_set = new int[3];
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter;
     private ProgressDialog progress;
 
+    private Calendar cal;
+    private int year;
+    private int month;
+    private int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,11 @@ public class CourseBegin extends AppCompatActivity {
         setContentView(R.layout.activity_course_begin);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
-
-
-
+        cal = Calendar.getInstance();
+        //获取年月日时分秒
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
     }
 
     //listview 点击事件========================================
@@ -71,20 +79,57 @@ public class CourseBegin extends AppCompatActivity {
             //传送给下一个UI 专业名称（开课表表名）
             String infoo = info.getText().toString();
             intent.putExtra("courseTB", infoo);
-
             int p1, p2;
             for (p1 = 0; p1 < Data1.length() && Data1.charAt(p1) != '.'; p1++) ;
             for(p2=p1+1;p2<Data1.length()&&Data1.charAt(p2)!='.';p2++);
-            data_set[0]=Data1.substring(0,p1);
-            data_set[1]=Data1.substring(p1+1,p2);
-            data_set[2]=Data1.substring(p2+1);
-
-            Log.i("info","<<<<>>>>"+data_set[0]+"."+data_set[1]+"."+data_set[2]);
-
-            startActivity(intent);
-
+            data_set[0]=Integer.parseInt(Data1.substring(0,p1));
+            data_set[1]=Integer.parseInt(Data1.substring(p1+1,p2));
+            data_set[2]=Integer.parseInt(Data1.substring(p2+1));
+            //测试数据=======修改报课截止时间可以的时候注释掉
+            data_set[0]=2016;
+            data_set[1]=11;
+            data_set[2]=15;
+            //=========================================
+            if(year>data_set[0]){
+                showDialog_end();
+            } else{
+                if(year<data_set[0]){
+                    startActivity(intent);
+                } else{
+                    if ((month+1)>data_set[1]){
+                        showDialog_end();
+                    } else{
+                        if ((month+1)<data_set[1]){
+                            startActivity(intent);
+                        } else{
+                            if(day>data_set[2]){
+                                showDialog_end();
+                            }else{
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+            }
+//            Toast.makeText(CourseBegin.this,data_set[0]+"  "+data_set[1]+"  "+data_set[2],Toast.LENGTH_SHORT).show();
         }
     }
+
+    //超过截止时间不能报课提示框===============================
+    private void showDialog_end(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("报课时间已经截止，无法继续报课！");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();  //创建一个dialog
+        dialog.show();          //显示对话框
+    }
+    //=================================================
 
     //========================================================
 //search过滤搜索框事件============================================

@@ -126,10 +126,10 @@ public class CurriculumsListAdapter extends BaseAdapter implements Filterable {
 
                         final ListCurriculums value = (ListCurriculums) values.get(i);
                         //Android拼音帮助类PinyinUtils，getPingYin汉字转拼音
-                        if (PinyinUtils.getPingYin(value.getItemName()).startsWith(prefixString)||
-                                value.getItemName().startsWith(prefixString) ||
+                        if (value.getItemName().startsWith(prefixString) ||
                                 value.getSemester().startsWith(prefixString) ||
-                                value.getDeadline().startsWith(prefixString)) {
+                                value.getDeadline().startsWith(prefixString)||
+                                PinyinUtils.getPingYin(value.getItemName()).startsWith(prefixString)) {
                             newValues.add(value);
                         }
                         // 然后将这个新的集合数据赋给FilterResults对象

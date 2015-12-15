@@ -60,6 +60,7 @@ public class TeachingOfficeSummaryTable extends Activity {
         initList();
         TextView isCourse = (TextView)findViewById(R.id.isCourse);
         isCourse.setText(tableName);
+        //手动刷新
         ImageView reflash = (ImageView)findViewById(R.id.reflash);
         reflash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +197,7 @@ public class TeachingOfficeSummaryTable extends Activity {
                                     tmp = "cell" + i;
                                     if (bundle.getString(tmp + 0).equals(zhuanye)) {
                                         cell = new ListProfessionals(bundle.getString(tmp + 4),
-                                                "工号:", bundle.getString(tmp + 5));
+                                                "工号:", bundle.getString(tmp + 3));
                                         listInfos.add(cell);
 
                                     }

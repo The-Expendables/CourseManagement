@@ -30,9 +30,10 @@
             android:textSize="20sp" />
         <ImageView
             android:id="@+id/reflash"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:src="@android:drawable/stat_notify_sync"
+            android:layout_centerInParent="true"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>

@@ -34,8 +34,8 @@ public class GetMajority extends HttpServlet {
     	
     	String table_name = request.getParameter("table_name");
     	String type = request.getParameter("type");
-//    	String table_name = "系负责人信息表";
-//    	String type = "4";
+//    	String table_name = "教师报课信息表";
+//    	String type = "2";
     	String str = null;
     	if(type.equals("1"))
     	{
@@ -62,6 +62,7 @@ public class GetMajority extends HttpServlet {
     		List<Tb_course_mes> tb_course_mes = GeneralDAO.queryCourse_mes(table_name);
     		str = gson.toJson(tb_course_mes);
     	}
+    	System.out.println(str);
     	response.getOutputStream().write(str.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
     }

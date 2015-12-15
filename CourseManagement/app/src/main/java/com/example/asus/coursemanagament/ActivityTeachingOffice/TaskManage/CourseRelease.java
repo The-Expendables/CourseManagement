@@ -131,7 +131,7 @@ public class CourseRelease extends Activity {
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
                                 cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
-                                        "截止日期:", bundle.getString(tmp + 2));
+                                        "截止日期:", bundle.getString(tmp + 3));
                                 Log.i(cell.getSemester(),"!!!!!!!cell");
                                 listCurriculumses.add(cell);
 

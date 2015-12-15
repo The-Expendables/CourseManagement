@@ -47,18 +47,18 @@ public class Tb_teacherBaoCourse {
             case 2:
                 s = getGrade();break;
             case 3:
-                s = getBe_weeks();break;
+                 s = getId();break;
             case 4:
                 s = getT_name();break;
             case 5:
-                s = getId();break;
+                s = getBe_weeks();break;
             case 6:
                 s = getRemark();break;
         }
         return s;
     }
-    public Tb_teacherBaoCourse(String table_name,String c_name,String grade,String be_weeks,String id,
-                               String t_name , String remark){
+    public Tb_teacherBaoCourse(String table_name,String c_name,String grade,String id,String t_name ,
+                               String be_weeks, String remark){
         this.table_name = table_name;
         this.id = id;
         this.grade = grade;

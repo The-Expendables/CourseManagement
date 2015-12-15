@@ -6,9 +6,11 @@ import com.tb.Tb_teacher;
 import com.util.JdbcUtil;
 
 public class UsersDAO extends MyDAO{	
-	public static boolean login(int type,String username,String password){
+	public static String login(int type,String username,String password){
 		init();
 		String pwd=null;
+		String name=null;
+		String fail="false";
 		try{
 			
 			switch(type){
@@ -29,11 +31,12 @@ public class UsersDAO extends MyDAO{
 			rs=pst.executeQuery();
 			while(rs.next()){
 				pwd=rs.getString("密码");
+				name=rs.getString("姓名");
 			}
 		}catch(Exception e){
 			System.out.println(e.toString());
 		}
-		if(pwd==null||!pwd.equals(password)) return false;
-		else return true;
+		if(pwd==null||!pwd.equals(password)) return fail;
+		else return name;
 	}
 }

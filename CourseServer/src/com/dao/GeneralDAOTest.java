@@ -7,13 +7,14 @@ import java.util.List;
 import org.junit.Test;
 
 import com.tb.Tb_teacher;
+import com.tb.Tb_teacher_declare;
 
 public class GeneralDAOTest {
 
 	@Test
 	public void testQueryTeacher() {
-		String table_name = "教师信息表";
-		List<Tb_teacher> tb_teacher = GeneralDAO.queryTeacher(table_name);
+		String table_name = "教师报课信息表";
+		List<Tb_teacher_declare> tb_teacher = GeneralDAO.queryTeacher_declare(table_name);
 		for (int i = 0; i < tb_teacher.size(); i++) {
 		    System.out.println(tb_teacher.get(i));
 		}

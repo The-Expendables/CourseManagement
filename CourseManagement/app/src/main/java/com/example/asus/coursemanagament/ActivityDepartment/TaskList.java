@@ -184,7 +184,7 @@ public class TaskList extends AppCompatActivity {
 
                             //查询系负责人表获得其工号对应的专业
                             l2 = gson.fromJson(response, type2);
-                            progress.cancel();
+
                             Intent intent = getIntent();
                             //获取工号，判定教师 所属系即专业
                             String gonghao = intent.getStringExtra("gonghao");
@@ -204,6 +204,7 @@ public class TaskList extends AppCompatActivity {
 
                             //查询发布表
                             initHttp();
+
                         }
 
                     });
@@ -245,6 +246,7 @@ public class TaskList extends AppCompatActivity {
                         public void run() {
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             bundle = new queryDB().queryDB(TaskList.this, tableName, l);
                             Log.i(bundle.getString("cell00"), "!!!!!bundle num");
                             int rows = bundle.getInt("rows");
@@ -258,7 +260,7 @@ public class TaskList extends AppCompatActivity {
                                         bundle.getString(tmp + 0).substring(0, 3).equals(zhuanye) ||
                                         bundle.getString(tmp + 0).substring(0, 4).equals(zhuanye)) {
                                     cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
-                                            "截止日期:", bundle.getString(tmp + 2));
+                                            "截止日期:", bundle.getString(tmp + 3));
                                     listCurriculumses.add(cell);
                                 }
 

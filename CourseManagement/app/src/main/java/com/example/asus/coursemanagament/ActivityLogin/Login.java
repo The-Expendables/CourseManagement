@@ -123,12 +123,14 @@ public class Login extends Activity {
 
             GlobalVariables.userId = username;
             GlobalVariables.password = password;
-
             if (edtt_userName.length() < 1 || edtt_password.length() < 1) {
+                progress.cancel();
                 Toast.makeText(Login.this, "账号或密码为空，请重新输入", Toast.LENGTH_SHORT).show();
             } else if (edtt_userName.length() < 5) {
+                progress.cancel();
                 Toast.makeText(Login.this, "账号格式有误，请重新输入", Toast.LENGTH_SHORT).show();
             } else if (edtt_password.length() < 5) {
+                progress.cancel();
                 Toast.makeText(Login.this, "密码格式有误，请重新输入", Toast.LENGTH_SHORT).show();
             } else {
                 //连接服务器不能删==================================================================
@@ -147,8 +149,8 @@ public class Login extends Activity {
                                         progress.cancel();
                                         Toast.makeText(Login.this, "密码错误", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        progress.cancel();
                                         GlobalVariables.name=response;
+                                        progress.cancel();
                                         goTo();
                                     }
                                 }
@@ -159,12 +161,12 @@ public class Login extends Activity {
                         public void onError(Exception e) {
 
                             e.printStackTrace();
-                            Log.i("Login", "服务器访问失败");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     progress.cancel();
                                     Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                    btn_login.setText("登录");
                                 }
                             });
                         }
