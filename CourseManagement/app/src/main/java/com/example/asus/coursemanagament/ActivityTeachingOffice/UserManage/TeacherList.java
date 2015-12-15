@@ -1,4 +1,5 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class TeacherList extends AppCompatActivity {
     private List<ListProfessionals> listInfos= new ArrayList<ListProfessionals>(); //存放Item
     private ListView listView;
     ProfessionalsListAdapter adapter ;
+    private ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +129,12 @@ public class TeacherList extends AppCompatActivity {
     // 初始化listView数据===========================================
     private void initList(){
 
+        progress = new ProgressDialog(TeacherList.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
         //连接服务器==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
@@ -140,6 +148,7 @@ public class TeacherList extends AppCompatActivity {
                         public void run() {
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             bundle = new queryDB().queryDB(TeacherList.this, tableName, l);
 
                             int rows = bundle.getInt("rows");
@@ -165,6 +174,7 @@ public class TeacherList extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progress.cancel();
                             Toast.makeText(TeacherList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }

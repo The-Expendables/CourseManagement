@@ -28,6 +28,12 @@
             android:textColor="#060606"
             android:layout_centerInParent="true"
             android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/reflash"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@android:drawable/stat_notify_sync"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
     <EditText

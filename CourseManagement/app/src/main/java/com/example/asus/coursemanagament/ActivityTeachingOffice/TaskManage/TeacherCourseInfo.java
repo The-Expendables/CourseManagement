@@ -1,6 +1,7 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,6 +46,7 @@ public class TeacherCourseInfo extends Activity {
     private ListView listView;
     private ImageView iv_left;
     TeacherCourseListAdapter adapter ;
+    private ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,12 @@ public class TeacherCourseInfo extends Activity {
     // 初始化listView数据===========================================
     private void initList(){
 
+        progress = new ProgressDialog(TeacherCourseInfo.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
 
         //连接服务器================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -119,6 +127,7 @@ public class TeacherCourseInfo extends Activity {
                         public void run() {
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             //获取数据,获得教师的工号
                              gonghao = intent.getStringExtra("gonghao");
                             //获取数据,获得教师姓名
@@ -152,7 +161,7 @@ public class TeacherCourseInfo extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress.cancel();
                             Toast.makeText(TeacherCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }

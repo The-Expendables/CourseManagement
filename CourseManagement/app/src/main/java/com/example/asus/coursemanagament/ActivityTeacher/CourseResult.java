@@ -1,6 +1,7 @@
 package com.example.asus.coursemanagament.ActivityTeacher;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,18 +43,21 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseResult extends AppCompatActivity {
-    String tableName = new String ();
-    String courseTB =  new String();
+    String tableName = new String();
+    String courseTB = new String();
     private List<Tb_course> l = new ArrayList<Tb_course>();
     private Gson gson = new Gson();
-    private Type type = new TypeToken<List<Tb_course>>() {}.getType();
+    private Type type = new TypeToken<List<Tb_course>>() {
+    }.getType();
     private Bundle bundle;
 
     private EditText search;
-    private List<ListTotalCourse> listInfos= new ArrayList<ListTotalCourse>(); //存放Item
+    private List<ListTotalCourse> listInfos = new ArrayList<ListTotalCourse>(); //存放Item
     private ListView listView;
     private ImageView iv_left;
-    TotalCoureseListAdapter adapter ;
+    TotalCoureseListAdapter adapter;
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,9 +75,8 @@ public class CourseResult extends AppCompatActivity {
         initView();
 
 
-
-
     }
+
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
 
@@ -92,9 +95,10 @@ public class CourseResult extends AppCompatActivity {
 
         }
     }
+
     //===========================================================
     //iv_left后退跳转==================================================
-    class MyOnClickListner implements View.OnClickListener{
+    class MyOnClickListner implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -105,32 +109,38 @@ public class CourseResult extends AppCompatActivity {
     //============================================================
 
     //listview 点击事件========================================
-    class MyOnItemClickListener implements AdapterView.OnItemClickListener{
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             showDialog1(position);
         }
     }
 
-//控件绑定，事件监听===========================================
-    private void initView(){
-        search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
+    //控件绑定，事件监听===========================================
+    private void initView() {
+        search = (EditText) findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
-        iv_left = (ImageView)findViewById(R.id.left);
+        iv_left = (ImageView) findViewById(R.id.left);
         iv_left.setOnClickListener(new MyOnClickListner());
         adapter = new TotalCoureseListAdapter(CourseResult.this, listInfos);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
     }
+
     //======================================================
     // 初始化listView数据===========================================
-    private void initList(){
+    private void initList() {
+        progress = new ProgressDialog(CourseResult.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
 
         //连接服务器==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
-        params.put("type",""+1);
+        params.put("type", "" + 1);
         try {
             HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
                 @Override
@@ -140,6 +150,7 @@ public class CourseResult extends AppCompatActivity {
                         public void run() {
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             bundle = new queryDB().queryDB(CourseResult.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
@@ -165,7 +176,7 @@ public class CourseResult extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress.cancel();
                             Toast.makeText(CourseResult.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
 
@@ -180,12 +191,12 @@ public class CourseResult extends AppCompatActivity {
     //=========================================================
 
     //================报课结果弹出框============================================
-    private void showDialog1(int i){   //显示课程信息对话框
+    private void showDialog1(int i) {   //显示课程信息对话框
         LayoutInflater inflater = LayoutInflater.from(this);    //引入自定义布局
-        View view  = inflater.inflate(R.layout.activity_course_info, null);
+        View view = inflater.inflate(R.layout.activity_course_info, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        int j=0;
-        Tb_course tb_course=l.get(i);
+        int j = 0;
+        Tb_course tb_course = l.get(i);
         TextView grade = (TextView) view.findViewById(R.id.grade);
         grade.setText(tb_course.getGrade());
         TextView major = (TextView) view.findViewById(R.id.major);
@@ -205,9 +216,9 @@ public class CourseResult extends AppCompatActivity {
         com_time.setText(tb_course.getPra_times());
         TextView be_weeks = (TextView) view.findViewById(R.id.be_weeks);
         be_weeks.setText(tb_course.getBe_weeks());
-        TextView teachers = (TextView)view.findViewById(R.id.teachers);
+        TextView teachers = (TextView) view.findViewById(R.id.teachers);
         teachers.setText(tb_course.getT_name());
-        TextView note = (TextView)view.findViewById(R.id.note);
+        TextView note = (TextView) view.findViewById(R.id.note);
         note.setText(tb_course.getRemark());
         builder.setView(view);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

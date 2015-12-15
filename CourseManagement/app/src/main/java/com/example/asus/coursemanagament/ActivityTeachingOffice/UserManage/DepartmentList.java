@@ -1,6 +1,7 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,6 +43,7 @@ public class DepartmentList extends Activity {
     private List<ListProfessionals> listInfos = new ArrayList<ListProfessionals>(); //存放Item
     private ListView listView;
     ProfessionalsListAdapter adapter;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +120,12 @@ public class DepartmentList extends Activity {
     // 初始化listView数据===========================================
     private void initList() {
 
+        progress = new ProgressDialog(DepartmentList.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
 
         //连接服务器==================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -133,6 +141,7 @@ public class DepartmentList extends Activity {
 
 //                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             bundle = new queryDB().queryDB(DepartmentList.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
@@ -157,6 +166,7 @@ public class DepartmentList extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progress.cancel();
                             Toast.makeText(DepartmentList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                         }
                     });

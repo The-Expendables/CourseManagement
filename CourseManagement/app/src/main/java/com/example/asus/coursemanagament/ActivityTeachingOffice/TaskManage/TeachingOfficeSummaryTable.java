@@ -1,6 +1,7 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,10 +37,14 @@ import java.util.Map;
  */
 public class TeachingOfficeSummaryTable extends Activity {
     String tableName = new String ("教师报课信息表");
-    private List<Tb_teacherBaoCourse> l = new ArrayList<Tb_teacherBaoCourse>();
+
     private Gson gson = new Gson();
     private Type type = new TypeToken<List<Tb_teacherBaoCourse>>() {}.getType();
     private String courseTB = new String();
+    List<Tb_teacherBaoCourse> l = new ArrayList<Tb_teacherBaoCourse>();
+    private ProgressDialog progress;
+    private ProgressDialog progress2;
+    private int re = 0;
 
     private EditText search;
     private List<ListProfessionals> listInfos= new ArrayList<ListProfessionals>(); //存放Item
@@ -55,6 +60,22 @@ public class TeachingOfficeSummaryTable extends Activity {
         initList();
         TextView isCourse = (TextView)findViewById(R.id.isCourse);
         isCourse.setText(tableName);
+        ImageView reflash = (ImageView)findViewById(R.id.reflash);
+        reflash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progress = new ProgressDialog(TeachingOfficeSummaryTable.this);
+                progress.setMessage("刷新中...");
+                progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progress.setCancelable(true);
+                progress.show();
+                re = 1;
+                listInfos.clear();
+                initList();
+
+            }
+        });
     }
     //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
@@ -131,7 +152,13 @@ public class TeachingOfficeSummaryTable extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-
+        if(re != 1 ){
+            progress2 = new ProgressDialog(TeachingOfficeSummaryTable.this);
+            progress2.setMessage("加载中...");
+            progress2.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress2.setCancelable(true);
+            progress2.show();
+        }
 
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -147,30 +174,35 @@ public class TeachingOfficeSummaryTable extends Activity {
 
                             Log.i("info",response.length()+"------------");
                             Log.i("info","-------"+response);
+
                             l = gson.fromJson(response, type);
+                            progress2.cancel();
+                            if(re == 1)
+                                progress.cancel();
                             Intent intent = getIntent();
                             //获取数据,即专业名称，eg：软件工程专业
                             String zhuanye = intent.getStringExtra("zhuanye");
                             //汇总表和教师信息
                             Bundle bundle = new queryDB().queryDB(TeachingOfficeSummaryTable.this, tableName, l);
+
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
                             int i;
                             String tmp;
                             ListProfessionals cell;
-                            cell = new ListProfessionals("汇","总","表");
-                            listInfos.add(cell);
-                            for (i = 0; i < rows; i++) {
-                                tmp = "cell" + i;
-                                if(bundle.getString(tmp + 0).equals(zhuanye) ) {
-                                    cell = new ListProfessionals(bundle.getString(tmp + 4),
-                                            "工号:", bundle.getString(tmp + 5));
-                                    listInfos.add(cell);
+                                cell = new ListProfessionals("汇", "总", "表");
+                                listInfos.add(cell);
+                                for (i = 0; i < rows; i++) {
+                                    tmp = "cell" + i;
+                                    if (bundle.getString(tmp + 0).equals(zhuanye)) {
+                                        cell = new ListProfessionals(bundle.getString(tmp + 4),
+                                                "工号:", bundle.getString(tmp + 5));
+                                        listInfos.add(cell);
 
+                                    }
                                 }
-                            }
-                            initView();
 
+                            initView();
 
                         }
                     });
@@ -183,8 +215,10 @@ public class TeachingOfficeSummaryTable extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress2.cancel();
+                            progress.cancel();
                             Toast.makeText(TeachingOfficeSummaryTable.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+
                         }
                     });
                 }

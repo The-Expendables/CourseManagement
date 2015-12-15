@@ -3,6 +3,7 @@ package com.example.asus.coursemanagament.ActivityLogin;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class Login extends Activity {
     private TextView tvw_forget; //忘记密码？
     String username = new String();
     String zhuanye = new String();
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,12 @@ public class Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            progress = new ProgressDialog(Login.this);
+            progress.setMessage("登录中...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.show();
+
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
 
@@ -135,11 +143,13 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (response.equals("true")) {
-
-                                        goTo();
-                                    } else {
+                                    if (response.equals("false")) {
+                                        progress.cancel();
                                         Toast.makeText(Login.this, "密码错误", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        progress.cancel();
+                                        GlobalVariables.name=response;
+                                        goTo();
                                     }
                                 }
                             });
@@ -153,6 +163,7 @@ public class Login extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    progress.cancel();
                                     Toast.makeText(Login.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                                 }
                             });

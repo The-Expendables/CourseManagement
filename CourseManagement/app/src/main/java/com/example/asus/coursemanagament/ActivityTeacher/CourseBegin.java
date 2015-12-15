@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityTeacher;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,12 +40,14 @@ public class CourseBegin extends AppCompatActivity {
     private Type type = new TypeToken<List<Tb_course_mes>>() {
     }.getType();
     private Bundle bundle;
+
     private String Data1;
     private String[] data_set = new String[3];
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter;
+    private ProgressDialog progress;
 
 
     @Override
@@ -119,6 +122,11 @@ public class CourseBegin extends AppCompatActivity {
     // 初始化listView数据===========================================
     private void initList() {
 
+        progress = new ProgressDialog(CourseBegin.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
 
         //连接服务器=================================================================
         Map<String, String> params = new HashMap<String, String>();
@@ -133,6 +141,7 @@ public class CourseBegin extends AppCompatActivity {
                         public void run() {
                             //获取返回数据
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             bundle = new queryDB().queryDB(CourseBegin.this, tableName, l);
                             int i;
                             String tmp;
@@ -159,6 +168,7 @@ public class CourseBegin extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progress.cancel();
                             Toast.makeText(CourseBegin.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }

@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityDepartment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,17 +40,19 @@ import java.util.Map;
 
 public class TaskList extends AppCompatActivity {
 
-    String tableName2 = new String ("系负责人信息表");
+    String tableName2 = new String("系负责人信息表");
     private List<Tb_department> l2 = new ArrayList<Tb_department>();
-    private Type type2 = new TypeToken<List<Tb_department>>() {}.getType();
+    private Type type2 = new TypeToken<List<Tb_department>>() {
+    }.getType();
     String zhuanye = new String();
     private Bundle bundle2;
 
 
-    String tableName = new String ("发布表");
+    String tableName = new String("发布表");
     private List<Tb_course_mes> l = new ArrayList<Tb_course_mes>();
     private Gson gson = new Gson();
-    private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
+    private Type type = new TypeToken<List<Tb_course_mes>>() {
+    }.getType();
     private Bundle bundle;
 
     private SlidingMenu mLeftMenu_department;
@@ -59,7 +62,9 @@ public class TaskList extends AppCompatActivity {
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
-    CurriculumsListAdapter adapter ;
+    CurriculumsListAdapter adapter;
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +101,7 @@ public class TaskList extends AppCompatActivity {
         btn_exit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TaskList.this,Login.class);
+                Intent intent = new Intent(TaskList.this, Login.class);
                 startActivity(intent);
             }
         });
@@ -105,22 +110,24 @@ public class TaskList extends AppCompatActivity {
     }
 
     //侧滑菜单===============================
-    public void toggleMenu(View view){
+    public void toggleMenu(View view) {
         mLeftMenu_department.toggle();
     }
+
     //=========================================
     //listview 点击事件========================================
-    class MyOnItemClickListener implements AdapterView.OnItemClickListener{
+    class MyOnItemClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(TaskList.this,SumCourseList.class);
-            TextView info = (TextView)view.findViewById(R.id.ItemName);
+            Intent intent = new Intent(TaskList.this, SumCourseList.class);
+            TextView info = (TextView) view.findViewById(R.id.ItemName);
             String infoo = info.getText().toString();
             intent.putExtra("zhuanye", infoo);
             startActivity(intent);
         }
     }
+
     //========================================================
 //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
@@ -140,24 +147,33 @@ public class TaskList extends AppCompatActivity {
 
         }
     }
+
     //===========================================================
 //控件绑定，事件监听===========================================
-    private void initView(){
-        search = (EditText)findViewById(R.id.searchbox);//绑定过滤搜索框
+    private void initView() {
+        search = (EditText) findViewById(R.id.searchbox);//绑定过滤搜索框
         search.addTextChangedListener(new MyTextWatcher());
 
         adapter = new CurriculumsListAdapter(TaskList.this, listCurriculumses);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
     }
+
     //======================================================
     // 初始化listView数据===========================================
-    private void initList(){
+    private void initList() {
+
+        progress = new ProgressDialog(TaskList.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", "" + tableName2);
-        params.put("type",""+4);
+        params.put("type", "" + 4);
         try {
             HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
                 @Override
@@ -168,6 +184,7 @@ public class TaskList extends AppCompatActivity {
 
                             //查询系负责人表获得其工号对应的专业
                             l2 = gson.fromJson(response, type2);
+                            progress.cancel();
                             Intent intent = getIntent();
                             //获取工号，判定教师 所属系即专业
                             String gonghao = intent.getStringExtra("gonghao");
@@ -185,7 +202,6 @@ public class TaskList extends AppCompatActivity {
                                 }
                             }
 
-
                             //查询发布表
                             initHttp();
                         }
@@ -200,7 +216,7 @@ public class TaskList extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress.cancel();
                             Toast.makeText(TaskList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }
@@ -213,14 +229,13 @@ public class TaskList extends AppCompatActivity {
         //=========================================================
 
 
-
-
     }//=========================================================
+
     private void initHttp() {//连接服务器，用用户的工号查询对应专业的 开课表
         //连接服务器不能删==================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
-        params.put("type",""+5);
+        params.put("type", "" + 5);
         try {
             HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
                 @Override
@@ -238,10 +253,10 @@ public class TaskList extends AppCompatActivity {
                             ListCurriculums cell;
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                Log.i("info!!!",bundle.getString(tmp + 0));
-                                if(bundle.getString(tmp + 0).substring(0,2).equals(zhuanye)||
-                                        bundle.getString(tmp + 0).substring(0,3).equals(zhuanye) ||
-                                        bundle.getString(tmp + 0).substring(0,4).equals(zhuanye)) {
+                                Log.i("info!!!", bundle.getString(tmp + 0));
+                                if (bundle.getString(tmp + 0).substring(0, 2).equals(zhuanye) ||
+                                        bundle.getString(tmp + 0).substring(0, 3).equals(zhuanye) ||
+                                        bundle.getString(tmp + 0).substring(0, 4).equals(zhuanye)) {
                                     cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
                                             "截止日期:", bundle.getString(tmp + 2));
                                     listCurriculumses.add(cell);

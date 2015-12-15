@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityTeacher;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class CourseResultInfo extends AppCompatActivity {
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter;
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,13 @@ public class CourseResultInfo extends AppCompatActivity {
 
     private void initList() {
 
+        progress = new ProgressDialog(CourseResultInfo.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
+
         //连接服务器=================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
@@ -116,6 +126,7 @@ public class CourseResultInfo extends AppCompatActivity {
                         public void run() {
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             Intent intent = getIntent();
                             //获取工号，判定教师 所属系即专业
                             String courseTB = intent.getStringExtra("courseTB");
@@ -142,7 +153,7 @@ public class CourseResultInfo extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress.cancel();
                             Toast.makeText(CourseResultInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }

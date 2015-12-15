@@ -2,6 +2,7 @@ package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ public class TotalCourseInfo extends Activity {
     private ListView listView;
     private ImageView iv_left;
     private Button btn_export;
-    //    private
+    private ProgressDialog progress;
     TotalCoureseListAdapter adapter;
 
     @Override
@@ -199,6 +200,11 @@ public class TotalCourseInfo extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
+        progress = new ProgressDialog(TotalCourseInfo.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
 
 
         //连接服务器不能删==================================================================
@@ -215,6 +221,7 @@ public class TotalCourseInfo extends Activity {
 
 
                             l = gson.fromJson(response, type);
+                            progress.cancel();
                             Intent intent = getIntent();
                             //获取数据，eg：网络工程专业：局域网解析。。。。
                             String zhuanye = intent.getStringExtra("zhuanye");
@@ -247,6 +254,7 @@ public class TotalCourseInfo extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progress.cancel();
                             Toast.makeText(TotalCourseInfo.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
 

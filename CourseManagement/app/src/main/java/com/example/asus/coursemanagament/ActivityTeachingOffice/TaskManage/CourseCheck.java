@@ -1,6 +1,7 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -40,6 +41,7 @@ public class CourseCheck extends Activity {
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter ;
+    private ProgressDialog progress;
 
 
     @Override
@@ -97,6 +99,11 @@ public class CourseCheck extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
+        progress = new ProgressDialog(CourseCheck.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
 
 
         //连接服务器================================================================
@@ -113,6 +120,7 @@ public class CourseCheck extends Activity {
 
 //                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response,type);
+                            progress.cancel();
                             Bundle bundle = new queryDB().queryDB(CourseCheck.this, tableName, l);
                             Log.i(bundle.getString("cell00"), "!!!!!bundle num");
                             int rows = bundle.getInt("rows");
@@ -138,6 +146,7 @@ public class CourseCheck extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progress.cancel();
                             Toast.makeText(CourseCheck.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
 
                         }

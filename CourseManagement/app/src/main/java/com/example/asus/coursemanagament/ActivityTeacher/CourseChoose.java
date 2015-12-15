@@ -2,6 +2,7 @@ package com.example.asus.coursemanagament.ActivityTeacher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,6 +62,7 @@ public class CourseChoose extends Activity {
     private String remark;
     private Gson gson = new Gson();
     private String tb_teacher_declare_json;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +131,12 @@ public class CourseChoose extends Activity {
     // 初始化listView数据===========================================
     private void initList() {
 
+        progress = new ProgressDialog(CourseChoose.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
+
         //连接服务器================================================================
         Map<String, String> params = new HashMap<String, String>();
         params.put("table_name", tableName);
@@ -141,9 +149,8 @@ public class CourseChoose extends Activity {
                         @Override
                         public void run() {
 
-//                            l = gson.fromJson(gson.toJson(l2), type);
                             l = gson.fromJson(response, type);
-
+                            progress.cancel();
                             bundle = new queryDB().queryDB(CourseChoose.this, tableName, l);
                             int rows = bundle.getInt("rows");
                             int cols = bundle.getInt("cols");
@@ -169,7 +176,7 @@ public class CourseChoose extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            progress.cancel();
                             Toast.makeText(CourseChoose.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                         }
                     });
