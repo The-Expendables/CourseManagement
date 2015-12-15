@@ -1,6 +1,7 @@
 package com.portforandroid;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.dao.CourseDAO;
 import com.dao.Teacher_declareDAO;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tb.Tb_course;
+import com.tb.Tb_teacher;
 import com.tb.Tb_teacher_declare;
 
 @WebServlet("/CourseUpdate")
@@ -32,6 +35,10 @@ public class CourseUpdate extends HttpServlet {
         String table_name= request.getParameter("table_name");
         String info_json = request.getParameter("info_json");
         String delete_json = request.getParameter("delete_json");
+        
+        System.out.println(table_name);
+        System.out.println(info_json);
+        System.out.println(delete_json);
        
 		int su_course=0,su_teacher_declare=0;
         switch(table_name)
@@ -77,28 +84,20 @@ public class CourseUpdate extends HttpServlet {
         	su_course=CourseDAO.update(tb_course8,"数学类（实验班）专业开课表");
         	break;
         }
-        Tb_teacher_declare tb_teacher_declare=
-        		gson.fromJson(delete_json, Tb_teacher_declare.class);
+        List<Tb_teacher_declare> tb_teacher_declare;
+        tb_teacher_declare=gson.fromJson(delete_json ,new TypeToken<List<Tb_teacher_declare>>(){}.getType());
         su_teacher_declare=Teacher_declareDAO.delete(tb_teacher_declare);
-        String str1="",str2="";
-        if(su_course!=0){
-        	str1="课程";
+        String ret="";
+        if(su_course!=0 && !(su_teacher_declare==0||delete_json.length()==0)) {
+        	ret="信息更新成功";
         }
-        if(su_teacher_declare!=0){
-        	str2="教师报课";
+        else {
+        	ret="信息更新失败";
         }
         System.out.print(su_course);
         System.out.print(su_teacher_declare);
-        String ret="";
-        if(str1.length()>0) ret=str1+"信息更新成功";
-        else ret="信息更新失败";
-        
-        String ret1="";
-        if(str2.length()>0) ret1=str2+"信息更新成功";
-        else ret1="信息更新失败";
         
         response.getOutputStream().write(ret.getBytes("UTF-8"));
-        response.getOutputStream().write(ret1.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
 	}
 }
