@@ -81,10 +81,10 @@ public class CourseBegin extends AppCompatActivity {
             data_set[0]=Integer.parseInt(Data1.substring(0,p1));
             data_set[1]=Integer.parseInt(Data1.substring(p1+1,p2));
             data_set[2]=Integer.parseInt(Data1.substring(p2+1));
-            //测试数据=======修改报课截止时间可以的时候注释掉
-            data_set[0]=2016;
-            data_set[1]=11;
-            data_set[2]=15;
+//            //测试数据=======修改报课截止时间可以的时候注释掉
+//            data_set[0]=2016;
+//            data_set[1]=11;
+//            data_set[2]=15;
             //=========================================
             if(year>data_set[0]){
                 showDialog_end();
