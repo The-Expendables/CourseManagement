@@ -14,6 +14,7 @@
             android:layout_gravity="center"
             android:layout_alignParentLeft="true"
             android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+            android:onClick="onBtn_back"
             />
 
         <TextView
@@ -55,6 +56,7 @@
                 android:gravity="right"
                 android:text="用  户  名："/>
             <EditText
+                android:id="@+id/edtt_id"
                 android:layout_weight="2"
                 android:maxLength="5"
                 android:numeric="integer"
@@ -105,6 +107,7 @@
                 android:gravity="right"
                 android:text="密        码："/>
             <EditText
+                android:id="@+id/edtt_password"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -152,6 +155,7 @@
                 android:gravity="right"
                 android:text="姓        名："/>
             <EditText
+                android:id="@+id/edtt_name"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -199,6 +203,7 @@
                 android:gravity="right"
                 android:text="性        别："/>
             <EditText
+                android:id="@+id/edtt_sex"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -231,6 +236,7 @@
                 android:gravity="right"
                 android:text="所  属  系："/>
             <EditText
+                android:id="@+id/edtt_department"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:textSize="15sp"
@@ -280,6 +286,7 @@
                 android:gravity="right"
                 android:text="出生年月："/>
             <EditText
+                android:id="@+id/edtt_birth"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -312,6 +319,7 @@
                 android:gravity="right"
                 android:text="手机号码："/>
             <EditText
+                android:id="@+id/edtt_phone"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -344,6 +352,7 @@
                 android:gravity="right"
                 android:text="邮箱账号："/>
             <EditText
+                android:id="@+id/edtt_email"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -374,7 +383,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="添加"/>
+                    android:text="保存"
+                    android:onClick="onBtn_save"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -385,7 +395,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="取消"/>
+                    android:text="取消"
+                    android:onClick="onBtn_cancel"/>
             </LinearLayout>
 
         </LinearLayout>

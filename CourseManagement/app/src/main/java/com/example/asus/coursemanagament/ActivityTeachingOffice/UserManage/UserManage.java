@@ -76,7 +76,7 @@ public class UserManage extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String result=parent.getItemAtPosition(position).toString();
-                if(result=="系负责人"){
+                if(result.equals("系负责人")){
                     Intent intent=new Intent(UserManage.this,DepartmentList.class);
                     intent.putExtra("type",result);//把关键字传递给下一个活动
                     startActivity(intent);

@@ -110,6 +110,7 @@ public class Login extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            goTo();
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
 
