@@ -12,6 +12,7 @@ public class UsersDAOTest {
 
 	@Test
 	public void testLogin() {
+
 		int type=1;
 		String username="21001";
 		String password="21000";

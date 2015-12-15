@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListProfessionals;
@@ -97,10 +98,29 @@ public class DepartmentList extends Activity {
     //listview 点击事件========================================
     class MyOnItemClickListener implements AdapterView.OnItemClickListener {
 
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            TextView gh = (TextView) view.findViewById(R.id.jobNumber);
+            String gh2 = new String(gh.getText().toString());
+            int rows = bundle.getInt("rows");
+            int i;
+            int j = 0;
+            String tmp;
+            for (i = 0; i < rows; i++) {
+                tmp = "cell" + i + j;
+                if (bundle.getString(tmp).equals(gh2)) {
+                    break;
+                }
+            }
+
+            Tb_department t = l.get(i);
+
             Intent intent = new Intent(DepartmentList.this, DepartmentInfo.class);
+            String t_json = gson.toJson(t);
+            intent.putExtra("department_info", t_json);
             startActivity(intent);
+
         }
     }
     //========================================================
@@ -142,9 +162,10 @@ public class DepartmentList extends Activity {
                             String tmp;
                             ListProfessionals cell;
                             for (i = 0; i < rows; i++) {
-                                tmp = "cell" + i;
-                                cell = new ListProfessionals(bundle.getString(tmp + 2),
-                                        "工号:", bundle.getString(tmp + 0));
+                                Tb_department td = l.get(i);
+                                Log.i("Name--Id",td.getName()+':'+td.getId());
+                                cell = new ListProfessionals(td.getName(),
+                                        "工号:",td.getId());
                                 listInfos.add(cell);
                             }
                             initView();
