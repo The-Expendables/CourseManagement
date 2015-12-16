@@ -14,7 +14,6 @@ import com.dao.Teacher_declareDAO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tb.Tb_course;
-import com.tb.Tb_teacher;
 import com.tb.Tb_teacher_declare;
 
 @WebServlet("/CourseUpdate")
@@ -36,9 +35,10 @@ public class CourseUpdate extends HttpServlet {
         String info_json = request.getParameter("info_json");
         String delete_json = request.getParameter("delete_json");
         
-        System.out.println(table_name);
-        System.out.println(info_json);
-        System.out.println(delete_json);
+        System.out.println("table_name"+table_name);
+        
+        System.out.println("update:"+info_json);
+        System.out.println("delete:"+delete_json);
        
 		int su_course=0,su_teacher_declare=0;
         switch(table_name)
@@ -88,16 +88,18 @@ public class CourseUpdate extends HttpServlet {
         tb_teacher_declare=gson.fromJson(delete_json ,new TypeToken<List<Tb_teacher_declare>>(){}.getType());
         su_teacher_declare=Teacher_declareDAO.delete(tb_teacher_declare);
         String ret="";
-        if(su_course!=0 && !(su_teacher_declare==0||delete_json.length()==0)) {
+        if(su_course!=0 && (su_teacher_declare!=0||delete_json.length()==2)) {
         	ret="信息更新成功";
         }
         else {
         	ret="信息更新失败";
         }
-        System.out.print(su_course);
-        System.out.print(su_teacher_declare);
-        
+        System.out.print("CourseUpdate:"+su_course);
+        System.out.print("Teacher_declare Delete:"+su_teacher_declare);
+        System.out.print("Delete_json Length:"+delete_json.length());
+        System.out.println(ret);
         response.getOutputStream().write(ret.getBytes("UTF-8"));
     	response.setContentType("text/json); charset=UTF-8");
+    	
 	}
 }
