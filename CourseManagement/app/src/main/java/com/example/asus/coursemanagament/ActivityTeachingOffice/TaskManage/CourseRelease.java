@@ -1,29 +1,50 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.asus.coursemanagament.SQLite_operation.queryDB;
-import com.example.asus.coursemanagament.UiCustomViews.CurriculumsListAdapter;
+import com.example.asus.coursemanagament.Tb.Tb_course_mes;
+import com.example.asus.coursemanagament.Tb.queryDB;
+import com.example.asus.coursemanagament.Util.CurriculumsListAdapter;
 import com.example.asus.coursemanagament.R;
+import com.example.asus.coursemanagament.Util.GlobalVariables;
+import com.example.asus.coursemanagament.Util.HttpCallbackListener;
+import com.example.asus.coursemanagament.Util.HttpUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CourseRelease extends Activity {
+
+    String tableName = new String ("发布表");
+    private List<Tb_course_mes> l = new ArrayList<Tb_course_mes>();
+    private Gson gson = new Gson();
+    private Type type = new TypeToken<List<Tb_course_mes>>() {}.getType();
+    private Bundle bundle;
 
     private EditText search;
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter ;
+    private String table_name;
+
+    private ProgressDialog progress;
 
 
     @Override
@@ -34,7 +55,6 @@ public class CourseRelease extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         initList();
-        initView();
 
     }
     //listview 点击事件========================================
@@ -43,6 +63,7 @@ public class CourseRelease extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(CourseRelease.this,CourseSet.class);
+            intent.putExtra("table_name",table_name);
             startActivity(intent);
         }
     }
@@ -81,19 +102,67 @@ public class CourseRelease extends Activity {
     //======================================================
     // 初始化listView数据===========================================
     private void initList(){
-        Bundle bundle = new queryDB().queryDB(this, "发布表");
-        int rows = bundle.getInt("rows");
-        int cols = bundle.getInt("cols");
-        int i;
-        String tmp;
-        ListCurriculums cell;
-        for (i = 0; i < rows; i++) {
-            tmp = "cell" + i;
-            cell = new ListCurriculums(bundle.getString(tmp + 1), bundle.getString(tmp + 2),
-                    "截止日期", bundle.getString(tmp + 3));
-            listCurriculumses.add(cell);
-        }
+        progress = new ProgressDialog(CourseRelease.this);
+        progress.setMessage("加载中...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.show();
 
+
+        //连接服务器不能删==================================================================
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("table_name", tableName);
+        params.put("type",""+5);
+        try {
+            HttpUtil.doPost(GlobalVariables.URL + "/sendList", params, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            l=gson.fromJson(response,type);
+                            progress.cancel();
+//                            l=gson.fromJson(gson.toJson(response),type);
+                            bundle = new queryDB().queryDB(CourseRelease.this, tableName, l);
+                            Log.i(bundle.getString("cell00"),"!!!!!bundle num");
+                            int rows = bundle.getInt("rows");
+                            int i;
+                            String tmp;
+                            ListCurriculums cell;
+                            for (i = 0; i < rows; i++) {
+                                tmp = "cell" + i;
+                                cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
+                                        "截止日期:", bundle.getString(tmp + 3));
+
+                                table_name = bundle.getString(tmp + 0);
+                                Log.i(cell.getSemester(),"!!!!!!!cell");
+                                listCurriculumses.add(cell);
+
+                            }
+                            initView();
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.i("in onError", "!!!!!!");
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.cancel();
+                            Toast.makeText(CourseRelease.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //=========================================================
+
 }

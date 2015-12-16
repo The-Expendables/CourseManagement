@@ -14,7 +14,7 @@ import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 
 public class PasswordChange extends Activity {
     private SlidingMenu mLeftMenu_teachingoffice;

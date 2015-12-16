@@ -9,14 +9,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.TaskManage;
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 
 public class UserManage extends Activity {
 
@@ -77,7 +76,7 @@ public class UserManage extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String result=parent.getItemAtPosition(position).toString();
-                if(result=="系负责人"){
+                if(result.equals("系负责人")){
                     Intent intent=new Intent(UserManage.this,DepartmentList.class);
                     intent.putExtra("type",result);//把关键字传递给下一个活动
                     startActivity(intent);

@@ -35,7 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="请选择文件"/>
+            android:text="请选择文件"
+            android:onClick="onBtn_filepicker"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +52,8 @@
             android:text="课表名称："
             android:textColor="#060606" />
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edtt_tablename"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:hint="如：计算机专业报课表"
             android:textSize="20sp"/>
@@ -70,7 +73,7 @@
         <Spinner
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner2"
+            android:id="@+id/sp_term"
             android:entries="@array/term"
             />
     </LinearLayout>
@@ -80,19 +83,20 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#060606"
-            android:text="教师报课截止时间："/>
-        <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_time_teacher"
+            android:text="教师报课截止时间选择"/>
+        <TextView
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="如：20151020"
             android:numeric="integer"
             android:maxLength="10"
-            android:id="@+id/time_teacher"
+            android:gravity="center"
+            android:id="@+id/edtt_time_teacher"
             android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
@@ -101,19 +105,20 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:id="@+id/btn_time_department"
             android:textColor="#060606"
-            android:text="系负责人审核截止时间："/>
-        <EditText
-            android:layout_width="wrap_content"
+            android:text="系负责人审核截止时间选择"/>
+        <TextView
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="如：20150107"
             android:numeric="integer"
-            android:maxLength="8"
-            android:id="@+id/time_department"
+            android:maxLength="10"
+            android:gravity="center"
+            android:id="@+id/edtt_time_department"
             android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout

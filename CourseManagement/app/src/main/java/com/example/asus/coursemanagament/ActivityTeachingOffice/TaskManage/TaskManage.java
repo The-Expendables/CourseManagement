@@ -10,16 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
-import com.example.asus.coursemanagament.ActivityDepartment.TaskList;
 import com.example.asus.coursemanagament.ActivityLogin.Login;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.PasswordChange;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage.UserManage;
-import android.widget.TabHost;
+
 import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.example.asus.coursemanagament.R;
-import com.example.asus.coursemanagament.UiCustomViews.SlidingMenu;
+import com.example.asus.coursemanagament.Util.SlidingMenu;
 
 public class TaskManage extends TabActivity {
 
