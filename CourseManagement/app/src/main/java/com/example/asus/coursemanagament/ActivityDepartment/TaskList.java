@@ -1,6 +1,8 @@
 package com.example.asus.coursemanagament.ActivityDepartment;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +67,12 @@ public class TaskList extends AppCompatActivity {
     private ListView listView;
     CurriculumsListAdapter adapter;
     private ProgressDialog progress;
+    private Calendar cal;
+    private int year;
+    private int month;
+    private int day;
+    private String Data1;
+    private int[] data_set = new int[3];
 
 
     @Override
@@ -72,6 +81,11 @@ public class TaskList extends AppCompatActivity {
         setContentView(R.layout.activity_task_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initList();
+        cal = Calendar.getInstance();
+        //获取年月日时分秒
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
 //        initView();
         mLeftMenu_department = (SlidingMenu) findViewById(R.id.department_menu);
 
@@ -124,11 +138,60 @@ public class TaskList extends AppCompatActivity {
             TextView info = (TextView) view.findViewById(R.id.ItemName);
             String infoo = info.getText().toString();
             intent.putExtra("zhuanye", infoo);
-            startActivity(intent);
+            int p1, p2;
+//            Toast.makeText(TaskList.this,Data1,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(TaskList.this,year+" "+month+" "+day,Toast.LENGTH_SHORT).show();
+            for (p1 = 0; p1 < Data1.length() && Data1.charAt(p1) != '.'; p1++) ;
+            for(p2=p1+1;p2<Data1.length()&&Data1.charAt(p2)!='.';p2++);
+            data_set[0]=Integer.parseInt(Data1.substring(0,p1));
+            data_set[1]=Integer.parseInt(Data1.substring(p1+1,p2));
+            data_set[2]=Integer.parseInt(Data1.substring(p2+1));
+//            //测试数据=======修改报课截止时间可以的时候注释掉
+//            data_set[0]=2016;
+//            data_set[1]=11;
+//            data_set[2]=15;
+            //=========================================
+            if(year>data_set[0]){
+                showDialog_end();
+            } else{
+                if(year<data_set[0]){
+                    startActivity(intent);
+                } else{
+                    if ((month+1)>data_set[1]){
+                        showDialog_end();
+                    } else{
+                        if ((month+1)<data_set[1]){
+                            startActivity(intent);
+                        } else{
+                            if(day>data_set[2]){
+                                showDialog_end();
+                            }else{
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-
     //========================================================
+
+    //超过截止时间不能报课提示框===============================
+    private void showDialog_end(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("审核时间已经截止，无法继续审核报课情况！");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();  //创建一个dialog
+        dialog.show();          //显示对话框
+    }
+    //=================================================
+
 //search过滤搜索框事件============================================
     class MyTextWatcher implements TextWatcher {
 
@@ -261,6 +324,7 @@ public class TaskList extends AppCompatActivity {
                                         bundle.getString(tmp + 0).substring(0, 4).equals(zhuanye)) {
                                     cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
                                             "截止日期:", bundle.getString(tmp + 3));
+                                    Data1 = bundle.getString(tmp + 3);
                                     listCurriculumses.add(cell);
                                 }
 
@@ -280,7 +344,6 @@ public class TaskList extends AppCompatActivity {
                             Toast.makeText(TaskList.this, "服务器访问失败，请稍后再试", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
             });
         } catch (Exception e) {
