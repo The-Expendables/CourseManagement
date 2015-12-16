@@ -142,7 +142,7 @@ public class TeacherCourseInfo extends Activity {
                             ListTeacherCourse cell;
                             for (i = 0; i < rows; i++) {
                                 tmp = "cell" + i;
-                                if (bundle.getString(tmp + 5).equals(gonghao)) {
+                                if (bundle.getString(tmp + 3).equals(gonghao)) {
                                     Log.i("info!!!!",bundle.getString(tmp + 5));
                                     cell = new ListTeacherCourse(bundle.getString(tmp + 1),"");
                                     listInfos.add(cell);

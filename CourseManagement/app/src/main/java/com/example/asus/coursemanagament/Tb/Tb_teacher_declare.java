@@ -78,7 +78,8 @@ public class Tb_teacher_declare {
         super();
     }
 
-    public Tb_teacher_declare(String table_name,String course_name,String grade,String be_weeks,String id,String t_name,String remark){
+    public Tb_teacher_declare(String table_name,String course_name,String grade,String be_weeks,
+                              String id,String t_name,String remark){
         this.table_name = table_name;
         this.course_name = course_name;
         this.grade = grade;

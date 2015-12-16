@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,7 +29,6 @@ public class CourseSet extends AppCompatActivity {
     private ImageView imgvw_back1;
     private Button btn_solve;
     private String cardnumber;
-    private String table_json;
     private String course_mes_json;
     private Gson gson=new Gson();
     private Calendar cal;
@@ -40,10 +37,17 @@ public class CourseSet extends AppCompatActivity {
     private int day;
     private Button btn_time_teacher;
     private Button btn_time_department;
+    private String table_name;
+    private String info_json;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_set);
+        Intent intent = getIntent();
+        table_name = intent.getStringExtra("table_name");
+//        Toast.makeText(CourseSet.this,table_name,Toast.LENGTH_SHORT).show();
+        TextView textView =(TextView)findViewById(R.id.title1);
+        textView.setText(table_name);
         //设置返回的监听事件==============================
         imgvw_back1 = (ImageView) findViewById(R.id.imgvw_back1);
         imgvw_back1.setOnClickListener(new View.OnClickListener() {
@@ -94,38 +98,31 @@ public class CourseSet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Tb_course_mes tb_course_mes=new Tb_course_mes();
-
-                TextView edtt_tablename = (EditText) findViewById(R.id.edtt_tablename);
-                tb_course_mes.setTable_name(edtt_tablename.getText().toString());
-
+                tb_course_mes.setTable_name(table_name);
                 Spinner sp_term = (Spinner) findViewById(R.id.spinner4);
-                sp_term.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        cardnumber = CourseSet.this.getResources().getStringArray(R.array.term)[arg2];
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        // TODO Auto-generated method stub
-                    }
-                });
+                cardnumber = sp_term.getSelectedItem().toString();
+//                sp_term.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//                        cardnumber = CourseSet.this.getResources().getStringArray(R.array.term)[arg2];
+//                    }
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> arg0) {
+//                        // TODO Auto-generated method stub
+//                    }
+//                });
                 tb_course_mes.setTerm(cardnumber);
-
                 tb_course_mes.setTeacher_time(edtt_time_teacher.getText().toString());
-
                 tb_course_mes.setDepartment_time(edtt_time_department.getText().toString());
+                info_json=gson.toJson(tb_course_mes);
 
-                Toast.makeText(CourseSet.this,"修改成功,请查看发布栏.",Toast.LENGTH_SHORT).show();
-
-                course_mes_json=gson.toJson(tb_course_mes);
-
+                Log.i("info","success"+info_json);
                 //数据上传到服务器===============================================================
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("table_json", table_json);
-                params.put("course_mes_json",course_mes_json);
+                params.put("table_name", "发布表");
+                params.put("info_json",info_json);
                 try {
-                    HttpUtil.doPost(GlobalVariables.URL + "/sendCoursetable", params, new HttpCallbackListener() {
+                    HttpUtil.doPost(GlobalVariables.URL + "/PortForUpdate", params, new HttpCallbackListener() {
                         @Override
                         public void onFinish(final String response) {
                             runOnUiThread(new Runnable() {
@@ -135,7 +132,6 @@ public class CourseSet extends AppCompatActivity {
                                 }
                             });
                         }
-
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();

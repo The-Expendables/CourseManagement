@@ -57,8 +57,8 @@ public class Tb_teacherBaoCourse {
         }
         return s;
     }
-    public Tb_teacherBaoCourse(String table_name,String c_name,String grade,String id,String t_name ,
-                               String be_weeks, String remark){
+    public Tb_teacherBaoCourse(String table_name,String c_name,String grade, String be_weeks,
+                               String id, String t_name , String remark){
         this.table_name = table_name;
         this.id = id;
         this.grade = grade;
@@ -67,4 +67,5 @@ public class Tb_teacherBaoCourse {
         this.t_name = t_name;
         this.remark = remark;
     }
+
 }

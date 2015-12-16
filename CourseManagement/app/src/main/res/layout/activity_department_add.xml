@@ -14,6 +14,7 @@
             android:layout_gravity="center"
             android:layout_alignParentLeft="true"
             android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+            android:onClick="onBtn_back"
             />
 
         <TextView
@@ -55,9 +56,11 @@
                 android:gravity="right"
                 android:text="工        号："/>
             <EditText
+                android:id="@+id/edtt_id"
                 android:layout_weight="2"
                 android:hint="用户名为5为数字"
                 android:maxLength="5"
+                android:textSize="15sp"
                 android:numeric="integer"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -106,10 +109,12 @@
                 android:gravity="right"
                 android:text="密        码："/>
             <EditText
+                android:id="@+id/edtt_password"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:hint="初始密码为工号"
+                android:textSize="15sp"
                 android:layout_height="wrap_content"
                 />
             <LinearLayout
@@ -154,6 +159,7 @@
                 android:gravity="right"
                 android:text="姓        名："/>
             <EditText
+                android:id="@+id/edtt_name"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -207,6 +213,7 @@
                 android:gravity="right"
                 android:text="所  属  系："/>
             <EditText
+                android:id="@+id/edtt_department"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:textSize="15sp"
@@ -261,6 +268,7 @@
                 android:gravity="right"
                 android:text="手机号码："/>
             <EditText
+                android:id="@+id/edtt_phone"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -310,7 +318,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="添加"/>
+                    android:text="添加"
+                    android:onClick="onBtn_add"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -321,7 +330,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="取消"/>
+                    android:text="取消"
+                    android:onClick="onBtn_cancel"/>
             </LinearLayout>
 
         </LinearLayout>

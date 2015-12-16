@@ -42,6 +42,7 @@ public class CourseRelease extends Activity {
     private List<ListCurriculums> listCurriculumses = new ArrayList<ListCurriculums>(); //存放Item
     private ListView listView;
     CurriculumsListAdapter adapter ;
+    private String table_name;
 
     private ProgressDialog progress;
 
@@ -62,6 +63,7 @@ public class CourseRelease extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(CourseRelease.this,CourseSet.class);
+            intent.putExtra("table_name",table_name);
             startActivity(intent);
         }
     }
@@ -132,6 +134,8 @@ public class CourseRelease extends Activity {
                                 tmp = "cell" + i;
                                 cell = new ListCurriculums(bundle.getString(tmp + 0), bundle.getString(tmp + 1),
                                         "截止日期:", bundle.getString(tmp + 3));
+
+                                table_name = bundle.getString(tmp + 0);
                                 Log.i(cell.getSemester(),"!!!!!!!cell");
                                 listCurriculumses.add(cell);
 

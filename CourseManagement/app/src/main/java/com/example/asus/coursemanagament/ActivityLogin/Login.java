@@ -118,6 +118,7 @@ public class Login extends Activity {
             progress.setCancelable(true);
             progress.show();
 
+
             username = edtt_userName.getText().toString();   //获取账号
             String password = edtt_password.getText().toString();  //获取密码
 
