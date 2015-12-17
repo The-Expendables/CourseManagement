@@ -1,11 +1,11 @@
 package com.example.asus.coursemanagament.ActivityDepartment;
 
-import android.app.ProgressDialog;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,8 +23,6 @@ import android.widget.Toast;
 import com.example.asus.coursemanagament.ActivityTeachingOffice.TaskManage.ListTotalCourse;
 import com.example.asus.coursemanagament.R;
 import com.example.asus.coursemanagament.Tb.Tb_course;
-import com.example.asus.coursemanagament.Tb.Tb_department;
-import com.example.asus.coursemanagament.Tb.Tb_teacherBaoCourse;
 import com.example.asus.coursemanagament.Tb.Tb_teacher_declare;
 import com.example.asus.coursemanagament.Tb.queryDB;
 import com.example.asus.coursemanagament.Util.GlobalVariables;
@@ -274,6 +272,12 @@ public class SumCourseList extends AppCompatActivity {
         TextView note = (TextView) view.findViewById(R.id.note2);
         note.setText(tb_course.getRemark());
         builder.setView(view);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

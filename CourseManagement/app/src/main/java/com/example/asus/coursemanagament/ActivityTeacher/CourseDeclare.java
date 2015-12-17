@@ -1,11 +1,13 @@
 package com.example.asus.coursemanagament.ActivityTeacher;
 
+import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -74,7 +76,21 @@ public class CourseDeclare extends TabActivity {
             }
         });
         //===================================================
+        ImageView reflash = (ImageView)findViewById(R.id.rel_declare);
+        reflash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CourseDeclare.this,CourseDeclare.class);
+                startActivity(intent);
+                finish();
+
+
+
+            }
+        });
     }
+
 
     //切换侧滑菜单==============================
     public void toggleMenu(View view) {

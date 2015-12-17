@@ -38,6 +38,13 @@
                         android:textColor="#060606"
                         android:layout_centerInParent="true"
                         android:textSize="25sp" />
+                    <ImageView
+                        android:id="@+id/rel_task_list"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@android:drawable/stat_notify_sync"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true" />
                 </RelativeLayout>
 
                 <EditText
