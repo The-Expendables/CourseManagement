@@ -196,9 +196,19 @@ public class TeachingOfficeSummaryTable extends Activity {
                                 for (i = 0; i < rows; i++) {
                                     tmp = "cell" + i;
                                     if (bundle.getString(tmp + 0).equals(zhuanye)) {
-                                        cell = new ListProfessionals(bundle.getString(tmp + 4),
-                                                "工号:", bundle.getString(tmp + 3));
-                                        listInfos.add(cell);
+                                        int sign=0;
+                                        for(int l = 0;l < listInfos.size();l ++) {
+                                            if(listInfos.get(l).getJobNumber().equals(bundle.getString(tmp + 3))) {
+                                                sign = 1;
+                                                break;
+                                            }
+                                        }
+                                        if(sign==0){
+                                            cell = new ListProfessionals(bundle.getString(tmp + 4),
+                                                    "工号:", bundle.getString(tmp + 3));
+                                            listInfos.add(cell);
+                                        }
+
 
                                     }
                                 }

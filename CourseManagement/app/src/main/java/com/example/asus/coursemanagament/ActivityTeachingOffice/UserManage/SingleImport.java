@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -86,6 +87,9 @@ public class SingleImport extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(SingleImport.this, response, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SingleImport.this,TeacherList.class);
+                                startActivity(intent);
+                                finish();
                             }
                         });
                     }

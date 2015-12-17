@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,24 +47,29 @@ public class DepartmentAdd extends AppCompatActivity {
 
         EditText edtt_id=(EditText)findViewById(R.id.edtt_id);
         String id=edtt_id.getText().toString();
+        Log.i("info","id<<>>"+id);
 
         EditText edtt_password=(EditText)findViewById(R.id.edtt_password);
         String password=edtt_password.getText().toString();
+        Log.i("info","pwd<<>>"+password);
 
         EditText edtt_name=(EditText)findViewById(R.id.edtt_name);
         String name=edtt_name.getText().toString();
+        Log.i("info","name<<>>"+name);
 
         EditText edtt_department=(EditText)findViewById(R.id.edtt_department);
         String department=edtt_department.getText().toString();
+        Log.i("info","department<<>>"+department);
 
         EditText edtt_phone=(EditText)findViewById(R.id.edtt_phone);
         String phone=edtt_phone.getText().toString();
+        Log.i("info","phone<<>>"+phone);
 
         if(id.equals("")||password.equals("")||department.equals("")||name.equals("")||phone.equals("")){
             Toast.makeText(DepartmentAdd.this,"信息不完整",Toast.LENGTH_SHORT).show();
         }
         else {
-            Tb_department tb_department = new Tb_department(id, password, department, name, phone);
+            Tb_department tb_department = new Tb_department(id, password, department, phone, name);
 
             String department_json = gson.toJson(tb_department);
 //        Log.i("info", "<<>>" + department_json);
@@ -79,6 +85,9 @@ public class DepartmentAdd extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(DepartmentAdd.this, response, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(DepartmentAdd.this,DepartmentList.class);
+                                startActivity(intent);
+                                finish();
                             }
                         });
                     }

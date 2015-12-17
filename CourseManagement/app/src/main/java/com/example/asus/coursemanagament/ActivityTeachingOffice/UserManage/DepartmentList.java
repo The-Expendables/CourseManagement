@@ -72,6 +72,7 @@ public class DepartmentList extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(DepartmentList.this, DepartmentAdd.class);
                 startActivity(intent);
+                finish();
             }
         });
         //=================================
@@ -122,7 +123,7 @@ public class DepartmentList extends Activity {
             String t_json = gson.toJson(t);
             intent.putExtra("department_info", t_json);
             startActivity(intent);
-
+            finish();
         }
     }
     //========================================================

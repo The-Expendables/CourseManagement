@@ -88,7 +88,7 @@ public class CourseUpdate extends HttpServlet {
         tb_teacher_declare=gson.fromJson(delete_json ,new TypeToken<List<Tb_teacher_declare>>(){}.getType());
         su_teacher_declare=Teacher_declareDAO.delete(tb_teacher_declare);
         String ret="";
-        if(su_course!=0 && !(su_teacher_declare==0||delete_json.length()==0)) {
+        if(su_course!=0 && (su_teacher_declare!=0||delete_json.length()==0)) {
         	ret="信息更新成功";
         }
         else {

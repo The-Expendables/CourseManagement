@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="term">
-        <item>201502</item>
         <item>201501</item>
-        <item>201402</item>
-        <item>201401</item>
-        <item>201302</item>
-        <item>201301</item>
+        <item>201502</item>
+        <item>201601</item>
+        <item>201602</item>
+        <item>201701</item>
+        <item>201702</item>
     </string-array>
 
     <string-array name="week">

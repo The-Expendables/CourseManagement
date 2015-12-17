@@ -1,5 +1,6 @@
 package com.example.asus.coursemanagament.ActivityTeachingOffice.UserManage;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +62,9 @@ public class BatchImport extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(BatchImport.this,response,Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(BatchImport.this,TeacherList.class);
+                            startActivity(intent);
+                            finish();
                         }
                     });
                 }

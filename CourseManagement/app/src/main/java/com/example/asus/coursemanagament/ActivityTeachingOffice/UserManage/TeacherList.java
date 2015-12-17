@@ -70,6 +70,7 @@ public class TeacherList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TeacherList.this, SingleImport.class);
                 startActivity(intent);
+                finish();
             }
         });
         //============================================
@@ -81,6 +82,7 @@ public class TeacherList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TeacherList.this, BatchImport.class);
                 startActivity(intent);
+                finish();
             }
         });
         //============================================
@@ -128,6 +130,7 @@ public class TeacherList extends AppCompatActivity {
             String t_json = gson.toJson(tb_teacher);
             intent.putExtra("teacherInfo", t_json);
             startActivity(intent);
+            finish();
         }
     }
     //========================================================

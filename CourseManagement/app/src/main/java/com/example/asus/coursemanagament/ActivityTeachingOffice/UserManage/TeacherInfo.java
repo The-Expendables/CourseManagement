@@ -123,6 +123,8 @@ public class TeacherInfo extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(TeacherInfo.this, response, Toast.LENGTH_SHORT).show();
+                                Intent intent =new Intent(TeacherInfo.this,TeacherList.class);
+                                startActivity(intent);
                                 finish();
                             }
                         });

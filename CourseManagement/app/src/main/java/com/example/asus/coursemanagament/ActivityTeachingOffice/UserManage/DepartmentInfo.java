@@ -77,7 +77,7 @@ public class DepartmentInfo extends AppCompatActivity {
             Toast.makeText(DepartmentInfo.this,"信息不完整",Toast.LENGTH_SHORT).show();
         }
         else {
-            Tb_department tb_department = new Tb_department(id, password, department, name, phone);
+            Tb_department tb_department = new Tb_department(id, password, department, phone,name);
 
             String department_json = gson.toJson(tb_department);
 //        Log.i("info", "<<>>" + teacher_json);
@@ -94,6 +94,8 @@ public class DepartmentInfo extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(DepartmentInfo.this, response, Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(DepartmentInfo.this,DepartmentList.class);
+                                startActivity(intent);
                                 finish();
                             }
                         });
