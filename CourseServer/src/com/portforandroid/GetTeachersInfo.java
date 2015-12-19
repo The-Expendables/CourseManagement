@@ -42,8 +42,9 @@ public class GetTeachersInfo extends HttpServlet {
         String teachers_json = request.getParameter("info_json");
         
         List<Tb_teacher> teachers=new ArrayList<Tb_teacher>();
-        teachers=gson.fromJson(teachers_json ,new TypeToken<List<Tb_teacher>>(){}.getType());
 
+        teachers=gson.fromJson(teachers_json ,new TypeToken<List<Tb_teacher>>(){}.getType());
+        System.out.println("listsize:"+teachers.size());
         //插入教师信息表
         int su=TeacherDAO.insertAll(teachers);//su为是否成功的意思
         
